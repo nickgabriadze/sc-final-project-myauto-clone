@@ -14,83 +14,106 @@ function ThreeTypes() {
   const styleToApply = {
     borderBottom: "1px solid #FD4100",
     backgroundColor: "white",
-    borderTopLeftRadius: chosenSearchType.car ? "10px": "",
-    borderTopRightRadius: chosenSearchType.motorcycle ? "10px": ""
+    borderTopLeftRadius: chosenSearchType.car ? "10px" : "",
+    borderTopRightRadius: chosenSearchType.motorcycle ? "10px" : "",
   };
 
   return (
     <>
-     
-        <div className={carSearchStyling["three-types"]}
-      
+      <div className={carSearchStyling["three-types"]}>
+        <div
+          className={carSearchStyling["car-div"]}
+          style={
+            chosenSearchType.car
+              ? styleToApply
+              : {
+                  borderTopLeftRadius: "10px",
+                }
+          }
+          onClick={() =>
+            setChosenSearchType((prev) => ({
+              ...prev,
+              car: true,
+              tractor: false,
+              motorcycle: false,
+            }))
+          }
         >
-          <div
-            className={carSearchStyling['car-div']}
-            style={chosenSearchType.car ? styleToApply : {
-                borderTopLeftRadius: "10px",
-                
-            }}
-            onClick={() =>
-              setChosenSearchType((prev) => ({
-                ...prev,
-                car: true,
-                tractor: false,
-                motorcycle: false
-              }))
+          <img
+            src={carSVG}
+            alt="Car icon"
+            style={
+              chosenSearchType.car
+                ? {
+                    filter:
+                      "invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%)",
+                  }
+                : {}
             }
-          >
-            <img src={carSVG} alt="Car icon"
-            style={chosenSearchType.car ? { filter: "invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%)"}: {}}
-            draggable={false}></img>
-          </div>
-
-          <div
-          className={carSearchStyling['tractor-div']}
-            style={chosenSearchType.tractor ? styleToApply : {
-            }}
-            onClick={() =>
-              setChosenSearchType((prev) => ({
-                ...prev,
-                tractor: true,
-                car: false,
-                motorcycle: false
-              }))
-            }
-          >
-            <img
-              src={tractorSVG}
-              style={chosenSearchType.tractor ? { filter: "invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%)"}: {}}
-              alt="Tractor icon"
-              
-              draggable={false}
-            ></img>
-          </div>
-
-          <div
-          className={carSearchStyling['motorcycle-div']}
-            style={chosenSearchType.motorcycle ? styleToApply : {
-                borderTopRightRadius: "10px"
-            }}
-            onClick={() =>
-              setChosenSearchType((prev) => ({
-                ...prev,
-                motorcycle: true,
-                car: false,
-                tractor: false
-              }))
-            }
-          >
-            <img
-              style={chosenSearchType.motorcycle ? { filter: "invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%)"}: {}}
-              src={motorcycleSVG}
-              alt="Motorcycle icon"
-              draggable={false}
-            ></img>
-          </div>
+            draggable={false}
+          ></img>
         </div>
 
-       
-    
+        <div
+          className={carSearchStyling["tractor-div"]}
+          style={chosenSearchType.tractor ? styleToApply : {}}
+          onClick={() =>
+            setChosenSearchType((prev) => ({
+              ...prev,
+              tractor: true,
+              car: false,
+              motorcycle: false,
+            }))
+          }
+        >
+          <img
+            src={tractorSVG}
+            style={
+              chosenSearchType.tractor
+                ? {
+                    filter:
+                      "invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%)",
+                  }
+                : {}
+            }
+            alt="Tractor icon"
+            draggable={false}
+          ></img>
+        </div>
+
+        <div
+          className={carSearchStyling["motorcycle-div"]}
+          style={
+            chosenSearchType.motorcycle
+              ? styleToApply
+              : {
+                  borderTopRightRadius: "10px",
+                }
+          }
+          onClick={() =>
+            setChosenSearchType((prev) => ({
+              ...prev,
+              motorcycle: true,
+              car: false,
+              tractor: false,
+            }))
+          }
+        >
+          <img
+            style={
+              chosenSearchType.motorcycle
+                ? {
+                    filter:
+                      "invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%)",
+                  }
+                : {}
+            }
+            src={motorcycleSVG}
+            alt="Motorcycle icon"
+            draggable={false}
+          ></img>
+        </div>
+      </div>
     </>
   );
 }
