@@ -1,0 +1,7 @@
+to retrieve the picture from the static.my.ge
+you have to get three variables
+1. ex. "photo": "0\/1\/6\/7\/9", (you just need 0/1/6/7/9)
+2. ex. car_id: 91976102
+3. ex. photo_ver: 8
+
+https://static.my.ge/myauto/photos/{0/1/6/7/9}/thumbs/{91976102}_1.jpg?v={8}
