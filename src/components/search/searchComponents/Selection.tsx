@@ -2,7 +2,7 @@ import carSearchStyling from "../carSearch.module.css";
 import useManufacturers from "../../../hooks/useManufacturers";
 import useCategories from "../../../hooks/useCategories";
 import { Category, Manufacturer } from "../searchInterfaces";
-import { useAppDispatch, useAppSelector } from "../../../features/hooks";
+import { useAppSelector } from "../../../features/hooks";
 
 function SelectionTypes() {
   const { mansData, mansError, mansLoading } = useManufacturers(
