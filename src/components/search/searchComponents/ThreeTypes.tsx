@@ -1,8 +1,8 @@
 import { useState } from "react";
-import carSearchStyling from "./carSearch.module.css";
-import carSVG from "./icons/car.svg";
-import motorcycleSVG from "./icons/motorcycle.svg";
-import tractorSVG from "./icons/tractor.svg";
+import carSearchStyling from "../carSearch.module.css";
+import carSVG from "../icons/car.svg";
+import motorcycleSVG from "../icons/motorcycle.svg";
+import tractorSVG from "../icons/tractor.svg";
 
 function ThreeTypes() {
   const [chosenSearchType, setChosenSearchType] = useState({
@@ -16,6 +16,7 @@ function ThreeTypes() {
     backgroundColor: "white",
     borderTopLeftRadius: chosenSearchType.car ? "10px" : "",
     borderTopRightRadius: chosenSearchType.motorcycle ? "10px" : "",
+    transition:` all 500ms ease-in-out`
   };
 
   return (

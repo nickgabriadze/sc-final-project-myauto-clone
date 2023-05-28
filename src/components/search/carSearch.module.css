@@ -1,11 +1,11 @@
 .search-wrap {
-  width: 300px;
-  
+  width: 250px;
+
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  box-shadow: 0 0 0 0.04em rgba(144, 141, 141, 0.479);
+  box-shadow: 0 0 0 0.1em #dfdfe6;
   background-clip: padding-box;
- 
+  font-family: "Poppins";
   margin: 30px; /*for testing, will be removed*/
 }
 
@@ -14,16 +14,15 @@
   justify-content: space-between;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.509);
+  background-color: dfdfe6;
 }
 
 .three-types > div > img {
   transform: scaleX(-1);
   width: 40px;
   height: 40px;
-  filter: opacity(100%) drop-shadow(0 0 0 grey);
+  filter: opacity(100%) drop-shadow(0 0 0 #dfdfe6);
   margin: 5px;
-
 }
 
 .three-types div {
@@ -34,10 +33,166 @@
   border-bottom: 1px solid transparent;
   border-radius: none;
   cursor: pointer;
- 
 }
 
+.tractor-div,
+.motorcycle-div,
+.car-div {
+  box-shadow: 0 0 0 0.03em #dfdfe6;
+}
 
-.tractor-div, .motorcycle-div, .car-div{
-    box-shadow: 0 0 0 0.03em rgb(210, 208, 208)
+.categories-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  background-color: white;
+  padding: 10px;
+  padding-bottom: 30px;
+  gap: 1rem;
+
+  border-bottom: 1px solid #dfdfe6;
+}
+
+.deal-type,
+.mans-type,
+.cats-type {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 90%;
+  gap: 0.3rem;
+}
+
+.deal-wrapper,
+.manufacturers-wrapper,
+.type-cat-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deal-type h5,
+.mans-type h5,
+.cats-type h5 {
+  font-weight: 600;
+}
+
+.deal-type > .deal-options,
+.mans-type > .man-options,
+.cats-type > .cats-options {
+  border: 1px solid rgba(144, 141, 141, 0.479);
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+}
+
+.deal-options:active {
+  outline: transparent;
+  border: 1px solid rgba(144, 141, 141, 0.479);
+}
+
+.price-from-to-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+  background-color: white;
+}
+
+.gel-dollar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.gel-dollar img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 20px;
+  transform: scale(0.9);
+  backface-visibility: hidden;
+}
+
+.price-from-to-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.currency-wrapper {
+  border-radius: 20px;
+  border: 1px solid rgba(144, 141, 141, 0.479);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.from-to-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: rgba(144, 141, 141, 0.479);
+}
+
+.from-to-wrapper input {
+  width: 40%;
+  height: 40px;
+  border: 1px solid rgba(144, 141, 141, 0.479);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.from-to-wrapper input::-webkit-outer-spin-button,
+.from-to-wrapper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.range-hr {
+  width: 8px;
+  border: none;
+  outline: transparent;
+  height: 2px;
+  background-color: rgba(144, 141, 141, 0.79);
+  border-radius: 2px;
+}
+
+.price-range-wrapper {
+  padding: 0 15px 15px 10px;
+}
+
+.search-btn-wrapper {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  width: 100%;
+  padding: 20px;
+  box-shadow: 0 -2px 8px #dfdfe6;
+}
+
+.search-btn {
+  width: 100%;
+
+  padding: 7px;
+  padding-right: 40px;
+  padding-left: 40px;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: "Poppins";
+  font-weight: 600;
+  letter-spacing: 2px;
+  background-color: #fd4101;
+  outline: transparent;
+  cursor: pointer;
 }
