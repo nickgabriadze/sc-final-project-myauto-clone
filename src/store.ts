@@ -7,3 +7,8 @@ export const MyAutoStore = configureStore({
         searchReducer: carSearchSlice
     }
 })
+
+
+
+export type RootState = ReturnType<typeof MyAutoStore.getState>
+export type AppDispatch = typeof MyAutoStore.dispatch

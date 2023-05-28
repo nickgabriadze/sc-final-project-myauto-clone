@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { Manufacturer } from "../components/search/searchInterfaces";
+import sortMansByTypes from "./sortMansByTypes";
 
 
 export const useManufacturers = (url: string) => {
-    const [mansData, setMansData] = useState<Manufacturer[]>();
+    const [mansData, setMansData] = useState<{[key:string]: Manufacturer[]}>();
     const [mansError, setMansError] = useState<string>("OK")
     const [mansLoading, setMansLoading] = useState<boolean>(false);
 
@@ -24,7 +25,9 @@ export const useManufacturers = (url: string) => {
             setMansLoading(true)
             const innerFunc = async () => {
                 const fetchedData = await fetchData();
-                setMansData(fetchedData);
+                
+                setMansData(sortMansByTypes(fetchedData));
+                
             }
 
             innerFunc();

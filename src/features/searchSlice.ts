@@ -10,7 +10,7 @@ interface SearchState {
 }
 
 const initialState: SearchState = {
-  main_type: "car",
+  main_type: "cars",
   deal_type: "იყიდება",
   manufacturers: [],
   categories: [],
@@ -66,5 +66,5 @@ const CarSearchSlice = createSlice({
   },
 });
 
-
+export const {setMainType} = CarSearchSlice.actions
 export default CarSearchSlice.reducer

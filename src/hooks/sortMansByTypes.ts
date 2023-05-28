@@ -1,6 +1,6 @@
 import { Manufacturer } from "../components/search/searchInterfaces";
 
-function sortMansByTypes(data: Manufacturer[]): { [key: string]: Manufacturer[] } {
+function sortMansByTypes(data: Manufacturer[]) {
     const result: { [key: string]: Manufacturer[] } = {
       'cars': [],
       'motorcycles': [],

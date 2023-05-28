@@ -3,6 +3,8 @@ import carSearchStyling from "../carSearch.module.css";
 import carSVG from "../icons/car.svg";
 import motorcycleSVG from "../icons/motorcycle.svg";
 import tractorSVG from "../icons/tractor.svg";
+import { useAppDispatch } from "../../../features/hooks";
+import { setMainType } from "../../../features/searchSlice";
 
 function ThreeTypes() {
   const [chosenSearchType, setChosenSearchType] = useState({
@@ -16,9 +18,10 @@ function ThreeTypes() {
     backgroundColor: "white",
     borderTopLeftRadius: chosenSearchType.car ? "10px" : "",
     borderTopRightRadius: chosenSearchType.motorcycle ? "10px" : "",
-    transition:` all 500ms ease-in-out`
+    transition: ` all 500ms ease-in-out`,
   };
 
+  const dispatchTypeInfo = useAppDispatch();
   return (
     <>
       <div className={carSearchStyling["three-types"]}>
@@ -31,14 +34,20 @@ function ThreeTypes() {
                   borderTopLeftRadius: "10px",
                 }
           }
-          onClick={() =>
+          onClick={() => {
             setChosenSearchType((prev) => ({
               ...prev,
               car: true,
               tractor: false,
               motorcycle: false,
-            }))
-          }
+            }));
+
+            dispatchTypeInfo(
+              setMainType({
+                main_type: "cars",
+              })
+            );
+          }}
         >
           <img
             src={carSVG}
@@ -58,14 +67,20 @@ function ThreeTypes() {
         <div
           className={carSearchStyling["tractor-div"]}
           style={chosenSearchType.tractor ? styleToApply : {}}
-          onClick={() =>
+          onClick={() => {
             setChosenSearchType((prev) => ({
               ...prev,
               tractor: true,
               car: false,
               motorcycle: false,
-            }))
-          }
+            }));
+
+            dispatchTypeInfo(
+              setMainType({
+                main_type: "tractors",
+              })
+            );
+          }}
         >
           <img
             src={tractorSVG}
@@ -91,14 +106,20 @@ function ThreeTypes() {
                   borderTopRightRadius: "10px",
                 }
           }
-          onClick={() =>
+          onClick={() => {
             setChosenSearchType((prev) => ({
               ...prev,
               motorcycle: true,
               car: false,
               tractor: false,
-            }))
-          }
+            }));
+
+            dispatchTypeInfo(
+              setMainType({
+                main_type: "motorcycles",
+              })
+            );
+          }}
         >
           <img
             style={
