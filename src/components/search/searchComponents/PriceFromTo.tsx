@@ -6,7 +6,7 @@ import gelWhiteSVG from "../icons/gel-white.svg";
 import gelBlackSVG from "../icons/gel-black.svg";
 
 function PriceFromTo() {
-  const [currency, setCurrency] = useState(true); //false means that it is set to GEL
+  const [currency, setCurrency] = useState(false); //false means that it is set to GEL
 
   const styleToSet = {
     backgroundColor: "#282a37",
