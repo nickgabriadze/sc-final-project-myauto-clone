@@ -1,7 +1,7 @@
 import carSearchStyling from "./carSearch.module.css";
 import SelectionTypes from "./searchComponents/Selection";
 import ThreeTypes from "./searchComponents/ThreeTypes";
-import PriceFromTo from "./searchComponents/priceFromTo";
+import PriceFromTo from "./searchComponents/PriceFromTo";
 
 function CarSearch() {
   return (
