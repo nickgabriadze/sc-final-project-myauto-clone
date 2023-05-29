@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { Category } from "../components/search/searchInterfaces";
+import sortByCatTypes from "./sortByCatTypes";
 
 
 export const useCategories = (url: string) => {
-    const [catsData, setCatsData] = useState<Category[]>();
+    const [catsData, setCatsData] = useState<{[key:string]: Category[]}>();
     const [catsError, setCatsError] = useState<string>("OK")
     const [catsLoading, setCatsLoading] = useState<boolean>(false);
 
@@ -24,7 +25,8 @@ export const useCategories = (url: string) => {
             setCatsLoading(true)
             const innerFunc = async () => {
                 const fetchedData = await fetchData();
-                setCatsData(fetchedData.data);
+                console.log(fetchedData.data)
+                setCatsData(sortByCatTypes(fetchedData.data));
                 
             }
 

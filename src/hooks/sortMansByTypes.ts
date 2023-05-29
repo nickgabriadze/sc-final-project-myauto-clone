@@ -12,10 +12,10 @@ function sortMansByTypes(data: Manufacturer[]) {
         result['cars'].push(eachMan);
       }
       if (eachMan.is_spec === '1') {
-        result['motorcycles'].push(eachMan);
+        result['tractors'].push(eachMan);
       }
       if (eachMan.is_moto === '1') {
-        result['tractors'].push(eachMan);
+        result['motorcycles'].push(eachMan);
       }
     }
   
