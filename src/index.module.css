@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-*{
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+* {
   box-sizing: border-box;
   margin: 0;
 }
 
-
-body{
+body {
   background-color: #f1f3f7;
   height: 2000px;
 }
