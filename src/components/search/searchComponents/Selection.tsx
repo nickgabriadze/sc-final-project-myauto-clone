@@ -21,6 +21,7 @@ function SelectionTypes() {
         <div className={carSearchStyling["deal-type"]}>
           <h5>გარიგების ტიპი</h5>
           <select name="Deal Type" className={carSearchStyling["deal-options"]}>
+            <option value="not chosen">გარიგების ტიპი</option>
             <option value="იყიდება">იყიდება</option>
             <option value="ქირავდება">ქირავდება</option>
           </select>

@@ -1,11 +1,13 @@
-import CarSearch from "./components/search/CarSearch"
-
-
+import Header from "./components/header/Header";
+import CarSearch from "./components/search/CarSearch";
 
 function App() {
-
-
-  return <><CarSearch /></>
+  return (
+    <>
+      <Header />
+      <CarSearch />
+    </>
+  );
 }
 
-export default App
+export default App;
