@@ -14,8 +14,11 @@ function SelectionTypes() {
   const { main_type } = useAppSelector((state) => state.searchReducer);
 
   return (
-    <div className={carSearchStyling["categories-wrapper"]}>
-      <div className={carSearchStyling["deal-wrapper"]}>
+    <div className={carSearchStyling["categories-wrapper"]}
+    >
+      <div className={carSearchStyling["deal-wrapper"]}
+     
+      >
         <div className={carSearchStyling["deal-type"]}>
           <h5>გარიგების ტიპი</h5>
           <select name="Deal Type" className={carSearchStyling["deal-options"]}>
@@ -28,7 +31,9 @@ function SelectionTypes() {
 
      <Manufacturers />
 
-      <div className={carSearchStyling["type-cat-wrapper"]}>
+      <div className={carSearchStyling["type-cat-wrapper"]}
+   
+      >
         <div className={carSearchStyling["cats-type"]}>
           <h5>კატეგორია</h5>
           <select name="Deal Type" className={carSearchStyling["cats-options"]}>
