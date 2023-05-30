@@ -30,7 +30,8 @@ function Manufacturers() {
   }, [main_type, mansData]);
 
   return (
-    <div className={carSearchStyling["manufacturers-wrapper"]}>
+    <div className={carSearchStyling["manufacturers-wrapper"]}
+    >
       <div className={carSearchStyling["mans-type"]}>
         <h5>მწარმოებელი</h5>
         <div className={carSearchStyling["mans-outer-div"]}>
@@ -44,7 +45,7 @@ function Manufacturers() {
               onClick={() => {
                 setSearchMans(true);
                 setSearchMansTXT("")
-              
+                setManufacturersData(mansData && mansData[main_type])
               }}
               onChange={(e) => {
                 setSearchMansTXT(e.target.value);
