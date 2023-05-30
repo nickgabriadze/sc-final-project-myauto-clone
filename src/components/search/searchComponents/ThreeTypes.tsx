@@ -97,6 +97,7 @@ function ThreeTypes() {
             }
             alt="Tractor icon"
             draggable={false}
+           
           ></img>
         </div>
 
