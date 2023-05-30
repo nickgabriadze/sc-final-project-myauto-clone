@@ -6,7 +6,7 @@
   box-shadow: 0 0 0 0.1em #dfdfe6;
   background-clip: padding-box;
   font-family: "Poppins";
-  margin: 50px 0 0 50px; /*for testing, will be removed*/
+  margin: 10px 0 0 50px; /*for testing, will be removed*/
 }
 
 .three-types {
@@ -145,8 +145,7 @@
 
 .scrollable-mans {
   overflow-y: scroll;
-  height: 250px;
-
+  height: 230px;
   background-color: #ffffff;
   padding-left: 10px;
   padding-top: 0;
@@ -169,6 +168,12 @@
   align-items: center;
   margin-top: -10px;
   margin-bottom: -10px;
+}
+
+.expand-close-delete:hover{
+  padding: 1px;
+  border-radius: 100%;
+  background-color: #d9dbe1;
 }
 
 .popular-options h5 {

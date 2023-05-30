@@ -70,6 +70,7 @@ function Manufacturers() {
                     : CloseSVG
                   : ExpandMoreSVG
               }
+              className={carSearchStyling['expand-close-delete']}
               draggable={false}
               onClick={() => {
                 if (selectedCarBrands.length !== 0 && searchMans === true) {
