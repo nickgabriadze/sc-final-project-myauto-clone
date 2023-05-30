@@ -42,6 +42,8 @@ function ThreeTypes() {
               motorcycle: false,
             }));
 
+            document.title = "ავტომობილები"
+
             dispatchTypeInfo(
               setMainType({
                 main_type: "cars",
@@ -75,6 +77,7 @@ function ThreeTypes() {
               motorcycle: false,
             }));
 
+            document.title = "სპეცტექნიკა"
             dispatchTypeInfo(
               setMainType({
                 main_type: "tractors",
@@ -113,7 +116,7 @@ function ThreeTypes() {
               car: false,
               tractor: false,
             }));
-
+            document.title = "მოტოტექნიკა"
             dispatchTypeInfo(
               setMainType({
                 main_type: "motorcycles",
