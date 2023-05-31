@@ -82,7 +82,7 @@
 
 .mans-search-div {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   transition: all 500ms linaer;
   border: 1px solid #908d8d3e;
