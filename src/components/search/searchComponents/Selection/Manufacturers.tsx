@@ -12,7 +12,7 @@ function Manufacturers() {
   );
   const { main_type } = useAppSelector((state) => state.searchReducer);
 
-  const [manufactueresData, setManufacturersData] = useState(
+  const [manufacturersData, setManufacturersData] = useState(
     mansData === undefined ? undefined : mansData[main_type]
   );
 
@@ -49,7 +49,7 @@ function Manufacturers() {
               }}
               onChange={(e) => {
                 setSearchMansTXT(e.target.value);
-                if (manufactueresData !== undefined) {
+                if (manufacturersData !== undefined) {
                   setManufacturersData(
                     mansData &&
                       mansData[main_type].filter((each) =>
@@ -85,12 +85,12 @@ function Manufacturers() {
             ></img>
           </div>
         </div>
-        {searchMans === true && manufactueresData !== undefined && (
+        {searchMans === true && manufacturersData !== undefined && (
           <div className={carSearchStyling["mans-list"]}>
             <div className={carSearchStyling["scrollable-mans"]}
-            style={manufactueresData.length === 0 ? {height:"fit-content"}: {}}
+            style={manufacturersData.length === 0 ? {height:"fit-content"}: {}}
             >
-              {manufactueresData.length === 0 ? (
+              {manufacturersData.length === 0 ? (
                 <p className={carSearchStyling["no-search-result"]}>
                   ჩანაწერი არ არის
                 </p>
@@ -101,7 +101,7 @@ function Manufacturers() {
                 </div>
               )}
 
-              {manufactueresData?.map((eachManufacturer) => (
+              {manufacturersData?.map((eachManufacturer) => (
                 <div
                   key={eachManufacturer.man_id}
                   className={carSearchStyling["each-man"]}
@@ -187,7 +187,7 @@ function Manufacturers() {
                 </div>
               ))}
             </div>
-           { manufactueresData.length !== 0 && <div className={carSearchStyling["clear-mans-submit"]}>
+           { manufacturersData.length !== 0 && <div className={carSearchStyling["clear-mans-submit"]}>
               <p
                 onClick={() => {
                   setSelectedCarBrands([]);
