@@ -149,7 +149,7 @@ function Manufacturers() {
                     }}
                   ></input>
                   <p
-                    onClick={() => {
+                     onClick={() => {
                       if (
                         selectedCarBrands.includes(eachManufacturer.man_name)
                       ) {
@@ -159,11 +159,26 @@ function Manufacturers() {
                               eachBrand !== eachManufacturer.man_name
                           )
                         );
+                        setSearchMansTXT(
+                          selectedCarBrands
+                            .filter(
+                              (eachBrand) =>
+                                eachBrand !== eachManufacturer.man_name
+                            )
+                            .join(", ")
+                        );
                       } else {
                         setSelectedCarBrands((prev) => [
                           ...prev,
                           eachManufacturer.man_name,
                         ]);
+
+                        setSearchMansTXT(
+                          [
+                            ...selectedCarBrands,
+                            eachManufacturer.man_name,
+                          ].join(", ")
+                        );
                       }
                     }}
                   >
