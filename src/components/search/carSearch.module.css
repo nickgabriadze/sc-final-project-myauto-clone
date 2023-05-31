@@ -62,9 +62,6 @@
   position: relative;
 }
 
-
-
-
 .deal-type,
 .mans-type,
 .cats-type {
@@ -83,9 +80,6 @@
   justify-content: center;
 }
 
-<<<<<<< HEAD
-
-=======
 .mans-search-div {
   display: flex;
   justify-content: center;
@@ -253,7 +247,6 @@ input[type="checkbox"]:checked::after {
 }
 
 .deal-type h5,
->>>>>>> c558e8f1dc3a5f04d2a24ba5263465abcaa03561
 .mans-type h5,
 .cats-type h5 {
   font-weight: 600;
@@ -371,7 +364,6 @@ input[type="checkbox"]:checked::after {
 
 .search-btn {
   width: 100%;
-
   padding: 7px;
   padding-right: 40px;
   padding-left: 40px;
