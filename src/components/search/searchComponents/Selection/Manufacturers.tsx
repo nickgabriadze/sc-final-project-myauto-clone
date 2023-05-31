@@ -199,7 +199,12 @@ function Manufacturers() {
               <button
                 onClick={() => {
                   setSearchMans(false);
+                  if(selectedCarBrands.length === 0){
+                    setSearchMansTXT("ყველა მწარმოებელი")
+                  }else{
                   setSearchMansTXT(selectedCarBrands.join(", "))
+                  }
+
                 }}
               >
                 არჩევა
