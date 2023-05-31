@@ -6,7 +6,7 @@
   box-shadow: 0 0 0 0.1em #dfdfe6;
   background-clip: padding-box;
   font-family: "Poppins";
-  margin: 50px 0 0  50px; /*for testing, will be removed*/
+  margin: 10px 0 0 50px; /*for testing, will be removed*/
 }
 
 .three-types {
@@ -18,10 +18,11 @@
 }
 
 .three-types > div > img {
-  transform: scaleX(-1);
-  width: 40px;
-  height: 40px;
-  filter: opacity(100%) drop-shadow(0 0 0 #dfdfe6);
+  display: flex;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  filter: opacity(100%) drop-shadow(0 0 0 #d5d5d8);
   margin: 5px;
 }
 
@@ -42,9 +43,10 @@
   transition: all 300ms linear;
 }
 
-.tractor-div:hover, .motorcycle-div:hover, .car-div:hover{
+.tractor-div:hover,
+.motorcycle-div:hover,
+.car-div:hover {
   background-color: white;
-  
 }
 
 .categories-wrapper {
@@ -57,6 +59,7 @@
   padding-bottom: 30px;
   gap: 1rem;
   border-bottom: 1px solid #dfdfe6;
+  position: relative;
 }
 
 .deal-type,
@@ -77,18 +80,181 @@
   justify-content: center;
 }
 
+.mans-search-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 500ms linaer;
+  border: 1px solid #908d8d3e;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 300ms linear;
+}
+
+.mans-search-div input {
+  font-size: 13px;
+  text-align: left;
+}
+.mans-search-div:hover {
+  border: 1px solid #908d8d8c;
+}
+
+.mans-list {
+  background-color: white;
+  z-index: 5;
+  border: 1px solid #d8dbe2;
+  border-radius: 8px;
+  padding: 10px;
+  padding-right: 0px;
+  padding-left: 0px;
+  position: absolute;
+  top: 160px;
+  width: 83%;
+}
+
+.clear-mans-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #d9dbdf;
+  padding: 10px;
+}
+
+.clear-mans-submit p {
+  font-size: 15px;
+  color: #8f9ba7;
+  line-height: 15px;
+  cursor: pointer;
+  padding-left: 5px;
+}
+.clear-mans-submit button {
+  border: none;
+  outline: transparent;
+  color: white;
+  background-color: #fd4101;
+  border-radius: 8px;
+  padding: 7px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.type-cat-wrapper {
+  position: inherit;
+  z-index: 1;
+}
+
+.scrollable-mans {
+  overflow-y: scroll;
+  height: 230px;
+  background-color: #ffffff;
+  padding-left: 10px;
+  padding-top: 0;
+}
+
+.scrollable-mans::-webkit-scrollbar {
+  width: 3px;
+}
+
+.scrollable-mans::-webkit-scrollbar-thumb {
+  background-color: #41444c;
+  margin-top: 5px;
+  position: relative;
+  border-radius: 10px;
+}
+
+.popular-options {
+  display: flex;
+  column-gap: 40px;
+  align-items: center;
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+.expand-close-delete:hover{
+  padding: 1px;
+  border-radius: 100%;
+  background-color: #d9dbe1;
+}
+
+.popular-options h5 {
+  font-size: 1rem;
+  color: #1c1b1ba7;
+}
+.popular-options hr {
+  transform: rotate(90deg);
+  width: 1px;
+  border: none;
+  border-radius: 3px;
+  margin-top: 3px;
+  outline: transparent;
+  height: 60px;
+  background-color: #8585859c;
+}
+
+.each-man {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+  font-weight: 300;
+  font-family: "Poppins";
+  color: #858585f8;
+  cursor: pointer;
+  transition: all 300ms linear;
+}
+
+.each-man > p:hover {
+  color: #646262f8;
+}
+
+.each-man > input {
+  cursor: pointer;
+}
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid #64626242;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #fd4101;
+}
+
+input[type="checkbox"]:checked::after {
+  content: url("./icons/check.svg");
+  display: block;
+  text-align: center;
+  color: white;
+}
+
+.mans-search-div > input {
+  border: none;
+  outline: transparent;
+  color: rgb(123, 118, 118);
+}
+
+.no-search-result{
+  color: rgba(123, 118, 118, 0.632);
+}
+
+.mans-outer-div {
+  cursor: pointer;
+}
+
 .deal-type h5,
 .mans-type h5,
 .cats-type h5 {
   font-weight: 600;
 }
 
-
-
 .deal-type > .deal-options,
-.mans-type > .man-options,
 .cats-type > .cats-options {
-  border: 1px solid rgba(144, 141, 141, 0.479);
+  border: 1px solid #908d8d7a;
   height: 40px;
   border-radius: 10px;
   cursor: pointer;
@@ -96,15 +262,16 @@
   transition: all 300ms ease-in-out;
 }
 
-.deal-options:hover, .cats-options:hover, .man-options:hover{
-  border: 1px solid rgba(133, 133, 133, 0.973);
+.deal-options:hover,
+.cats-options:hover {
+  border: 1px solid #858585f8;
 }
 
-.deal-options, .cats-options, .man-options {
+.deal-options,
+.cats-options {
   outline: transparent;
   border: 1px solid rgba(144, 141, 141, 0.479);
 }
-
 
 .price-from-to-wrapper {
   display: flex;
@@ -192,6 +359,8 @@
   padding: 20px;
   box-shadow: 0 -2px 8px #dfdfe6;
 }
+
+
 
 .search-btn {
   width: 100%;
