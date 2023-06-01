@@ -3,10 +3,18 @@ import useCategories from "../../../../hooks/useCategories";
 import { Category } from "../../searchInterfaces";
 import Manufacturers from "./Manufacturers";
 import { useAppSelector } from "../../../../features/hooks";
+<<<<<<< HEAD
 import SelectTypes from "./SelectionType";
 
 function SelectionTypes() {
   const { catsData, catsError, catsLoading } = useCategories(
+=======
+import Categories  from "./Categories";
+
+function SelectionTypes() {
+
+  useCategories(
+>>>>>>> f41b5ae44c8ff775c138d08c24903d793c9a14f8
     "https://api2.myauto.ge/ka/cats/get"
   );
 
@@ -18,6 +26,7 @@ function SelectionTypes() {
       <SelectTypes />
       <Manufacturers />
 
+<<<<<<< HEAD
       <div className={carSearchStyling["type-cat-wrapper"]}>
         <div className={carSearchStyling["cats-type"]}>
           <h5>კატეგორია</h5>
@@ -32,7 +41,14 @@ function SelectionTypes() {
               : "loading..."}
           </select>
         </div>
+=======
+      <div className={carSearchStyling["type-cat-wrapper"]}
+   
+      >
+>>>>>>> f41b5ae44c8ff775c138d08c24903d793c9a14f8
       </div>
+      <Categories/>
+
     </div>
   );
 }

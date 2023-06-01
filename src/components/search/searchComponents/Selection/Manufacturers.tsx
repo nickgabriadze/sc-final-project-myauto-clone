@@ -12,7 +12,7 @@ function Manufacturers() {
   );
   const { main_type } = useAppSelector((state) => state.searchReducer);
 
-  const [manufactueresData, setManufacturersData] = useState(
+  const [manufacturersData, setManufacturersData] = useState(
     mansData === undefined ? undefined : mansData[main_type]
   );
 
@@ -30,13 +30,15 @@ function Manufacturers() {
   }, [main_type, mansData]);
 
   return (
-    <div className={carSearchStyling["manufacturers-wrapper"]}
+    <div className={carSearchStyling["type-car-wrapper"]}
     >
-      <div className={carSearchStyling["mans-type"]}>
+      <div className={carSearchStyling["mans-type"]}
+       >
         <h5>მწარმოებელი</h5>
         <div className={carSearchStyling["mans-outer-div"]}>
           <div className={carSearchStyling["mans-search-div"]}>
             <input
+           
               type="text"
               className={carSearchStyling["man-input"]}
               value={searchMansTXT}
@@ -49,7 +51,7 @@ function Manufacturers() {
               }}
               onChange={(e) => {
                 setSearchMansTXT(e.target.value);
-                if (manufactueresData !== undefined) {
+                if (manufacturersData !== undefined) {
                   setManufacturersData(
                     mansData &&
                       mansData[main_type].filter((each) =>
@@ -73,6 +75,11 @@ function Manufacturers() {
               className={carSearchStyling['expand-close-delete']}
               draggable={false}
               onClick={() => {
+
+                if(selectedCarBrands.length === 0 ){
+                  setSearchMansTXT("ყველა მწარმოებელი")
+                }
+
                 if (selectedCarBrands.length !== 0 && searchMans === true) {
                   setSelectedCarBrands([]);
                   setSearchMansTXT("")
@@ -85,12 +92,12 @@ function Manufacturers() {
             ></img>
           </div>
         </div>
-        {searchMans === true && manufactueresData !== undefined && (
+        {searchMans === true && manufacturersData !== undefined && (
           <div className={carSearchStyling["mans-list"]}>
             <div className={carSearchStyling["scrollable-mans"]}
-            style={manufactueresData.length === 0 ? {height:"fit-content"}: {}}
+            style={manufacturersData.length === 0 ? {height:"fit-content"}: {}}
             >
-              {manufactueresData.length === 0 ? (
+              {manufacturersData.length === 0 ? (
                 <p className={carSearchStyling["no-search-result"]}>
                   ჩანაწერი არ არის
                 </p>
@@ -101,7 +108,7 @@ function Manufacturers() {
                 </div>
               )}
 
-              {manufactueresData?.map((eachManufacturer) => (
+              {manufacturersData?.map((eachManufacturer) => (
                 <div
                   key={eachManufacturer.man_id}
                   className={carSearchStyling["each-man"]}
@@ -149,7 +156,7 @@ function Manufacturers() {
                     }}
                   ></input>
                   <p
-                    onClick={() => {
+                     onClick={() => {
                       if (
                         selectedCarBrands.includes(eachManufacturer.man_name)
                       ) {
@@ -159,11 +166,26 @@ function Manufacturers() {
                               eachBrand !== eachManufacturer.man_name
                           )
                         );
+                        setSearchMansTXT(
+                          selectedCarBrands
+                            .filter(
+                              (eachBrand) =>
+                                eachBrand !== eachManufacturer.man_name
+                            )
+                            .join(", ")
+                        );
                       } else {
                         setSelectedCarBrands((prev) => [
                           ...prev,
                           eachManufacturer.man_name,
                         ]);
+
+                        setSearchMansTXT(
+                          [
+                            ...selectedCarBrands,
+                            eachManufacturer.man_name,
+                          ].join(", ")
+                        );
                       }
                     }}
                   >
@@ -172,7 +194,7 @@ function Manufacturers() {
                 </div>
               ))}
             </div>
-           { manufactueresData.length !== 0 && <div className={carSearchStyling["clear-mans-submit"]}>
+           { selectedCarBrands.length !== 0 && <div className={carSearchStyling["clear-mans-submit"]}>
               <p
                 onClick={() => {
                   setSelectedCarBrands([]);
@@ -184,7 +206,10 @@ function Manufacturers() {
               <button
                 onClick={() => {
                   setSearchMans(false);
+                
                   setSearchMansTXT(selectedCarBrands.join(", "))
+                  
+
                 }}
               >
                 არჩევა

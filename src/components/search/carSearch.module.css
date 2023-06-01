@@ -80,6 +80,7 @@
   justify-content: center;
 }
 
+<<<<<<< HEAD
 
 
 
@@ -97,24 +98,30 @@
 
 
 .mans-search-div {
+=======
+.mans-search-div,
+.cats-search-div{
+>>>>>>> f41b5ae44c8ff775c138d08c24903d793c9a14f8
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  transition: all 500ms linaer;
   border: 1px solid #908d8d3e;
   padding: 8px;
   border-radius: 8px;
   transition: all 300ms linear;
 }
 
-.mans-search-div input {
+.mans-search-div input,
+.cats-search-div input {
   font-size: 13px;
   text-align: left;
 }
-.mans-search-div:hover {
+.mans-search-div:hover,
+.cats-search-div:hover {
   border: 1px solid #908d8d8c;
 }
 
+/* nick aq */
 .mans-list {
   background-color: white;
   z-index: 5;
@@ -127,8 +134,21 @@
   top: 160px;
   width: 83%;
 }
+.cats-list {
+  background-color: white;
+  z-index: 5;
+  border: 1px solid #d8dbe2;
+  border-radius: 8px;
+  padding: 10px;
+  padding-right: 0px;
+  padding-left: 0px;
+  position: absolute;
+  top: 250px;
+  width: 83%;
+}
 
-.clear-mans-submit {
+.clear-mans-submit,
+.clear-cats-submit {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -136,14 +156,16 @@
   padding: 10px;
 }
 
-.clear-mans-submit p {
+.clear-mans-submit p
+.clear-cats-submit p {
   font-size: 15px;
   color: #8f9ba7;
   line-height: 15px;
   cursor: pointer;
   padding-left: 5px;
 }
-.clear-mans-submit button {
+.clear-mans-submit button,
+.clear-cats-submit button {
   border: none;
   outline: transparent;
   color: white;
@@ -248,7 +270,8 @@ input[type="checkbox"]:checked::after {
   color: white;
 }
 
-.mans-search-div > input {
+.mans-search-div > input,
+.cats-search-div > input {
   border: none;
   outline: transparent;
   color: rgb(123, 118, 118);
@@ -258,7 +281,8 @@ input[type="checkbox"]:checked::after {
   color: rgba(123, 118, 118, 0.632);
 }
 
-.mans-outer-div {
+.mans-outer-div ,
+.cats-outer-div{
   cursor: pointer;
 }
 
