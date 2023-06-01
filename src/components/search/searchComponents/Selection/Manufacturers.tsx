@@ -30,7 +30,7 @@ function Manufacturers() {
   }, [main_type, mansData]);
 
   return (
-    <div className={carSearchStyling["manufacturers-wrapper"]}
+    <div className={carSearchStyling["type-car-wrapper"]}
     >
       <div className={carSearchStyling["mans-type"]}>
         <h5>მწარმოებელი</h5>
