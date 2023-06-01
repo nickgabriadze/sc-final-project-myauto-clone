@@ -32,11 +32,13 @@ function Manufacturers() {
   return (
     <div className={carSearchStyling["manufacturers-wrapper"]}
     >
-      <div className={carSearchStyling["mans-type"]}>
+      <div className={carSearchStyling["mans-type"]}
+       >
         <h5>მწარმოებელი</h5>
         <div className={carSearchStyling["mans-outer-div"]}>
           <div className={carSearchStyling["mans-search-div"]}>
             <input
+           
               type="text"
               className={carSearchStyling["man-input"]}
               value={searchMansTXT}
@@ -73,6 +75,11 @@ function Manufacturers() {
               className={carSearchStyling['expand-close-delete']}
               draggable={false}
               onClick={() => {
+
+                if(selectedCarBrands.length === 0 ){
+                  setSearchMansTXT("ყველა მწარმოებელი")
+                }
+
                 if (selectedCarBrands.length !== 0 && searchMans === true) {
                   setSelectedCarBrands([]);
                   setSearchMansTXT("")
@@ -187,7 +194,7 @@ function Manufacturers() {
                 </div>
               ))}
             </div>
-           { manufacturersData.length !== 0 && <div className={carSearchStyling["clear-mans-submit"]}>
+           { selectedCarBrands.length !== 0 && <div className={carSearchStyling["clear-mans-submit"]}>
               <p
                 onClick={() => {
                   setSelectedCarBrands([]);
@@ -199,11 +206,9 @@ function Manufacturers() {
               <button
                 onClick={() => {
                   setSearchMans(false);
-                  if(selectedCarBrands.length === 0){
-                    setSearchMansTXT("ყველა მწარმოებელი")
-                  }else{
+                
                   setSearchMansTXT(selectedCarBrands.join(", "))
-                  }
+                  
 
                 }}
               >
