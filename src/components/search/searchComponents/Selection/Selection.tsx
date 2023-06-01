@@ -1,8 +1,6 @@
 import carSearchStyling from "../../carSearch.module.css"
 import useCategories from "../../../../hooks/useCategories";
-import { Category } from "../../searchInterfaces";
 import Manufacturers from "./Manufacturers";
-import { useAppSelector } from "../../../../features/hooks";
 import Categories  from "./Categories";
 
 function SelectionTypes() {
@@ -11,7 +9,6 @@ function SelectionTypes() {
     "https://api2.myauto.ge/ka/cats/get"
   );
 
-  const { main_type } = useAppSelector((state) => state.searchReducer);
 
   return (
     <div className={carSearchStyling["categories-wrapper"]}
@@ -31,10 +28,7 @@ function SelectionTypes() {
 
      <Manufacturers />
 
-      <div className={carSearchStyling["type-cat-wrapper"]}
-   
-      >
-      </div>
+     
       <Categories/>
 
     </div>

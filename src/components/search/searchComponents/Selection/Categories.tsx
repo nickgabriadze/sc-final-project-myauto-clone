@@ -12,21 +12,21 @@ function Categories() {
     );
     const { main_type } = useAppSelector((state) => state.searchReducer);
   
-    const [manufactueresData, setManufacturersData] = useState(
+    const [categoriesData, setCategoriesData] = useState(
       catsData === undefined ? undefined : catsData[main_type]
     );
   
-    const [searchMans, setSearchMans] = useState<boolean>(false);
-    const [searchMansTXT, setSearchMansTXT] =
+    const [searchCats, setSearchCats] = useState<boolean>(false);
+    const [searchCatsTXT, setSearchCatsTXT] =
       useState<string>("ყველა კატეგორია");
   
-    const [selectedCarBrands, setSelectedCarBrands] = useState<string[]>([]);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const inputFocusRef = useRef<HTMLInputElement>(null);
   
     useEffect(() => {
-      setSelectedCarBrands([]);
-      setSearchMansTXT("ყველა კატეგორია");
-      setManufacturersData(catsData && catsData[main_type]);
+      setSelectedCategories([]);
+      setSearchCatsTXT("ყველა კატეგორია");
+      setCategoriesData(catsData && catsData[main_type]);
     }, [main_type, catsData]);
   
     return (
@@ -38,18 +38,18 @@ function Categories() {
               <input
                 type="text"
                 className={carSearchStyling["cats-input"]}
-                value={searchMansTXT}
+                value={searchCatsTXT}
                 ref={inputFocusRef}
-                style={searchMans ? { cursor: "initial" } : { cursor: "pointer" }}
+                style={searchCats ? { cursor: "initial" } : { cursor: "pointer" }}
                 onClick={() => {
-                  setSearchMans(true);
-                  setSearchMansTXT("")
-                  setManufacturersData(catsData && catsData[main_type])
+                  setSearchCats(true);
+                  setSearchCatsTXT("")
+                  setCategoriesData(catsData && catsData[main_type])
                 }}
                 onChange={(e) => {
-                  setSearchMansTXT(e.target.value);
-                  if (manufactueresData !== undefined) {
-                    setManufacturersData(
+                  setSearchCatsTXT(e.target.value);
+                  if (categoriesData !== undefined) {
+                    setCategoriesData(
                         catsData &&
                       catsData[main_type].filter((each) =>
                           each.title
@@ -64,8 +64,8 @@ function Categories() {
               ></input>
               <img
                 src={
-                  searchMans
-                    ? selectedCarBrands.length === 0
+                  searchCats
+                    ? selectedCategories.length === 0
                       ? ExpandLessSVG
                       : CloseSVG
                     : ExpandMoreSVG
@@ -73,11 +73,11 @@ function Categories() {
                 className={carSearchStyling['expand-close-delete']}
                 draggable={false}
                 onClick={() => {
-                  if (selectedCarBrands.length !== 0 && searchMans === true) {
-                    setSelectedCarBrands([]);
-                    setSearchMansTXT("")
+                  if (selectedCategories.length !== 0 && searchCats === true) {
+                    setSelectedCategories([]);
+                    setSearchCatsTXT("")
                   } else {
-                    setSearchMans((prev) => !prev);
+                    setSearchCats((prev) => !prev);
                   }
                 }}
                 width={20}
@@ -85,16 +85,16 @@ function Categories() {
               ></img>
             </div>
           </div>
-          {searchMans === true && manufactueresData !== undefined && (
+          {searchCats === true && categoriesData !== undefined && (
             <div className={carSearchStyling["cats-list"]}>
-              <div className={carSearchStyling["scrollable-mans"]}
-              style={manufactueresData.length === 0 ? {height:"fit-content"}: {}}
+              <div className={carSearchStyling["scrollable-cats"]}
+              style={categoriesData.length === 0 ? {height:"fit-content"}: {}}
               >
                 {}
   
-                {manufactueresData?.map((eachManufacturer) => (
+                {categoriesData?.map((eachCategory) => (
                   <div
-                    key={eachManufacturer.title}
+                    key={eachCategory.title}
                     className={carSearchStyling["each-man"]}
                   >
                     <input
@@ -102,80 +102,95 @@ function Categories() {
                       readOnly={true}
                       name="Categories"
                       checked={
-                        selectedCarBrands.includes(eachManufacturer.title)
+                        selectedCategories.includes(eachCategory.title)
                           ? true
                           : false
                       }
                       onClick={() => {
                         if (
-                          selectedCarBrands.includes(eachManufacturer.title)
+                          selectedCategories.includes(eachCategory.title)
                         ) {
-                          setSelectedCarBrands((prev) =>
+                          setSelectedCategories((prev) =>
                             prev.filter(
                               (eachBrand) =>
-                                eachBrand !== eachManufacturer.title
+                                eachBrand !== eachCategory.title
                             )
                           );
-                          setSearchMansTXT(
-                            selectedCarBrands
+                          setSearchCatsTXT(
+                            selectedCategories
                               .filter(
                                 (eachBrand) =>
-                                  eachBrand !== eachManufacturer.title
+                                  eachBrand !== eachCategory.title
                               )
                               .join(", ")
                           );
                         } else {
-                          setSelectedCarBrands((prev) => [
+                          setSelectedCategories((prev) => [
                             ...prev,
-                            eachManufacturer.title,
+                            eachCategory.title,
                           ]);
   
-                          setSearchMansTXT(
+                          setSearchCatsTXT(
                             [
-                              ...selectedCarBrands,
-                              eachManufacturer.title,
+                              ...selectedCategories,
+                              eachCategory.title,
                             ].join(", ")
                           );
                         }
                       }}
                     ></input>
                     <p
-                      onClick={() => {
-                        if (
-                          selectedCarBrands.includes(eachManufacturer.title)
-                        ) {
-                          setSelectedCarBrands((prev) =>
-                            prev.filter(
+                     onClick={() => {
+                      if (
+                        selectedCategories.includes(eachCategory.title)
+                      ) {
+                        setSelectedCategories((prev) =>
+                          prev.filter(
+                            (eachBrand) =>
+                              eachBrand !== eachCategory.title
+                          )
+                        );
+                        setSearchCatsTXT(
+                          selectedCategories
+                            .filter(
                               (eachBrand) =>
-                                eachBrand !== eachManufacturer.title
+                                eachBrand !== eachCategory.title
                             )
-                          );
-                        } else {
-                          setSelectedCarBrands((prev) => [
-                            ...prev,
-                            eachManufacturer.title,
-                          ]);
-                        }
-                      }}
+                            .join(", ")
+                        );
+                      } else {
+                        setSelectedCategories((prev) => [
+                          ...prev,
+                          eachCategory.title,
+                        ]);
+
+                        setSearchCatsTXT(
+                          [
+                            ...selectedCategories,
+                            eachCategory.title,
+                          ].join(", ")
+                        );
+                      }
+                    }}
                     >
-                      {eachManufacturer.title}
+                      {eachCategory.title}
                     </p>
                   </div>
                 ))}
               </div>
-             { manufactueresData.length !== 0 && <div className={carSearchStyling["clear-mans-submit"]}>
+             { selectedCategories.length !== 0 && <div className={carSearchStyling["clear-cats-submit"]}>
                 <p
                   onClick={() => {
-                    setSelectedCarBrands([]);
-                    setSearchMansTXT("")
+                    setSelectedCategories([]);
+                    setSearchCatsTXT("")
                   }}
                 >
                   ფილტრის გასუფთავება
                 </p>
                 <button
                   onClick={() => {
-                    setSearchMans(false);
-                    setSearchMansTXT(selectedCarBrands.join(", "))
+                    setSearchCats(false);
+                    setSearchCatsTXT(selectedCategories.join(", "))
                   }}
                 >
                   არჩევა

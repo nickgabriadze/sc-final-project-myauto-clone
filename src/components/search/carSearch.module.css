@@ -53,6 +53,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
   background-color: white;
   padding: 10px;
@@ -73,11 +74,11 @@
 }
 
 .deal-wrapper,
-.manufacturers-wrapper,
-.type-cat-wrapper {
+.type-mans-wrapper,
+.type-cats-wrapper {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .mans-search-div,
@@ -111,8 +112,9 @@
   padding-right: 0px;
   padding-left: 0px;
   position: absolute;
-  top: 160px;
-  width: 83%;
+  top: 140px;
+  margin-left: -10px;
+  width: 84%;
 }
 .cats-list {
   background-color: white;
@@ -123,8 +125,9 @@
   padding-right: 0px;
   padding-left: 0px;
   position: absolute;
-  top: 250px;
-  width: 83%;
+  margin-left: -10px;
+  top: 218px;
+  width: 84%;
 }
 
 .clear-mans-submit,
@@ -136,14 +139,22 @@
   padding: 10px;
 }
 
-.clear-mans-submit p
+
+
+.clear-mans-submit p,
 .clear-cats-submit p {
   font-size: 15px;
-  color: #8f9ba7;
+  color: #8f9ba7d1;
   line-height: 15px;
   cursor: pointer;
   padding-left: 5px;
+  cursor: pointer;
 }
+
+.clear-mans-submit p:hover, .clear-cats-submit p:hover{
+  color: #48494a;
+}
+
 .clear-mans-submit button,
 .clear-cats-submit button {
   border: none;
@@ -156,12 +167,9 @@
   cursor: pointer;
 }
 
-.type-cat-wrapper {
-  position: inherit;
-  z-index: 1;
-}
 
-.scrollable-mans {
+
+.scrollable-mans, .scrollable-cats {
   overflow-y: scroll;
   height: 230px;
   background-color: #ffffff;
@@ -169,11 +177,11 @@
   padding-top: 0;
 }
 
-.scrollable-mans::-webkit-scrollbar {
+.scrollable-mans::-webkit-scrollbar, .scrollable-cats::-webkit-scrollbar {
   width: 3px;
 }
 
-.scrollable-mans::-webkit-scrollbar-thumb {
+.scrollable-mans::-webkit-scrollbar-thumb, .scrollable-cats::-webkit-scrollbar-thumb {
   background-color: #41444c;
   margin-top: 5px;
   position: relative;
@@ -250,6 +258,11 @@ input[type="checkbox"]:checked::after {
   color: white;
 }
 
+.mans-search-div {
+  display: flex;
+  justify-content: space-between;
+}
+
 .mans-search-div > input,
 .cats-search-div > input {
   border: none;
@@ -264,6 +277,8 @@ input[type="checkbox"]:checked::after {
 .mans-outer-div ,
 .cats-outer-div{
   cursor: pointer;
+  display: flex;
+  justify-content: space-around;
 }
 
 .deal-type h5,
@@ -272,26 +287,8 @@ input[type="checkbox"]:checked::after {
   font-weight: 600;
 }
 
-.deal-type > .deal-options,
-.cats-type > .cats-options {
-  border: 1px solid #908d8d7a;
-  height: 40px;
-  border-radius: 10px;
-  cursor: pointer;
-  color: rgb(0, 0, 0);
-  transition: all 300ms ease-in-out;
-}
 
-.deal-options:hover,
-.cats-options:hover {
-  border: 1px solid #858585f8;
-}
 
-.deal-options,
-.cats-options {
-  outline: transparent;
-  border: 1px solid rgba(144, 141, 141, 0.479);
-}
 
 .price-from-to-wrapper {
   display: flex;
