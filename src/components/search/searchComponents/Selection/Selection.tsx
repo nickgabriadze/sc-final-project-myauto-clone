@@ -1,5 +1,4 @@
 import carSearchStyling from "../../carSearch.module.css";
-<<<<<<< HEAD
 import useCategories from "../../../../hooks/useCategories";
 import { Category } from "../../searchInterfaces";
 import Manufacturers from "./Manufacturers";
@@ -37,20 +36,6 @@ function SelectionTypes() {
       </div>
       <Categories/>
 
-=======
-import Manufacturers from "./Manufacturers";
-import Categories from "./Categories";
-import DealTypes from "./DealTypes";
-
-function SelectionTypes() {
-
-  return (
-    <div className={carSearchStyling["categories-wrapper"]}>
-      <DealTypes/>
-      
-      <Manufacturers />
-      <Categories />
->>>>>>> nicka
     </div>
   );
 }
