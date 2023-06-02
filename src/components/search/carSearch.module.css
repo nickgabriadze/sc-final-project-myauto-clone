@@ -83,8 +83,9 @@
   justify-content: center;
   align-items: center;
 }
-
-.mans-search-div {
+.deals-search-div,
+.mans-search-div,
+.cats-search-div{
   display: flex;
   justify-content: space-between;
   align-items: center;
