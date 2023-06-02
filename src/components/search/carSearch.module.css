@@ -80,7 +80,6 @@
   justify-content: center;
 }
 
-<<<<<<< HEAD
 
 
 
@@ -98,10 +97,6 @@
 
 
 .mans-search-div {
-=======
-.mans-search-div,
-.cats-search-div{
->>>>>>> f41b5ae44c8ff775c138d08c24903d793c9a14f8
   display: flex;
   justify-content: space-between;
   align-items: center;
