@@ -18,7 +18,7 @@ function DealTypes() {
             }}
             readOnly={true}
             />
-            <img src={ExpandMoreSVG} alt="dropdown" width={20} height={20} />
+            <img src={ExpandMoreSVG} alt="dropdown" width={15} height={15} />
           </div>
         </div>
       </div>
