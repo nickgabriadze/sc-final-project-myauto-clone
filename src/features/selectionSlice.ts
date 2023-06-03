@@ -21,7 +21,7 @@ const SelectionSlice = createSlice({
     initialState,
     reducers: {
         setSearchingTypeState: (state, action) => {
-            console.log(action.payload)
+            
             return {
                 ...state,
                 deal_type: action.payload.deal_type,

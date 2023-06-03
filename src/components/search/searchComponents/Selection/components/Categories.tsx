@@ -46,7 +46,7 @@ function Categories() {
                 style={category_type ? { cursor: "initial" } : { cursor: "pointer" }}
                 onClick={() => {
                   selectionDispatch(setSearchingTypeState({
-                    deal_type: true,
+                    deal_type: false,
                     manufacturer_type: false,
                     category_type: true,
                     models_type: false
