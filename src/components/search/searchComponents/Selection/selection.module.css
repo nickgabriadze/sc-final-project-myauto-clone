@@ -244,7 +244,7 @@ input[type="checkbox"]:checked::after {
   justify-content: center;
   align-items: center;
   border-top: 1px solid #d9dbdf;
-  padding: 10px;
+  padding: 5px;
 }
 
 .clear-mans-submit p,
@@ -270,7 +270,7 @@ input[type="checkbox"]:checked::after {
   background-color: #fd4101;
   border-radius: 5px;
   padding: 3px 10px 5px 10px;
-
+  margin-right: 5px;
   font-size: 14px;
   cursor: pointer;
 }
