@@ -1,10 +1,10 @@
-import carSearchStyling from "../../carSearch.module.css";
-import useCategories from "../../../../hooks/useCategories";
-import { useAppSelector } from "../../../../features/hooks";
-import ExpandMoreSVG from "../../icons/expand-more.svg";
+import selectionStyling from "../selection.module.css";
+import useCategories from "../../../../../hooks/useCategories";
+import { useAppSelector } from "../../../../../features/hooks";
+import ExpandMoreSVG from "../../../icons/expand-more.svg";
 import { useState, useRef, useEffect } from "react";
-import ExpandLessSVG from "../../icons/expand-less.svg";
-import CloseSVG from "../../icons/close.svg";
+import ExpandLessSVG from "../../../icons/expand-less.svg";
+import CloseSVG from "../../../icons/close.svg";
 
 function Categories() {
     const { catsData, catsError, catsLoading } = useCategories(
@@ -30,14 +30,14 @@ function Categories() {
     }, [main_type, catsData]);
   
     return (
-      <div className={carSearchStyling["type-cats-wrapper"]}>
-        <div className={carSearchStyling["cats-type"]}>
+      <div className={selectionStyling["type-cats-wrapper"]}>
+        <div className={selectionStyling["cats-type"]}>
           <h5>კატეგორია</h5>
-          <div className={carSearchStyling["cats-outer-div"]}>
-            <div className={carSearchStyling["cats-search-div"]}>
+          <div className={selectionStyling["cats-outer-div"]}>
+            <div className={selectionStyling["cats-search-div"]}>
               <input
                 type="text"
-                className={carSearchStyling["cats-input"]}
+                className={selectionStyling["cats-input"]}
                 value={searchCatsTXT}
                 ref={inputFocusRef}
                 style={searchCats ? { cursor: "initial" } : { cursor: "pointer" }}
@@ -70,24 +70,29 @@ function Categories() {
                       : CloseSVG
                     : ExpandMoreSVG
                 }
-                className={carSearchStyling['expand-close-delete']}
+                className={selectionStyling['expand-close-delete']}
                 draggable={false}
                 onClick={() => {
+                  if(selectedCategories.length === 0 ){
+                    setSearchCatsTXT("ყველა მწარმოებელი")
+                  }
+                  
                   if (selectedCategories.length !== 0 && searchCats === true) {
                     setSelectedCategories([]);
                     setSearchCatsTXT("")
                   } else {
                     setSearchCats((prev) => !prev);
+                  
                   }
                 }}
-                width={20}
-                height={20}
+                width={15}
+                height={15}
               ></img>
             </div>
           </div>
           {searchCats === true && categoriesData !== undefined && (
-            <div className={carSearchStyling["cats-list"]}>
-              <div className={carSearchStyling["scrollable-cats"]}
+            <div className={selectionStyling["cats-list"]}>
+              <div className={selectionStyling["scrollable-cats"]}
               style={categoriesData.length === 0 ? {height:"fit-content"}: {}}
               >
                 {}
@@ -95,7 +100,7 @@ function Categories() {
                 {categoriesData?.map((eachCategory) => (
                   <div
                     key={eachCategory.title}
-                    className={carSearchStyling["each-man"]}
+                    className={selectionStyling["each-man"]}
                   >
                     <input
                       type={"checkbox"}
@@ -178,7 +183,7 @@ function Categories() {
                   </div>
                 ))}
               </div>
-             { selectedCategories.length !== 0 && <div className={carSearchStyling["clear-cats-submit"]}>
+             { selectedCategories.length !== 0 && <div className={selectionStyling["clear-cats-submit"]}>
                 <p
                   onClick={() => {
                     setSelectedCategories([]);

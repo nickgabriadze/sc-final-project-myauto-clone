@@ -1,9 +1,7 @@
 import carSearchStyling from "../../carSearch.module.css";
-import useCategories from "../../../../hooks/useCategories";
-import { Category } from "../../searchInterfaces";
-import Manufacturers from "./Manufacturers";
-import Categories from "./Categories";
-import DealTypes from "./DealTypes";
+import Manufacturers from "./components/Manufacturers";
+import Categories from "./components/Categories";
+import DealTypes from "./components/DealTypes";
 
 function SelectionTypes() {
 

@@ -1,10 +1,10 @@
-import carSearchStyling from "../../carSearch.module.css";
-import useManufacturers from "../../../../hooks/useManufacturers";
-import { useAppSelector } from "../../../../features/hooks";
-import ExpandMoreSVG from "../../icons/expand-more.svg";
+import useManufacturers from "../../../../../hooks/useManufacturers";
+import { useAppSelector } from "../../../../../features/hooks";
+import ExpandMoreSVG from "../../../icons/expand-more.svg";
 import { useState, useRef, useEffect } from "react";
-import ExpandLessSVG from "../../icons/expand-less.svg";
-import CloseSVG from "../../icons/close.svg";
+import ExpandLessSVG from "../../../icons/expand-less.svg";
+import CloseSVG from "../../../icons/close.svg";
+import selectionStyling from "../selection.module.css"
 
 function Manufacturers() {
   const { mansData, mansError, mansLoading } = useManufacturers(
@@ -30,17 +30,16 @@ function Manufacturers() {
   }, [main_type, mansData]);
 
   return (
-    <div className={carSearchStyling["type-mans-wrapper"]}
+    <div className={selectionStyling["type-mans-wrapper"]}
     >
-      <div className={carSearchStyling["mans-type"]}
+      <div className={selectionStyling["mans-type"]}
        >
         <h5>მწარმოებელი</h5>
-        <div className={carSearchStyling["mans-outer-div"]}>
-          <div className={carSearchStyling["mans-search-div"]}>
+        <div className={selectionStyling["mans-outer-div"]}>
+          <div className={selectionStyling["mans-search-div"]}>
             <input
            
               type="text"
-              className={carSearchStyling["man-input"]}
               value={searchMansTXT}
               ref={inputFocusRef}
               style={searchMans ? { cursor: "initial" } : { cursor: "pointer" }}
@@ -72,7 +71,7 @@ function Manufacturers() {
                     : CloseSVG
                   : ExpandMoreSVG
               }
-              className={carSearchStyling['expand-close-delete']}
+              className={selectionStyling['expand-close-delete']}
               draggable={false}
               onClick={() => {
 
@@ -87,22 +86,22 @@ function Manufacturers() {
                   setSearchMans((prev) => !prev);
                 }
               }}
-              width={20}
-              height={20}
+              width={15}
+              height={15}
             ></img>
           </div>
         </div>
         {searchMans === true && manufacturersData !== undefined && (
-          <div className={carSearchStyling["mans-list"]}>
-            <div className={carSearchStyling["scrollable-mans"]}
+          <div className={selectionStyling["mans-list"]}>
+            <div className={selectionStyling["scrollable-mans"]}
             style={manufacturersData.length === 0 ? {height:"fit-content"}: {}}
             >
               {manufacturersData.length === 0 ? (
-                <p className={carSearchStyling["no-search-result"]}>
+                <p className={selectionStyling["no-search-result"]}>
                   ჩანაწერი არ არის
                 </p>
               ) : (
-                <div className={carSearchStyling["popular-options"]}>
+                <div className={selectionStyling["popular-options"]}>
                   <h5>პოპულარული</h5>
                   <hr></hr>
                 </div>
@@ -111,7 +110,7 @@ function Manufacturers() {
               {manufacturersData?.map((eachManufacturer) => (
                 <div
                   key={eachManufacturer.man_id}
-                  className={carSearchStyling["each-man"]}
+                  className={selectionStyling["each-man"]}
                 >
                   <input
                     type={"checkbox"}
@@ -194,7 +193,7 @@ function Manufacturers() {
                 </div>
               ))}
             </div>
-           { selectedCarBrands.length !== 0 && <div className={carSearchStyling["clear-mans-submit"]}>
+           { selectedCarBrands.length !== 0 && <div className={selectionStyling["clear-mans-submit"]}>
               <p
                 onClick={() => {
                   setSelectedCarBrands([]);
