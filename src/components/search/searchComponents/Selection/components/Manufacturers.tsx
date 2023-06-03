@@ -1,22 +1,27 @@
 import useManufacturers from "../../../../../hooks/useManufacturers";
-import { useAppSelector } from "../../../../../features/hooks";
+import { useAppSelector, useAppDispatch } from "../../../../../features/hooks";
 import ExpandMoreSVG from "../../../icons/expand-more.svg";
 import { useState, useRef, useEffect } from "react";
 import ExpandLessSVG from "../../../icons/expand-less.svg";
 import CloseSVG from "../../../icons/close.svg";
-import selectionStyling from "../selection.module.css"
+import selectionStyling from "../selection.module.css";
+import { setSearchingTypeState } from "../../../../../features/selectionSlice";
 
 function Manufacturers() {
   const { mansData, mansError, mansLoading } = useManufacturers(
     "https://static.my.ge/myauto/js/mans.json"
   );
+  const selectionDispatch = useAppDispatch();
   const { main_type } = useAppSelector((state) => state.searchReducer);
 
   const [manufacturersData, setManufacturersData] = useState(
     mansData === undefined ? undefined : mansData[main_type]
   );
 
-  const [searchMans, setSearchMans] = useState<boolean>(false);
+  const { manufacturer_type } = useAppSelector(
+    (state) => state.selectionReducer
+  );
+
   const [searchMansTXT, setSearchMansTXT] =
     useState<string>("ყველა მწარმოებელი");
 
@@ -30,23 +35,32 @@ function Manufacturers() {
   }, [main_type, mansData]);
 
   return (
-    <div className={selectionStyling["type-mans-wrapper"]}
-    >
-      <div className={selectionStyling["mans-type"]}
-       >
+    <div className={selectionStyling["type-mans-wrapper"]}>
+      <div className={selectionStyling["mans-type"]}>
         <h5>მწარმოებელი</h5>
         <div className={selectionStyling["mans-outer-div"]}>
           <div className={selectionStyling["mans-search-div"]}>
             <input
-           
               type="text"
               value={searchMansTXT}
               ref={inputFocusRef}
-              style={searchMans ? { cursor: "initial" } : { cursor: "pointer" }}
+              style={
+                manufacturer_type
+                  ? { cursor: "initial" }
+                  : { cursor: "pointer" }
+              }
               onClick={() => {
-                setSearchMans(true);
-                setSearchMansTXT("")
-                setManufacturersData(mansData && mansData[main_type])
+              
+                selectionDispatch(
+                  setSearchingTypeState({
+                    deal_type: false,
+                    manufacturer_type: true,
+                    category_type: false,
+                    models_type: false,
+                  })
+                );
+                setSearchMansTXT("");
+                setManufacturersData(mansData && mansData[main_type]);
               }}
               onChange={(e) => {
                 setSearchMansTXT(e.target.value);
@@ -65,25 +79,33 @@ function Manufacturers() {
             ></input>
             <img
               src={
-                searchMans
+                manufacturer_type
                   ? selectedCarBrands.length === 0
                     ? ExpandLessSVG
                     : CloseSVG
                   : ExpandMoreSVG
               }
-              className={selectionStyling['expand-close-delete']}
+              className={selectionStyling["expand-close-delete"]}
               draggable={false}
               onClick={() => {
-
-                if(selectedCarBrands.length === 0 ){
-                  setSearchMansTXT("ყველა მწარმოებელი")
+                if (selectedCarBrands.length === 0) {
+                  setSearchMansTXT("ყველა მწარმოებელი");
                 }
-
-                if (selectedCarBrands.length !== 0 && searchMans === true) {
+                if (
+                  selectedCarBrands.length !== 0 &&
+                  manufacturer_type === true
+                ) {
                   setSelectedCarBrands([]);
-                  setSearchMansTXT("")
+                  setSearchMansTXT("");
                 } else {
-                  setSearchMans((prev) => !prev);
+                  selectionDispatch(
+                    setSearchingTypeState({
+                      deal_type: false,
+                      manufacturer_type: !manufacturer_type,
+                      category_type: false,
+                      models_type: false,
+                    })
+                  );
                 }
               }}
               width={15}
@@ -91,10 +113,13 @@ function Manufacturers() {
             ></img>
           </div>
         </div>
-        {searchMans === true && manufacturersData !== undefined && (
+        {manufacturer_type === true && manufacturersData !== undefined && (
           <div className={selectionStyling["mans-list"]}>
-            <div className={selectionStyling["scrollable-mans"]}
-            style={manufacturersData.length === 0 ? {height:"fit-content"}: {}}
+            <div
+              className={selectionStyling["scrollable-mans"]}
+              style={
+                manufacturersData.length === 0 ? { height: "fit-content" } : {}
+              }
             >
               {manufacturersData.length === 0 ? (
                 <p className={selectionStyling["no-search-result"]}>
@@ -155,7 +180,7 @@ function Manufacturers() {
                     }}
                   ></input>
                   <p
-                     onClick={() => {
+                    onClick={() => {
                       if (
                         selectedCarBrands.includes(eachManufacturer.man_name)
                       ) {
@@ -193,27 +218,34 @@ function Manufacturers() {
                 </div>
               ))}
             </div>
-           { selectedCarBrands.length !== 0 && <div className={selectionStyling["clear-mans-submit"]}>
-              <p
-                onClick={() => {
-                  setSelectedCarBrands([]);
-                  setSearchMansTXT("")
-                }}
-              >
-                ფილტრის გასუფთავება
-              </p>
-              <button
-                onClick={() => {
-                  setSearchMans(false);
-                
-                  setSearchMansTXT(selectedCarBrands.join(", "))
-                  
+            {selectedCarBrands.length !== 0 && (
+              <div className={selectionStyling["clear-mans-submit"]}>
+                <p
+                  onClick={() => {
+                    setSelectedCarBrands([]);
+                    setSearchMansTXT("");
+                  }}
+                >
+                  ფილტრის გასუფთავება
+                </p>
+                <button
+                  onClick={() => {
+                    selectionDispatch(
+                      setSearchingTypeState({
+                        deal_type: false,
+                        manufacturer_type: false,
+                        category_type: false,
+                        models_type: false,
+                      })
+                    );
 
-                }}
-              >
-                არჩევა
-              </button>
-            </div>}
+                    setSearchMansTXT(selectedCarBrands.join(", "));
+                  }}
+                >
+                  არჩევა
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

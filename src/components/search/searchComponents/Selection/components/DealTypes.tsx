@@ -16,6 +16,7 @@ function DealTypes() {
             onClick={() => {
               setSearchDealsTXT("")
             }}
+            readOnly={true}
             />
             <img src={ExpandMoreSVG} alt="dropdown" width={20} height={20} />
           </div>

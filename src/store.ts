@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import carSearchSlice from "./features/searchSlice";
+import selectionSlice from "./features/selectionSlice";
 
 
 export const MyAutoStore = configureStore({
     reducer: {
-        searchReducer: carSearchSlice
+        searchReducer: carSearchSlice,
+        selectionReducer: selectionSlice
     }
 })
 

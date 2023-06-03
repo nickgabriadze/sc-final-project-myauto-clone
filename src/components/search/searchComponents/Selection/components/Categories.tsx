@@ -1,10 +1,11 @@
 import selectionStyling from "../selection.module.css";
 import useCategories from "../../../../../hooks/useCategories";
-import { useAppSelector } from "../../../../../features/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../features/hooks";
 import ExpandMoreSVG from "../../../icons/expand-more.svg";
 import { useState, useRef, useEffect } from "react";
 import ExpandLessSVG from "../../../icons/expand-less.svg";
 import CloseSVG from "../../../icons/close.svg";
+import { setSearchingTypeState } from "../../../../../features/selectionSlice";
 
 function Categories() {
     const { catsData, catsError, catsLoading } = useCategories(
@@ -16,7 +17,9 @@ function Categories() {
       catsData === undefined ? undefined : catsData[main_type]
     );
   
-    const [searchCats, setSearchCats] = useState<boolean>(false);
+    const {category_type} = useAppSelector((state) => state.selectionReducer);
+
+    const selectionDispatch = useAppDispatch();
     const [searchCatsTXT, setSearchCatsTXT] =
       useState<string>("ყველა კატეგორია");
   
@@ -40,9 +43,15 @@ function Categories() {
                 className={selectionStyling["cats-input"]}
                 value={searchCatsTXT}
                 ref={inputFocusRef}
-                style={searchCats ? { cursor: "initial" } : { cursor: "pointer" }}
+                style={category_type ? { cursor: "initial" } : { cursor: "pointer" }}
                 onClick={() => {
-                  setSearchCats(true);
+                  selectionDispatch(setSearchingTypeState({
+                    deal_type: true,
+                    manufacturer_type: false,
+                    category_type: true,
+                    models_type: false
+                  }));
+
                   setSearchCatsTXT("")
                   setCategoriesData(catsData && catsData[main_type])
                 }}
@@ -64,7 +73,7 @@ function Categories() {
               ></input>
               <img
                 src={
-                  searchCats
+                  category_type
                     ? selectedCategories.length === 0
                       ? ExpandLessSVG
                       : CloseSVG
@@ -74,14 +83,21 @@ function Categories() {
                 draggable={false}
                 onClick={() => {
                   if(selectedCategories.length === 0 ){
-                    setSearchCatsTXT("ყველა მწარმოებელი")
+                    setSearchCatsTXT("ყველა კატეგორია")
                   }
                   
-                  if (selectedCategories.length !== 0 && searchCats === true) {
+                  if (selectedCategories.length !== 0 && category_type === true) {
                     setSelectedCategories([]);
                     setSearchCatsTXT("")
                   } else {
-                    setSearchCats((prev) => !prev);
+
+                   selectionDispatch(setSearchingTypeState({
+                    deal_type: false,
+                    manufacturer_type: false,
+                    category_type: !category_type,
+                    models_type: false
+                  }));
+
                   
                   }
                 }}
@@ -90,7 +106,7 @@ function Categories() {
               ></img>
             </div>
           </div>
-          {searchCats === true && categoriesData !== undefined && (
+          {category_type === true && categoriesData !== undefined && (
             <div className={selectionStyling["cats-list"]}>
               <div className={selectionStyling["scrollable-cats"]}
               style={categoriesData.length === 0 ? {height:"fit-content"}: {}}
@@ -194,7 +210,13 @@ function Categories() {
                 </p>
                 <button
                   onClick={() => {
-                    setSearchCats(false);
+                    selectionDispatch(setSearchingTypeState({
+                      deal_type: false,
+                      manufacturer_type: false,
+                      category_type: false,
+                      models_type: false
+                    }));
+  
                     setSearchCatsTXT(selectedCategories.join(", "))
                   }}
                 >
