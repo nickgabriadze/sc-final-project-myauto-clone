@@ -21,14 +21,14 @@ function Categories() {
 
     const selectionDispatch = useAppDispatch();
     const [searchCatsTXT, setSearchCatsTXT] =
-      useState<string>("ყველა კატეგორია");
+      useState<string>("კატეგორია");
   
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const inputFocusRef = useRef<HTMLInputElement>(null);
   
     useEffect(() => {
       setSelectedCategories([]);
-      setSearchCatsTXT("ყველა კატეგორია");
+      setSearchCatsTXT("კატეგორია");
       setCategoriesData(catsData && catsData[main_type]);
     }, [main_type, catsData]);
   
@@ -83,12 +83,12 @@ function Categories() {
                 draggable={false}
                 onClick={() => {
                   if(selectedCategories.length === 0 ){
-                    setSearchCatsTXT("ყველა კატეგორია")
+                    setSearchCatsTXT("კატეგორია")
                   }
                   
                   if (selectedCategories.length !== 0 && category_type === true) {
                     setSelectedCategories([]);
-                    setSearchCatsTXT("")
+                    setSearchCatsTXT("კატეგორია")
                   } else {
 
                    selectionDispatch(setSearchingTypeState({
@@ -203,7 +203,7 @@ function Categories() {
                 <p
                   onClick={() => {
                     setSelectedCategories([]);
-                    setSearchCatsTXT("")
+                    setSearchCatsTXT("კატეგორია")
                   }}
                 >
                   ფილტრის გასუფთავება

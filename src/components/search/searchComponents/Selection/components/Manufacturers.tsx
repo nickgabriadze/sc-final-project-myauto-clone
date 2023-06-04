@@ -23,14 +23,14 @@ function Manufacturers() {
   );
 
   const [searchMansTXT, setSearchMansTXT] =
-    useState<string>("ყველა მწარმოებელი");
+    useState<string>("მწარმოებელი");
 
   const [selectedCarBrands, setSelectedCarBrands] = useState<string[]>([]);
   const inputFocusRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setSelectedCarBrands([]);
-    setSearchMansTXT("ყველა მწარმოებელი");
+    setSearchMansTXT("მწარმოებელი");
     setManufacturersData(mansData && mansData[main_type]);
   }, [main_type, mansData]);
 
@@ -89,14 +89,14 @@ function Manufacturers() {
               draggable={false}
               onClick={() => {
                 if (selectedCarBrands.length === 0) {
-                  setSearchMansTXT("ყველა მწარმოებელი");
+                  setSearchMansTXT("მწარმოებელი");
                 }
                 if (
                   selectedCarBrands.length !== 0 &&
                   manufacturer_type === true
                 ) {
                   setSelectedCarBrands([]);
-                  setSearchMansTXT("");
+                  setSearchMansTXT("მწარმოებელი");
                 } else {
                   selectionDispatch(
                     setSearchingTypeState({
@@ -223,7 +223,7 @@ function Manufacturers() {
                 <p
                   onClick={() => {
                     setSelectedCarBrands([]);
-                    setSearchMansTXT("");
+                    setSearchMansTXT("მწარმოებელი");
                   }}
                 >
                   ფილტრის გასუფთავება
