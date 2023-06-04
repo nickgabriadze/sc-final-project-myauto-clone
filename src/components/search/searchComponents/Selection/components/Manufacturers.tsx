@@ -22,8 +22,7 @@ function Manufacturers() {
     (state) => state.selectionReducer
   );
 
-  const [searchMansTXT, setSearchMansTXT] =
-    useState<string>("მწარმოებელი");
+  const [searchMansTXT, setSearchMansTXT] = useState<string>("მწარმოებელი");
 
   const [selectedCarBrands, setSelectedCarBrands] = useState<string[]>([]);
   const inputFocusRef = useRef<HTMLInputElement>(null);
@@ -50,7 +49,6 @@ function Manufacturers() {
                   : { cursor: "pointer" }
               }
               onClick={() => {
-              
                 selectionDispatch(
                   setSearchingTypeState({
                     deal_type: false,
