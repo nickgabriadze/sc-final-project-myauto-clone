@@ -2,6 +2,7 @@ import carSearchStyling from "../../carSearch.module.css";
 import Manufacturers from "./components/Manufacturers";
 import Categories from "./components/Categories";
 import DealTypes from "./components/DealTypes";
+import Models from "./components/Models";
 
 function SelectionTypes() {
 
@@ -11,6 +12,7 @@ function SelectionTypes() {
 
       <DealTypes />
       <Manufacturers />
+      <Models />
       <Categories/>
 
     </div>

@@ -4,7 +4,7 @@ import sortByCatTypes from "./sortByCatTypes";
 
 export const useCategories = (url: string) => {
   const [catsData, setCatsData] = useState<{ [key: string]: Category[] }>();
-  const [catsError, setCatsError] = useState<string>("OK");
+  const [catsError, setCatsError] = useState<string>("");
   const [catsLoading, setCatsLoading] = useState<boolean>(false);
 
   useEffect(() => {
