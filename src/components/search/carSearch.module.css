@@ -85,9 +85,9 @@
   width: 30px;
   height: 30px;
   cursor: pointer;
-  padding: 3px;
+  padding: 5px;
   border-radius: 20px;
-  transform: scale(0.8);
+  
   backface-visibility: hidden;
 }
 
@@ -99,11 +99,13 @@
 }
 
 .currency-wrapper {
-  border-radius: 20px;
+  border-radius: 30px;
   border: 1px solid rgba(144, 141, 141, 0.479);
   display: flex;
   justify-content: center;
   align-items: center;
+  transform: scale(0.8);
+  backface-visibility: hidden;
 }
 
 .from-to-wrapper {

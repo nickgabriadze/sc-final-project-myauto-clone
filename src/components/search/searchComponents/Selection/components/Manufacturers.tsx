@@ -6,9 +6,10 @@ import ExpandLessSVG from "../../../icons/expand-less.svg";
 import CloseSVG from "../../../icons/close.svg";
 import selectionStyling from "../selection.module.css";
 import { setSearchingTypeState } from "../../../../../features/selectionSlice";
+import { setManuFacturers } from "../../../../../features/searchSlice";
 
 function Manufacturers() {
-  const { mansData, mansError, mansLoading } = useManufacturers(
+  const { mansData } = useManufacturers(
     "https://static.my.ge/myauto/js/mans.json"
   );
   const selectionDispatch = useAppDispatch();
@@ -24,7 +25,10 @@ function Manufacturers() {
 
   const [searchMansTXT, setSearchMansTXT] = useState<string>("მწარმოებელი");
 
-  const [selectedCarBrands, setSelectedCarBrands] = useState<string[]>([]);
+  const [selectedCarBrands, setSelectedCarBrands] = useState<
+    { man_name: string; man_id: number }[]
+  >([]);
+
   const inputFocusRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -95,6 +99,11 @@ function Manufacturers() {
                 ) {
                   setSelectedCarBrands([]);
                   setSearchMansTXT("მწარმოებელი");
+                  selectionDispatch(
+                    setManuFacturers({
+                      manufacturers: [],
+                    })
+                  );
                 } else {
                   selectionDispatch(
                     setSearchingTypeState({
@@ -140,39 +149,79 @@ function Manufacturers() {
                     readOnly={true}
                     name="Manufacturers"
                     checked={
-                      selectedCarBrands.includes(eachManufacturer.man_name)
+                      selectedCarBrands.some(
+                        (eachMan) =>
+                          eachMan.man_name === eachManufacturer.man_name &&
+                          eachMan.man_id === Number(eachManufacturer.man_id)
+                      )
                         ? true
                         : false
                     }
                     onClick={() => {
                       if (
-                        selectedCarBrands.includes(eachManufacturer.man_name)
+                        selectedCarBrands.some(
+                          (eachMan) =>
+                            eachMan.man_name === eachManufacturer.man_name &&
+                            eachMan.man_id === Number(eachManufacturer.man_id)
+                        )
                       ) {
                         setSelectedCarBrands((prev) =>
                           prev.filter(
                             (eachBrand) =>
-                              eachBrand !== eachManufacturer.man_name
+                              eachBrand.man_name !== eachManufacturer.man_name
                           )
                         );
+
                         setSearchMansTXT(
                           selectedCarBrands
                             .filter(
                               (eachBrand) =>
-                                eachBrand !== eachManufacturer.man_name
+                                eachBrand.man_name !== eachManufacturer.man_name
                             )
+                            .map((eachMan) => eachMan.man_name)
                             .join(", ")
+                        );
+
+                        selectionDispatch(
+                          setManuFacturers({
+                            manufacturers: [
+                              ...selectedCarBrands
+                                .filter(
+                                  (eachMan) =>
+                                    eachMan.man_id !==
+                                    Number(eachManufacturer.man_id)
+                                )
+                                .map((eachMan) => eachMan.man_id),
+                            ],
+                          })
                         );
                       } else {
                         setSelectedCarBrands((prev) => [
                           ...prev,
-                          eachManufacturer.man_name,
+                          {
+                            man_name: eachManufacturer.man_name,
+                            man_id: Number(eachManufacturer.man_id),
+                          },
                         ]);
 
                         setSearchMansTXT(
                           [
-                            ...selectedCarBrands,
+                            ...selectedCarBrands.map(
+                              (eachMan) => eachMan.man_name
+                            ),
                             eachManufacturer.man_name,
                           ].join(", ")
+                        );
+
+                        selectionDispatch(
+                          setManuFacturers({
+                            manufacturers: [
+                              ...selectedCarBrands.map(
+                                (eachMan) => eachMan.man_id
+                              ),
+                              Number(eachManufacturer.man_id),
+                            ],
+                          })
                         );
                       }
                     }}
@@ -180,33 +229,69 @@ function Manufacturers() {
                   <p
                     onClick={() => {
                       if (
-                        selectedCarBrands.includes(eachManufacturer.man_name)
+                        selectedCarBrands.some(
+                          (eachMan) =>
+                            eachMan.man_name === eachManufacturer.man_name &&
+                            eachMan.man_id === Number(eachManufacturer.man_id)
+                        )
                       ) {
                         setSelectedCarBrands((prev) =>
                           prev.filter(
                             (eachBrand) =>
-                              eachBrand !== eachManufacturer.man_name
+                              eachBrand.man_name !== eachManufacturer.man_name
                           )
                         );
+
                         setSearchMansTXT(
                           selectedCarBrands
                             .filter(
                               (eachBrand) =>
-                                eachBrand !== eachManufacturer.man_name
+                                eachBrand.man_name !== eachManufacturer.man_name
                             )
+                            .map((eachMan) => eachMan.man_name)
                             .join(", ")
+                        );
+
+                        selectionDispatch(
+                          setManuFacturers({
+                            manufacturers: [
+                              ...selectedCarBrands
+                                .filter(
+                                  (eachMan) =>
+                                    eachMan.man_id !==
+                                    Number(eachManufacturer.man_id)
+                                )
+                                .map((eachMan) => eachMan.man_id),
+                            ],
+                          })
                         );
                       } else {
                         setSelectedCarBrands((prev) => [
                           ...prev,
-                          eachManufacturer.man_name,
+                          {
+                            man_name: eachManufacturer.man_name,
+                            man_id: Number(eachManufacturer.man_id),
+                          },
                         ]);
 
                         setSearchMansTXT(
                           [
-                            ...selectedCarBrands,
+                            ...selectedCarBrands.map(
+                              (eachMan) => eachMan.man_name
+                            ),
                             eachManufacturer.man_name,
                           ].join(", ")
+                        );
+
+                        selectionDispatch(
+                          setManuFacturers({
+                            manufacturers: [
+                              ...selectedCarBrands.map(
+                                (eachMan) => eachMan.man_id
+                              ),
+                              Number(eachManufacturer.man_id),
+                            ],
+                          })
                         );
                       }
                     }}
@@ -222,6 +307,11 @@ function Manufacturers() {
                   onClick={() => {
                     setSelectedCarBrands([]);
                     setSearchMansTXT("მწარმოებელი");
+                    selectionDispatch(
+                      setManuFacturers({
+                        manufacturers: [],
+                      })
+                    );
                   }}
                 >
                   ფილტრის გასუფთავება
@@ -237,7 +327,11 @@ function Manufacturers() {
                       })
                     );
 
-                    setSearchMansTXT(selectedCarBrands.join(", "));
+                    setSearchMansTXT(
+                      selectedCarBrands
+                        .map((eachMan) => eachMan.man_name)
+                        .join(", ")
+                    );
                   }}
                 >
                   არჩევა

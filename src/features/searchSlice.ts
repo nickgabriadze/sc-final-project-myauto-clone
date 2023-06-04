@@ -2,20 +2,22 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface SearchState {
   main_type: string; //car, tractor or motorcycle
-  deal_type: string; //for sale or for rent
-  manufacturers: string[];
-  categories: string[]; // main_type into detail
+  deal_type: string[]; //for sale or for rent
+  manufacturers: number[];
+  categories: number[]; // main_type into detail
   currency: boolean; //gel or dollar
-  pricesFromTo: number[];
+  pricesFrom: number;
+  pricesTo: number;
 }
 
 const initialState: SearchState = {
   main_type: "cars",
-  deal_type: "იყიდება",
+  deal_type: [],
   manufacturers: [],
   categories: [],
   currency: false,
-  pricesFromTo: [0, 0],
+  pricesFrom: 0,
+  pricesTo: 0,
 };
 
 const CarSearchSlice = createSlice({
@@ -29,42 +31,94 @@ const CarSearchSlice = createSlice({
       };
     },
 
-    setDealType: (state, action) => {
+    setDealType: (
+      state,
+      action: { type: string; payload: { deal_type: string[] } }
+    ) => {
       return {
         ...state,
         deal_type: action.payload.deal_type,
       };
     },
 
-    setManuFacturers: (state, action) => {
+    setManuFacturers: (
+      state,
+      action: { type: string; payload: { manufacturers: number[] } }
+    ) => {
       return {
         ...state,
         manufacturers: action.payload.manufacturers,
       };
     },
 
-    setCategories: (state, action) => {
+    setCategories: (
+      state,
+      action: {
+        type: string;
+        payload: {
+          categories: number[];
+        };
+      }
+    ) => {
       return {
         ...state,
         categories: action.payload.categories,
       };
     },
 
-    setCurrency: (state, action) => {
+    setCurrency: (
+      state,
+      action: {
+        type: string;
+        payload: {
+          currency: boolean;
+        };
+      }
+    ) => {
       return {
         ...state,
         currency: action.payload.currency,
       };
     },
 
-    setPricesFromTo: (state, action) => {
+    setPricesFrom: (
+      state,
+      action: {
+        type: string;
+        payload: {
+          pricesFrom: number;
+        };
+      }
+    ) => {
       return {
         ...state,
-        pricesFromTo: action.payload.pricesFromTo,
+        pricesFrom: action.payload.pricesFrom,
+      };
+    },
+    setPricesTo: (
+      state,
+      action: {
+        type: string;
+        payload: {
+          pricesTo: number;
+        };
+      }
+    ) => {
+      return {
+        ...state,
+        pricesTo: action.payload.pricesTo,
       };
     },
   },
 });
 
-export const {setMainType} = CarSearchSlice.actions
-export default CarSearchSlice.reducer
+export const {
+  setMainType,
+  setDealType,
+  setManuFacturers,
+  setCategories,
+  setCurrency,
+  setPricesFrom,
+  setPricesTo,
+} = CarSearchSlice.actions;
+export default CarSearchSlice.reducer;

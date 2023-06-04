@@ -21,8 +21,8 @@ function sortByCatTypes(data: Category[]){
         if(eachCat.category_type === 2){
             result["motorcycles"].push(eachCat)
         }
-    }
-
+    }   
+ 
     return result;
 }
 

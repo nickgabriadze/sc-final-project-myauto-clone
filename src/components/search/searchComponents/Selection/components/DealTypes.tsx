@@ -5,6 +5,8 @@ import CloseSVG from "../../../icons/close.svg";
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../../../../features/hooks";
 import { setSearchingTypeState } from "../../../../../features/selectionSlice";
+import { useDispatch } from "react-redux";
+import { setDealType } from "../../../../../features/searchSlice";
 
 interface Deal {
   იყიდება: boolean;
@@ -16,6 +18,7 @@ interface Deal {
 }
 
 function DealTypes() {
+ 
   const [searchDealsTXT, setSearchDealsTXT] =
     useState<string>("გარიგების ტიპი");
   const selectionDispatch = useAppDispatch();
@@ -55,6 +58,10 @@ function DealTypes() {
     setSearchDealsTXT(
       updatedString.length === 0 ? "გარიგების ტიპი" : updatedString
     );
+    selectionDispatch(setDealType({
+      deal_type: updatedString.split(",")
+    }))
+
   }, [
     selectedDeals,
     selectedDeals.დაზღვეული,
