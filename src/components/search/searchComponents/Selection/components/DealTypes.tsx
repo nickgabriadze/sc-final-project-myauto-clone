@@ -5,65 +5,70 @@ import CloseSVG from "../../../icons/close.svg";
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../../../../features/hooks";
 import { setSearchingTypeState } from "../../../../../features/selectionSlice";
-import { useDispatch } from "react-redux";
 import { setDealType } from "../../../../../features/searchSlice";
 
 interface Deal {
-  იყიდება: boolean;
-  ქირავდება: boolean;
-  დღიურად: boolean;
-  მძღოლით: boolean;
-  შესყიდვით: boolean;
-  დაზღვეული: boolean;
+  იყიდება: [number, boolean];
+  ქირავდება: [number, boolean];
+  დღიურად: [number, boolean];
+  მძღოლით: [number, boolean];
+  შესყიდვით: [number, boolean];
+  დაზღვეული: [number, boolean];
 }
 
 function DealTypes() {
- 
   const [searchDealsTXT, setSearchDealsTXT] =
     useState<string>("გარიგების ტიპი");
   const selectionDispatch = useAppDispatch();
   const { deal_type } = useAppSelector((state) => state.selectionReducer);
   const [selectedDeals, setSelectedDeals] = useState<Deal>({
-    იყიდება: false,
-    ქირავდება: false,
-    დღიურად: false,
-    მძღოლით: false,
-    შესყიდვით: false,
-    დაზღვეული: false,
+    იყიდება: [0, false],
+    ქირავდება: [1, false],
+    დღიურად: [1, false],
+    მძღოლით: [2, false],
+    შესყიდვით: [3, false],
+    დაზღვეული: [4, false],
   });
 
   const checkSelectedDeals = (): boolean => {
     return (
-      selectedDeals.იყიდება ||
-      selectedDeals.ქირავდება ||
-      selectedDeals.დაზღვეული ||
-      selectedDeals.დღიურად ||
-      selectedDeals.მძღოლით ||
-      selectedDeals.შესყიდვით
+      selectedDeals.იყიდება[1] ||
+      selectedDeals.ქირავდება[1] ||
+      selectedDeals.დაზღვეული[1] ||
+      selectedDeals.დღიურად[1] ||
+      selectedDeals.მძღოლით[1] ||
+      selectedDeals.შესყიდვით[1]
     );
   };
 
   useEffect(() => {
-    const updateSearchTXT = (): string => {
+    const updateSearchTXT = (): [string, number[]] => {
       let constructedString = "";
+      const chosenDealIds: number[] = [];
       for (const [k, v] of Object.entries(selectedDeals)) {
-        if (v) {
+        if (v[1] === true) {
           constructedString = constructedString + k + ", ";
+          chosenDealIds.push(v[0]);
         }
       }
 
-      return constructedString.split(", ").slice(0, -1).join(", ");
+      return [
+        constructedString.split(", ").slice(0, -1).join(", "),
+        chosenDealIds,
+      ];
     };
     const updatedString = updateSearchTXT();
     setSearchDealsTXT(
-      updatedString.length === 0 ? "გარიგების ტიპი" : updatedString
+      updatedString[0].length === 0 ? "გარიგების ტიპი" : updatedString[0]
     );
-    selectionDispatch(setDealType({
-      deal_type: updatedString.split(",")
-    }))
-
+    selectionDispatch(
+      setDealType({
+        deal_type: updatedString[1],
+      })
+    );
   }, [
     selectedDeals,
+    selectionDispatch,
     selectedDeals.დაზღვეული,
     selectedDeals.დღიურად,
     selectedDeals.იყიდება,
@@ -103,12 +108,12 @@ function DealTypes() {
                   setSearchDealsTXT("გარიგების ტიპი");
                   setSelectedDeals((prev) => ({
                     ...prev,
-                    იყიდება: false,
-                    ქირავდება: false,
-                    დღიურად: false,
-                    მძღოლით: false,
-                    შესყიდვით: false,
-                    დაზღვეული: false,
+                    იყიდება: [0, false],
+                    ქირავდება: [1, false],
+                    დღიურად: [1, false],
+                    მძღოლით: [2, false],
+                    შესყიდვით: [3, false],
+                    დაზღვეული: [4, false],
                   }));
                 } else {
                   selectionDispatch(
@@ -139,16 +144,16 @@ function DealTypes() {
                 <input
                   type={"checkbox"}
                   readOnly={true}
-                  checked={selectedDeals.იყიდება}
+                  checked={selectedDeals.იყიდება[1]}
                   onClick={() => {
                     setSelectedDeals((prev) => ({
                       ...prev,
-                      იყიდება: !prev.იყიდება,
-                      ქირავდება: false,
-                      დღიურად: false,
-                      მძღოლით: false,
-                      შესყიდვით: false,
-                      დაზღვეული: false,
+                      იყიდება: [0, !prev.იყიდება[1]],
+                      ქირავდება: [1, false],
+                      დღიურად: [1, false],
+                      მძღოლით: [2, false],
+                      შესყიდვით: [3, false],
+                      დაზღვეული: [4, false],
                     }));
                   }}
                 ></input>
@@ -156,12 +161,12 @@ function DealTypes() {
                   onClick={() => {
                     setSelectedDeals((prev) => ({
                       ...prev,
-                      იყიდება: !prev.იყიდება,
-                      ქირავდება: false,
-                      დღიურად: false,
-                      მძღოლით: false,
-                      შესყიდვით: false,
-                      დაზღვეული: false,
+                      იყიდება: [0, !prev.იყიდება[1]],
+                      ქირავდება: [1, false],
+                      დღიურად: [1, false],
+                      მძღოლით: [2, false],
+                      შესყიდვით: [3, false],
+                      დაზღვეული: [4, false],
                     }));
                   }}
                 >
@@ -173,16 +178,16 @@ function DealTypes() {
                 <input
                   type={"checkbox"}
                   readOnly={true}
-                  checked={selectedDeals.ქირავდება}
+                  checked={selectedDeals.ქირავდება[1]}
                   onClick={() => {
                     setSelectedDeals((prev) => ({
                       ...prev,
-                      იყიდება: false,
-                      ქირავდება: !prev.ქირავდება,
-                      დღიურად: false,
-                      მძღოლით: false,
-                      შესყიდვით: false,
-                      დაზღვეული: false,
+                      იყიდება: [0, false],
+                      ქირავდება: [1, !prev.ქირავდება[1]],
+                      დღიურად: [1, false],
+                      მძღოლით: [2, false],
+                      შესყიდვით: [3, false],
+                      დაზღვეული: [4, false],
                     }));
                   }}
                 ></input>
@@ -190,12 +195,12 @@ function DealTypes() {
                   onClick={() => {
                     setSelectedDeals((prev) => ({
                       ...prev,
-                      იყიდება: false,
-                      ქირავდება: !prev.ქირავდება,
-                      დღიურად: false,
-                      მძღოლით: false,
-                      შესყიდვით: false,
-                      დაზღვეული: false,
+                      იყიდება: [0, false],
+                      ქირავდება: [1, !prev.ქირავდება[1]],
+                      დღიურად: [1, false],
+                      მძღოლით: [2, false],
+                      შესყიდვით: [3, false],
+                      დაზღვეული: [4, false],
                     }));
                   }}
                 >
@@ -210,16 +215,16 @@ function DealTypes() {
                     <input
                       type={"checkbox"}
                       readOnly={true}
-                      checked={selectedDeals.დღიურად}
+                      checked={selectedDeals.დღიურად[1]}
                       onClick={() => {
                         setSelectedDeals((prev) => ({
                           ...prev,
-                          იყიდება: false,
-                          ქირავდება: true,
-                          დღიურად: !prev.დღიურად,
-                          მძღოლით: prev.მძღოლით,
-                          შესყიდვით: prev.შესყიდვით,
-                          დაზღვეული: prev.დაზღვეული,
+                          იყიდება: [0, false],
+                          ქირავდება: [1, true],
+                          დღიურად: [1, !prev.დღიურად[1]],
+                          მძღოლით: [2, prev.მძღოლით[1]],
+                          შესყიდვით: [3, prev.შესყიდვით[1]],
+                          დაზღვეული: [4, prev.დაზღვეული[1]],
                         }));
                       }}
                     ></input>
@@ -227,12 +232,12 @@ function DealTypes() {
                       onClick={() => {
                         setSelectedDeals((prev) => ({
                           ...prev,
-                          იყიდება: false,
-                          ქირავდება: true,
-                          დღიურად: !prev.დღიურად,
-                          მძღოლით: prev.მძღოლით,
-                          შესყიდვით: prev.შესყიდვით,
-                          დაზღვეული: prev.დაზღვეული,
+                          იყიდება: [0, false],
+                          ქირავდება: [1, true],
+                          დღიურად: [1, !prev.დღიურად[1]],
+                          მძღოლით: [2, prev.მძღოლით[1]],
+                          შესყიდვით: [3, prev.შესყიდვით[1]],
+                          დაზღვეული: [4, prev.დაზღვეული[1]],
                         }));
                       }}
                     >
@@ -244,16 +249,16 @@ function DealTypes() {
                     <input
                       type={"checkbox"}
                       readOnly={true}
-                      checked={selectedDeals.მძღოლით}
+                      checked={selectedDeals.მძღოლით[1]}
                       onClick={() => {
                         setSelectedDeals((prev) => ({
                           ...prev,
-                          იყიდება: false,
-                          ქირავდება: true,
-                          დღიურად: prev.დღიურად,
-                          მძღოლით: !prev.მძღოლით,
-                          შესყიდვით: prev.შესყიდვით,
-                          დაზღვეული: prev.დაზღვეული,
+                          იყიდება: [0, false],
+                          ქირავდება: [1, true],
+                          დღიურად: [1, prev.დღიურად[1]],
+                          მძღოლით: [2, !prev.მძღოლით[1]],
+                          შესყიდვით: [3, prev.შესყიდვით[1]],
+                          დაზღვეული: [4, prev.დაზღვეული[1]],
                         }));
                       }}
                     ></input>
@@ -261,12 +266,12 @@ function DealTypes() {
                       onClick={() => {
                         setSelectedDeals((prev) => ({
                           ...prev,
-                          იყიდება: false,
-                          ქირავდება: true,
-                          დღიურად: prev.დღიურად,
-                          მძღოლით: !prev.მძღოლით,
-                          შესყიდვით: prev.შესყიდვით,
-                          დაზღვეული: prev.დაზღვეული,
+                          იყიდება: [0, false],
+                          ქირავდება: [1, true],
+                          დღიურად: [1, prev.დღიურად[1]],
+                          მძღოლით: [2, !prev.მძღოლით[1]],
+                          შესყიდვით: [3, prev.შესყიდვით[1]],
+                          დაზღვეული: [4, prev.დაზღვეული[1]],
                         }));
                       }}
                     >
@@ -277,16 +282,16 @@ function DealTypes() {
                     <input
                       type={"checkbox"}
                       readOnly={true}
-                      checked={selectedDeals.შესყიდვით}
+                      checked={selectedDeals.შესყიდვით[1]}
                       onClick={() => {
                         setSelectedDeals((prev) => ({
                           ...prev,
-                          იყიდება: false,
-                          ქირავდება: true,
-                          დღიურად: prev.დღიურად,
-                          მძღოლით: prev.მძღოლით,
-                          შესყიდვით: !prev.შესყიდვით,
-                          დაზღვეული: prev.დაზღვეული,
+                          იყიდება: [0, false],
+                          ქირავდება: [1, true],
+                          დღიურად: [1, prev.დღიურად[1]],
+                          მძღოლით: [2, prev.მძღოლით[1]],
+                          შესყიდვით: [3, !prev.შესყიდვით[1]],
+                          დაზღვეული: [4, prev.დაზღვეული[1]],
                         }));
                       }}
                     ></input>
@@ -294,12 +299,12 @@ function DealTypes() {
                       onClick={() => {
                         setSelectedDeals((prev) => ({
                           ...prev,
-                          იყიდება: false,
-                          ქირავდება: true,
-                          დღიურად: prev.დღიურად,
-                          მძღოლით: prev.მძღოლით,
-                          შესყიდვით: !prev.შესყიდვით,
-                          დაზღვეული: prev.დაზღვეული,
+                          იყიდება: [0, false],
+                          ქირავდება: [1, true],
+                          დღიურად: [1, prev.დღიურად[1]],
+                          მძღოლით: [2, prev.მძღოლით[1]],
+                          შესყიდვით: [3, !prev.შესყიდვით[1]],
+                          დაზღვეული: [4, prev.დაზღვეული[1]],
                         }));
                       }}
                     >
@@ -310,16 +315,16 @@ function DealTypes() {
                     <input
                       type={"checkbox"}
                       readOnly={true}
-                      checked={selectedDeals.დაზღვეული}
+                      checked={selectedDeals.დაზღვეული[1]}
                       onClick={() => {
                         setSelectedDeals((prev) => ({
                           ...prev,
-                          იყიდება: false,
-                          ქირავდება: true,
-                          დღიურად: prev.დღიურად,
-                          მძღოლით: prev.მძღოლით,
-                          შესყიდვით: prev.შესყიდვით,
-                          დაზღვეული: !prev.დაზღვეული,
+                          იყიდება: [0, false],
+                          ქირავდება: [1, true],
+                          დღიურად: [1, prev.დღიურად[1]],
+                          მძღოლით: [2, prev.მძღოლით[1]],
+                          შესყიდვით: [3, prev.შესყიდვით[1]],
+                          დაზღვეული: [4, !prev.დაზღვეული[1]],
                         }));
                       }}
                     ></input>
@@ -327,12 +332,12 @@ function DealTypes() {
                       onClick={() => {
                         setSelectedDeals((prev) => ({
                           ...prev,
-                          იყიდება: false,
-                          ქირავდება: true,
-                          დღიურად: prev.დღიურად,
-                          მძღოლით: prev.მძღოლით,
-                          შესყიდვით: prev.შესყიდვით,
-                          დაზღვეული: !prev.დაზღვეული,
+                          იყიდება: [0, false],
+                          ქირავდება: [1, true],
+                          დღიურად: [1, prev.დღიურად[1]],
+                          მძღოლით: [2, prev.მძღოლით[1]],
+                          შესყიდვით: [3, prev.შესყიდვით[1]],
+                          დაზღვეული: [4, !prev.დაზღვეული[1]],
                         }));
                       }}
                     >
@@ -348,12 +353,12 @@ function DealTypes() {
                   onClick={() => {
                     setSelectedDeals((prev) => ({
                       ...prev,
-                      იყიდება: false,
-                      ქირავდება: false,
-                      დღიურად: false,
-                      მძღოლით: false,
-                      შესყიდვით: false,
-                      დაზღვეული: false,
+                      იყიდება: [0, false],
+                      ქირავდება: [1, false],
+                      დღიურად: [1, false],
+                      მძღოლით: [2, false],
+                      შესყიდვით: [3, false],
+                      დაზღვეული: [4, false],
                     }));
                   }}
                 >
