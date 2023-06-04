@@ -144,7 +144,19 @@ function DealTypes() {
                     }));
                   }}
                 ></input>
-                <p>იყიდება</p>
+                <p
+                 onClick={() => {
+                  setSelectedDeals((prev) => ({
+                    ...prev,
+                    იყიდება: !prev.იყიდება,
+                    ქირავდება: false,
+                    დღიურად: false,
+                    მძღოლით: false,
+                    შესყიდვით: false,
+                    დაზღვეული: false,
+                  }));
+                }}
+                >იყიდება</p>
               </div>
 
               <div className={selectionStyling["each-deal"]}>
@@ -164,7 +176,19 @@ function DealTypes() {
                     }));
                   }}
                 ></input>
-                <p>ქირავდება</p>
+                <p
+                 onClick={() => {
+                  setSelectedDeals((prev) => ({
+                    ...prev,
+                    იყიდება: false,
+                    ქირავდება: !prev.ქირავდება,
+                    დღიურად: false,
+                    მძღოლით: false,
+                    შესყიდვით: false,
+                    დაზღვეული: false,
+                  }));
+                }}
+                >ქირავდება</p>
               </div>
 
               <div className={selectionStyling["for-rent-deals"]}>
@@ -187,7 +211,19 @@ function DealTypes() {
                         }));
                       }}
                     ></input>
-                    <p>დღიურად</p>
+                    <p
+                    onClick={() => {
+                      setSelectedDeals((prev) => ({
+                        ...prev,
+                        იყიდება: false,
+                        ქირავდება: true,
+                        დღიურად: !prev.დღიურად,
+                        მძღოლით: prev.მძღოლით,
+                        შესყიდვით: prev.შესყიდვით,
+                        დაზღვეული: prev.დაზღვეული,
+                      }));
+                    }}
+                    >დღიურად</p>
                   </div>
 
                   <div className={selectionStyling["each-deal"]}>
@@ -207,7 +243,19 @@ function DealTypes() {
                         }));
                       }}
                     ></input>
-                    <p>მძღოლით</p>
+                    <p
+                    onClick={() => {
+                      setSelectedDeals((prev) => ({
+                        ...prev,
+                        იყიდება: false,
+                        ქირავდება: true,
+                        დღიურად: prev.დღიურად,
+                        მძღოლით: !prev.მძღოლით,
+                        შესყიდვით: prev.შესყიდვით,
+                        დაზღვეული: prev.დაზღვეული,
+                      }));
+                    }}
+                    >მძღოლით</p>
                   </div>
                   <div className={selectionStyling["each-deal"]}>
                     <input
@@ -226,7 +274,19 @@ function DealTypes() {
                         }));
                       }}
                     ></input>
-                    <p>შესყიდვით</p>
+                    <p
+                     onClick={() => {
+                      setSelectedDeals((prev) => ({
+                        ...prev,
+                        იყიდება: false,
+                        ქირავდება: true,
+                        დღიურად: prev.დღიურად,
+                        მძღოლით: prev.მძღოლით,
+                        შესყიდვით: !prev.შესყიდვით,
+                        დაზღვეული: prev.დაზღვეული,
+                      }));
+                    }}
+                    >შესყიდვით</p>
                   </div>
                   <div className={selectionStyling["each-deal"]}>
                     <input
@@ -245,7 +305,19 @@ function DealTypes() {
                         }));
                       }}
                     ></input>
-                    <p>დაზღვეული</p>
+                    <p
+                    onClick={() => {
+                      setSelectedDeals((prev) => ({
+                        ...prev,
+                        იყიდება: false,
+                        ქირავდება: true,
+                        დღიურად: prev.დღიურად,
+                        მძღოლით: prev.მძღოლით,
+                        შესყიდვით: prev.შესყიდვით,
+                        დაზღვეული: !prev.დაზღვეული,
+                      }));
+                    }}
+                    >დაზღვეული</p>
                   </div>
                 </div>
               </div>
