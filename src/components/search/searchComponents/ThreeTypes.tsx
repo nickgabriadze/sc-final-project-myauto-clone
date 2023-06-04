@@ -4,7 +4,11 @@ import carSVG from "../icons/car.svg";
 import motorcycleSVG from "../icons/motorcycle.svg";
 import tractorSVG from "../icons/tractor.svg";
 import { useAppDispatch } from "../../../features/hooks";
-import { setMainType } from "../../../features/searchSlice";
+import {
+  setCategories,
+  setMainType,
+  setManuFacturers,
+} from "../../../features/searchSlice";
 
 function ThreeTypes() {
   const [chosenSearchType, setChosenSearchType] = useState({
@@ -42,7 +46,18 @@ function ThreeTypes() {
               motorcycle: false,
             }));
 
-            document.title = "ავტომობილები"
+            dispatchTypeInfo(
+              setCategories({
+                categories: [],
+              })
+            );
+            dispatchTypeInfo(
+              setManuFacturers({
+                manufacturers: [],
+              })
+            );
+
+            document.title = "ავტომობილები";
 
             dispatchTypeInfo(
               setMainType({
@@ -77,7 +92,18 @@ function ThreeTypes() {
               motorcycle: false,
             }));
 
-            document.title = "სპეცტექნიკა"
+            dispatchTypeInfo(
+              setCategories({
+                categories: [],
+              })
+            );
+            dispatchTypeInfo(
+              setManuFacturers({
+                manufacturers: [],
+              })
+            );
+
+            document.title = "სპეცტექნიკა";
             dispatchTypeInfo(
               setMainType({
                 main_type: "tractors",
@@ -97,7 +123,6 @@ function ThreeTypes() {
             }
             alt="Tractor icon"
             draggable={false}
-           
           ></img>
         </div>
 
@@ -117,7 +142,19 @@ function ThreeTypes() {
               car: false,
               tractor: false,
             }));
-            document.title = "მოტოტექნიკა"
+
+            dispatchTypeInfo(
+              setCategories({
+                categories: [],
+              })
+            );
+            dispatchTypeInfo(
+              setManuFacturers({
+                manufacturers: [],
+              })
+            );
+
+            document.title = "მოტოტექნიკა";
             dispatchTypeInfo(
               setMainType({
                 main_type: "motorcycles",

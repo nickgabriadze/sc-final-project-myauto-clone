@@ -4,6 +4,7 @@ import ThreeTypes from "./searchComponents/ThreeTypes";
 import PriceFromTo from "./searchComponents/PriceFromTo";
 
 function CarSearch() {
+  
   return (
     <>
       <section className={carSearchStyling["search-wrap"]}>
