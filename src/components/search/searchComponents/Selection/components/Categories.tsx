@@ -19,7 +19,7 @@ function Categories() {
   const { category_type } = useAppSelector((state) => state.selectionReducer);
 
   const selectionDispatch = useAppDispatch();
-  const [searchCatsTXT, setSearchCatsTXT] = useState<string>("კატეგორია");
+  const [searchCatsTXT, setSearchCatsTXT] = useState<string>("ყველა კატეგორია");
 
   const [selectedCategories, setSelectedCategories] = useState<
     { cat_name: string; cat_id: number }[]
@@ -28,14 +28,14 @@ function Categories() {
 
   useEffect(() => {
     setSelectedCategories([]);
-    setSearchCatsTXT("კატეგორია");
+    setSearchCatsTXT("ყველა კატეგორია");
     setCategoriesData(catsData && catsData[main_type]);
   }, [main_type, catsData]);
 
   return (
     <div className={selectionStyling["type-cats-wrapper"]}>
       <div className={selectionStyling["cats-type"]}>
-        <h5>კატეგორია</h5>
+        <h5>ყველა კატეგორია</h5>
         <div className={selectionStyling["cats-outer-div"]}>
           <div className={selectionStyling["cats-search-div"]}>
             <input
@@ -86,12 +86,12 @@ function Categories() {
               draggable={false}
               onClick={() => {
                 if (selectedCategories.length === 0) {
-                  setSearchCatsTXT("კატეგორია");
+                  setSearchCatsTXT("ყველა კატეგორია");
                 }
 
                 if (selectedCategories.length !== 0 && category_type === true) {
                   setSelectedCategories([]);
-                  setSearchCatsTXT("კატეგორია");
+                  setSearchCatsTXT("ყველა კატეგორია");
                   selectionDispatch(
                     setCategories({
                       categories: [],
@@ -118,9 +118,20 @@ function Categories() {
             <div
               className={selectionStyling["scrollable-cats"]}
               style={
-                categoriesData.length === 0 ? { height: "fit-content" } : {}
+                categoriesData.length < 5  ? { height: "fit-content" } : {}
               }
             >
+
+{categoriesData.length === 0 ? (
+                <p className={selectionStyling["no-search-result"]}>
+                  ჩანაწერი არ არის
+                </p>
+              ) : (
+                <div className={selectionStyling["popular-options"]}>
+                  <h5>პოპულარული</h5>
+                  <hr></hr>
+                </div>
+              )}
               {categoriesData?.map((eachCategory) => (
                 <div
                   key={eachCategory.title}
@@ -275,7 +286,7 @@ function Categories() {
                 <p
                   onClick={() => {
                     setSelectedCategories([]);
-                    setSearchCatsTXT("კატეგორია");
+                    setSearchCatsTXT("ყველა კატეგორია");
                     selectionDispatch(
                       setCategories({
                         categories: [],

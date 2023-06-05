@@ -125,7 +125,7 @@ function Manufacturers() {
             <div
               className={selectionStyling["scrollable-mans"]}
               style={
-                manufacturersData.length === 0 ? { height: "fit-content" } : {}
+                manufacturersData.length < 7 ? { height: "fit-content" } : {}
               }
             >
               {manufacturersData.length === 0 ? (

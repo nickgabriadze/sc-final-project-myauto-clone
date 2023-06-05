@@ -74,18 +74,7 @@
   background-color: #d9dbe1;
 }
 
-.deals-list {
-  background-color: white;
-  z-index: 5;
-  border: 1px solid #d8dbe2;
-  border-radius: 8px;
-  padding: 10px;
-  padding-right: 0px;
-  padding-left: 0px;
-  position: absolute;
-  top: 75px;
-  width: 80%;
-}
+
 
 .each-deal-wrapper {
   padding: 8px;
@@ -95,15 +84,29 @@
 }
 .each-deal {
   font-size: 15px;
-
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.for-rent-deals {
+
+
+.for-rent-deals, .models-dropdown {
   display: flex;
   margin-left: 12px;
+}
+
+.models-dropdown{
+  border-left: 1px solid #25273420;
+  padding: 5px;
+}
+
+.models-dropdown > div {
+margin-left: 5px;;
+}
+
+.models-dropdown{
+  gap: 20px;
 }
 
 .for-rent-deals hr {
@@ -116,9 +119,27 @@
   background-color: #eae9ee;
 }
 
+.models-dropdown{
+  height: fit-content;
+}
+
+
 .rent-deals {
   padding: 10px;
   padding-top: 0;
+}
+
+.deals-list {
+  background-color: white;
+  z-index: 5;
+  border: 1px solid #d8dbe2;
+  border-radius: 8px;
+  padding: 10px;
+  padding-right: 0px;
+  padding-left: 0px;
+  position: absolute;
+  top: 75px;
+  width: 82%;
 }
 
 .mans-list {
@@ -131,7 +152,7 @@
   padding-left: 0px;
   position: absolute;
   top: 148px;
-  width: 80%;
+  width: 82%;
 }
 
 .cats-list {
@@ -144,7 +165,7 @@
   padding-left: 0px;
   position: absolute;
   top: 295px;
-  width: 80%;
+  width: 82%;
 }
 
 .models-list{
@@ -157,7 +178,7 @@
   padding-left: 0px;
   position: absolute;
   top: 220px;
-  width: 80%;
+  width: 82%;
 }
 
 .scrollable-mans,
@@ -235,12 +256,11 @@
   transition: all 300ms linear;
 }
 
-.each-models-man > p{
-  color: black
-}
+
 
 .each-models-man {
   width: 100%;
+  height: fit-content;
   
 }
 .each-models-man > div{
@@ -259,14 +279,12 @@
 .each-man > input,
 .each-deal > input,
 .each-model > input,
-.each-models-man > div > input {
+.each-models-man > div > input,
+.each-models-man > input {
   cursor: pointer;
 }
 
-.each-models-man {
-  justify-content: space-between;
-  
-}
+
 
 .each-models-man hr {
   width: 10%;

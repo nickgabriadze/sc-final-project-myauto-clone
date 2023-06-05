@@ -8,6 +8,7 @@ import {
   setCategories,
   setMainType,
   setManuFacturers,
+  setModels,
 } from "../../../features/searchSlice";
 
 function ThreeTypes() {
@@ -57,6 +58,11 @@ function ThreeTypes() {
               })
             );
 
+            dispatchTypeInfo(
+              setModels({
+                models: [],
+              })
+            );
             document.title = "ავტომობილები";
 
             dispatchTypeInfo(
@@ -103,6 +109,11 @@ function ThreeTypes() {
               })
             );
 
+            dispatchTypeInfo(
+              setModels({
+                models: [],
+              })
+            );
             document.title = "სპეცტექნიკა";
             dispatchTypeInfo(
               setMainType({
@@ -148,6 +159,14 @@ function ThreeTypes() {
                 categories: [],
               })
             );
+
+            
+            dispatchTypeInfo(
+              setModels({
+                models: [],
+              })
+            );
+
             dispatchTypeInfo(
               setManuFacturers({
                 manufacturers: [],
