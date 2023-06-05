@@ -23,7 +23,7 @@ function Manufacturers() {
     (state) => state.selectionReducer
   );
 
-  const [searchMansTXT, setSearchMansTXT] = useState<string>("მწარმოებელი");
+  const [searchMansTXT, setSearchMansTXT] = useState<string>("ყველა მწარმოებელი");
 
   const [selectedCarBrands, setSelectedCarBrands] = useState<
     { man_name: string; man_id: number }[]
@@ -33,14 +33,14 @@ function Manufacturers() {
 
   useEffect(() => {
     setSelectedCarBrands([]);
-    setSearchMansTXT("მწარმოებელი");
+    setSearchMansTXT("ყველა მწარმოებელი");
     setManufacturersData(mansData && mansData[main_type]);
   }, [main_type, mansData]);
 
   return (
     <div className={selectionStyling["type-mans-wrapper"]}>
       <div className={selectionStyling["mans-type"]}>
-        <h5>მწარმოებელი</h5>
+        <h5>ყველა მწარმოებელი</h5>
         <div className={selectionStyling["mans-outer-div"]}>
           <div className={selectionStyling["mans-search-div"]}>
             <input
@@ -91,14 +91,14 @@ function Manufacturers() {
               draggable={false}
               onClick={() => {
                 if (selectedCarBrands.length === 0) {
-                  setSearchMansTXT("მწარმოებელი");
+                  setSearchMansTXT("ყველა მწარმოებელი");
                 }
                 if (
                   selectedCarBrands.length !== 0 &&
                   manufacturer_type === true
                 ) {
                   setSelectedCarBrands([]);
-                  setSearchMansTXT("მწარმოებელი");
+                  setSearchMansTXT("ყველა მწარმოებელი");
                   selectionDispatch(
                     setManuFacturers({
                       manufacturers: [],
@@ -191,7 +191,7 @@ function Manufacturers() {
                                     eachMan.man_id !==
                                     Number(eachManufacturer.man_id)
                                 )
-                                .map((eachMan) => eachMan.man_id),
+                              
                             ],
                           })
                         );
@@ -216,10 +216,8 @@ function Manufacturers() {
                         selectionDispatch(
                           setManuFacturers({
                             manufacturers: [
-                              ...selectedCarBrands.map(
-                                (eachMan) => eachMan.man_id
-                              ),
-                              Number(eachManufacturer.man_id),
+                              ...selectedCarBrands,
+                              {man_name: eachManufacturer.man_name, man_id: Number(eachManufacturer.man_id)}
                             ],
                           })
                         );
@@ -261,7 +259,7 @@ function Manufacturers() {
                                     eachMan.man_id !==
                                     Number(eachManufacturer.man_id)
                                 )
-                                .map((eachMan) => eachMan.man_id),
+                                
                             ],
                           })
                         );
@@ -286,10 +284,8 @@ function Manufacturers() {
                         selectionDispatch(
                           setManuFacturers({
                             manufacturers: [
-                              ...selectedCarBrands.map(
-                                (eachMan) => eachMan.man_id
-                              ),
-                              Number(eachManufacturer.man_id),
+                              ...selectedCarBrands,
+                              {man_name: eachManufacturer.man_name, man_id: Number(eachManufacturer.man_id)},
                             ],
                           })
                         );
@@ -306,7 +302,7 @@ function Manufacturers() {
                 <p
                   onClick={() => {
                     setSelectedCarBrands([]);
-                    setSearchMansTXT("მწარმოებელი");
+                    setSearchMansTXT("ყველა მწარმოებელი");
                     selectionDispatch(
                       setManuFacturers({
                         manufacturers: [],

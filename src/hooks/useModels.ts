@@ -1,33 +1,35 @@
 import { useEffect, useState } from "react";
-import { Model } from "../components/search/searchInterfaces";
+import { Model, SortedManModel } from "../components/search/searchInterfaces";
+import sortByModelTypes from "./sortByModelTypes";
 
-export const useModels = (mans: number[]) => {
-  const [modelsData, setModelsData] = useState<Model[]>([]);
+
+export const useModels = (mans: {man_name: string, man_id:number}[]) => {
+  const [modelsData, setModelsData] = useState<SortedManModel[]>([]);
   const [modelsError, setModelsError] = useState<string>("");
   const [modelsLoading, setModelsLoading] = useState<boolean>(false);
-
+  
   useEffect(() => {
     const abortController = new AbortController();
 
     const fetchData = async () => {
-      const models = [];
-      for (const num of mans) {
+      const manModels:{man_models:Model[], man_name: string}[] = [];
+      for (const man of mans) {
         const req = await fetch(
-          `https://api2.myauto.ge/ka/getManModels?man_id=${num}`
+          `https://api2.myauto.ge/ka/getManModels?man_id=${man.man_id}`
         );
-        const data = await req.json();
+        const models = await req.json();
 
-        models.push(data.data);
+        manModels.push({man_models: models.data, man_name: man.man_name });
       }
 
-      return models;
+      return manModels;
     };
 
     try {
       setModelsLoading(true);
       const innerFunc = async () => {
         const fetchedData = await fetchData();
-        setModelsData(fetchedData.flat());
+        setModelsData(sortByModelTypes(fetchedData));
       };
 
       innerFunc();

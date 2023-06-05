@@ -30,3 +30,8 @@ export interface Model {
   shown_in_slider: number;
   sort_order: number;
 }
+
+export interface SortedManModel {
+  man_name: string;
+  models_group: {[key:string]: Model[]}[];
+}

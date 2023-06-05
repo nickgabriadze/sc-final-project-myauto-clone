@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 interface SearchState {
   main_type: string; //car, tractor or motorcycle
   deal_type: number[]; //for sale or for rent
-  manufacturers: number[];
+  manufacturers: {man_name: string, man_id: number}[];
   categories: number[]; // main_type into detail
   currency: boolean; //gel or dollar
   pricesFrom: number;
@@ -43,8 +43,10 @@ const CarSearchSlice = createSlice({
 
     setManuFacturers: (
       state,
-      action: { type: string; payload: { manufacturers: number[] } }
+      action: { type: string; payload: { manufacturers: {man_name: string, man_id: number}[] } }
     ) => {
+
+      console.log(action.payload.manufacturers)
       return {
         ...state,
         manufacturers: action.payload.manufacturers,
