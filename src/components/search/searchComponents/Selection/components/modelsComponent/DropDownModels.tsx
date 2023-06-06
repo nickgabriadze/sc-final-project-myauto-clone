@@ -3,7 +3,6 @@ import { Model } from "../../../../searchInterfaces";
 import selectionStyling from "../../selection.module.css";
 import ExpandMoreSVG from "../../../../icons/expand-more.svg";
 import ExpandLessSVG from "../../../../icons/expand-less.svg";
-import { useState, useEffect } from "react";
 import {
   useAppDispatch,
   useAppSelector,
@@ -35,8 +34,23 @@ function DropDownModels({
               <input
                 type={"checkbox"}
                 readOnly={true}
-                
+                checked={models.some(model => manModels.map(each => each.model_name).includes(model.model_name))}
                 name="Manufacturers"
+
+                onClick={() =>  {
+                  if(models.some(model => manModels.map(each => each.model_name).includes(model.model_name))){
+                    selectionDispatch(setModels({
+                      models: [...models, ...manModels.map(each => {return {man_id: each.man_id, model_name: each.model_name, model_id: each.model_id}})]
+                     }))
+                  }
+                  
+                  if(models.every(model => manModels.map(each => each.model_name).includes(model.model_name))){
+                    
+                    selectionDispatch(setModels({
+                      models: [...models.filter(each => !manModels.some(model => model.model_id === each.model_id && model.model_name === each.model_name && model.man_id === each.man_id))]
+                     }))
+                  }
+                }}
               ></input>
               <p
                 onClick={() => {

@@ -1,4 +1,4 @@
-import {v4} from "uuid"
+import { v4 } from "uuid";
 import selectionStyling from "../../selection.module.css";
 import ExpandMoreSVG from "../../../../icons/expand-more.svg";
 import ExpandLessSVG from "../../../../icons/expand-less.svg";
@@ -9,9 +9,10 @@ import {
 } from "../../../../../../features/hooks";
 import useModels from "../../../../../../hooks/useModels";
 import { setSearchingTypeState } from "../../../../../../features/selectionSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DropDownModels from "./DropDownModels";
 import { setModels } from "../../../../../../features/searchSlice";
+import { SortedManModel } from "../../../../searchInterfaces";
 
 function Models() {
   const { manufacturers, models } = useAppSelector(
@@ -20,6 +21,12 @@ function Models() {
   const selectionDispatch = useAppDispatch();
 
   const { modelsData } = useModels(manufacturers);
+  const [modelsDataToManipulate, setModelsDataToManipulate] =
+    useState<SortedManModel[]>();
+
+  useEffect(() => {
+    setModelsDataToManipulate(modelsData);
+  }, [modelsData]);
 
   const { models_type } = useAppSelector((state) => state.selectionReducer);
   const [selectedModels, setSelectedModels] = useState<number[]>([]);
@@ -27,62 +34,69 @@ function Models() {
 
   return (
     <div className={selectionStyling["type-models-wrappers"]}>
-     
-        <div className={selectionStyling["models-type"]}>
-          <h5>მოდელები</h5>
-          <div className={selectionStyling["models-outer-div"]}>
-            <div className={selectionStyling["models-search-div"]}>
-              <input
-                value={modelsTXT}
-                readOnly={manufacturers.length === 0}
-                onClick={() => {
-                  if (manufacturers.length !== 0) {
-                    selectionDispatch(
-                      setSearchingTypeState({
-                        deal_type: false,
-                        manufacturer_type: false,
-                        category_type: false,
-                        models_type: true,
-                      })
-                    );
-                  }
-                }}
-                style={
-                  manufacturers.length === 0
-                    ? { cursor: "pointer" }
-                    : { cursor: "initial" }
+      <div className={selectionStyling["models-type"]}>
+        <h5>მოდელები</h5>
+        <div className={selectionStyling["models-outer-div"]}>
+          <div className={selectionStyling["models-search-div"]}>
+            <input
+              value={modelsTXT}
+              onChange={(e) => {
+                if(manufacturers.length !== 0){
+                setModelsTXT(e.target.value);
                 }
-              ></input>
-              <img
-                alt="Dropdown"
-                src={
-                  models_type
-                    ? selectedModels.length === 0
-                      ? ExpandLessSVG
-                      : CloseSVG
-                    : ExpandMoreSVG
-                }
-                onClick={() => {
+              }}
+              readOnly={manufacturers.length === 0}
+              onClick={() => {
+                setModelsTXT("");
+                if (manufacturers.length !== 0) {
                   selectionDispatch(
                     setSearchingTypeState({
                       deal_type: false,
                       manufacturer_type: false,
                       category_type: false,
-                      models_type: !models_type && manufacturers.length !== 0,
+                      models_type: true,
                     })
                   );
-                }}
-                className={selectionStyling["expand-close-delete"]}
-                draggable={false}
-                width={15}
-                height={15}
-              ></img>
-            </div>
+                }
+              }}
+              style={
+                manufacturers.length === 0
+                  ? { cursor: "pointer" }
+                  : { cursor: "initial" }
+              }
+            ></input>
+            <img
+              alt="Dropdown"
+              src={
+                models_type
+                  ? selectedModels.length === 0
+                    ? ExpandLessSVG
+                    : CloseSVG
+                  : ExpandMoreSVG
+              }
+              onClick={() => {
+                selectionDispatch(
+                  setSearchingTypeState({
+                    deal_type: false,
+                    manufacturer_type: false,
+                    category_type: false,
+                    models_type: !models_type && manufacturers.length !== 0,
+                  })
+                );
+              }}
+              className={selectionStyling["expand-close-delete"]}
+              draggable={false}
+              width={15}
+              height={15}
+            ></img>
           </div>
-          {models_type && modelsData.length !== 0 && (
+        </div>
+        {models_type &&
+          modelsDataToManipulate !== undefined &&
+          modelsData.length !== 0 && (
             <div className={selectionStyling["models-list"]}>
               <div className={selectionStyling["scrollable-models"]}>
-                {modelsData.map((eachManModels) => (
+                {modelsDataToManipulate.map((eachManModels) => (
                   <div key={v4()}>
                     <div className={selectionStyling["each-models-man"]}>
                       <div>
@@ -111,7 +125,7 @@ function Models() {
                           ([modelGroup, models]) => {
                             return (
                               <DropDownModels
-                              key={v4()}
+                                key={v4()}
                                 modelGroup={modelGroup}
                                 manModels={models}
                               />
@@ -124,40 +138,38 @@ function Models() {
                 ))}
               </div>
               {models.length !== 0 && (
-              <div className={selectionStyling["clear-mans-submit"]}>
-                <p
-                  onClick={() => {
-                    selectionDispatch(setModels({
-                      models: []
-                    }))
-                  }}
-                >
-                  ფილტრის გასუფთავება
-                </p>
-                <button
-                  onClick={() => {
-                    selectionDispatch(
-                      setSearchingTypeState({
-                        deal_type: false,
-                        manufacturer_type: false,
-                        category_type: false,
-                        models_type: false,
-                      })
-                    );
-                  }}
-                >
-                  არჩევა
-                </button>
-              </div>
-            )}
+                <div className={selectionStyling["clear-mans-submit"]}>
+                  <p
+                    onClick={() => {
+                      selectionDispatch(
+                        setModels({
+                          models: [],
+                        })
+                      );
+                    }}
+                  >
+                    ფილტრის გასუფთავება
+                  </p>
+                  <button
+                    onClick={() => {
+                      selectionDispatch(
+                        setSearchingTypeState({
+                          deal_type: false,
+                          manufacturer_type: false,
+                          category_type: false,
+                          models_type: false,
+                        })
+                      );
+                    }}
+                  >
+                    არჩევა
+                  </button>
+                </div>
+              )}
             </div>
-            
           )}
-          
-        </div>
-        
       </div>
-
+    </div>
   );
 }
 
