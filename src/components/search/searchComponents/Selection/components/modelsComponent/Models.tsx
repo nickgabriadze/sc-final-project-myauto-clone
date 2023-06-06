@@ -106,7 +106,7 @@ function Models() {
                     </div>
 
                     {eachManModels.models_group.map((eachObject) => (
-                      <div>
+                      <div key={v4()}>
                         {Object.entries(eachObject).map(
                           ([modelGroup, models]) => {
                             return (
