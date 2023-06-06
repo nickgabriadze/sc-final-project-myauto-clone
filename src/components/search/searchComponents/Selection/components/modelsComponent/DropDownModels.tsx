@@ -1,4 +1,4 @@
-import { v4 } from "uuid";
+
 import { Model } from "../../../../searchInterfaces";
 import selectionStyling from "../../selection.module.css";
 import ExpandMoreSVG from "../../../../icons/expand-more.svg";
@@ -9,6 +9,7 @@ import {
   useAppSelector,
 } from "../../../../../../features/hooks";
 import { setModels } from "../../../../../../features/searchSlice";
+import { setOpenedModelGroups } from "../../../../../../features/selectionSlice";
 useAppDispatch;
 function DropDownModels({
   modelGroup,
@@ -17,15 +18,11 @@ function DropDownModels({
   modelGroup: string;
   manModels: Model[];
 }) {
-  const [openModels, setOpenModels] = useState<boolean>(false);
+  const allOpenedModelGroups = useAppSelector((state) => state.selectionReducer.openedModelGroups);
+  const openedModelGroup = useAppSelector(state =>  state.selectionReducer.openedModelGroups).includes(modelGroup)
   const selectionDispatch = useAppDispatch();
-  const { models_type } = useAppSelector((state) => state.selectionReducer);
   const { models } = useAppSelector((state) => state.searchReducer);
 
-  useEffect(() => {
-    setOpenModels(false);
-   
-  }, [models_type]);
 
   return (
     <>
@@ -42,18 +39,34 @@ function DropDownModels({
                 name="Manufacturers"
               ></input>
               <p
-               onClick={() => {
-                setOpenModels(!openModels);
-                console.log("WHUT")
-            }}
+                onClick={() => {
+                  if(allOpenedModelGroups.includes(modelGroup)){
+                    selectionDispatch(setOpenedModelGroups({
+                      modelGroups: [...allOpenedModelGroups.filter(eachModelGroup => eachModelGroup !== modelGroup)]
+                     }))
+                  }else{
+                   selectionDispatch(setOpenedModelGroups({
+                    modelGroups: [...allOpenedModelGroups, modelGroup]
+                   }))
+                  }
+                
+                }}
               >{modelGroup}</p>
             </div>
             <img
               alt="Dropdown"
-              src={!openModels ? ExpandMoreSVG : ExpandLessSVG}
+              src={!openedModelGroup ? ExpandMoreSVG : ExpandLessSVG}
                 onClick={() => {
-                    setOpenModels(!openModels);
-                    console.log("WHUT")
+                  if(allOpenedModelGroups.includes(modelGroup)){
+                    selectionDispatch(setOpenedModelGroups({
+                      modelGroups: [...allOpenedModelGroups.filter(eachModelGroup => eachModelGroup !== modelGroup)]
+                     }))
+                  }else{
+                   selectionDispatch(setOpenedModelGroups({
+                    modelGroups: [...allOpenedModelGroups, modelGroup]
+                   }))
+                  }
+                
                 }}
               width={20}
               height={20}
@@ -61,7 +74,7 @@ function DropDownModels({
             ></img>
           </div>
 
-          {openModels && (
+          {openedModelGroup && (
             <div className={selectionStyling["models-dropdown"]}>
               <div>
                 {manModels.map((eachInnerModel) => (
