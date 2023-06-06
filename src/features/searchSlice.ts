@@ -8,7 +8,7 @@ interface SearchState {
   currency: boolean; //gel or dollar
   pricesFrom: number;
   pricesTo: number;
-  models: {man_id: number, model_name: string, model_id: number}[];
+  models: {man_id: number, model_name: string, model_id: number, model_group: string}[];
 }
 
 const initialState: SearchState = {
@@ -58,7 +58,7 @@ const CarSearchSlice = createSlice({
 
     setModels: (
       state,
-      action: { type: string; payload:{models: {man_id: number, model_name: string, model_id: number}[]} }
+      action: { type: string; payload:{models: {man_id: number, model_name: string, model_id: number, model_group: string}[]} }
     ) => {
       console.log(action.payload.models)
       return {

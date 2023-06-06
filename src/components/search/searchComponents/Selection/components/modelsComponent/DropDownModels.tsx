@@ -36,21 +36,20 @@ function DropDownModels({
                 readOnly={true}
                 checked={models.some(model => manModels.map(each => each.model_name).includes(model.model_name))}
                 name="Manufacturers"
-
-                onClick={() =>  {
-                  if(models.some(model => manModels.map(each => each.model_name).includes(model.model_name))){
+                onClick={() => {
+                  if(manModels.length === models.filter(each => each.model_group === modelGroup).length){
                     selectionDispatch(setModels({
-                      models: [...models, ...manModels.map(each => {return {man_id: each.man_id, model_name: each.model_name, model_id: each.model_id}})]
-                     }))
+                      models: [...models.filter(each => each.model_group !== modelGroup )]
+                    }))
                   }
-                  
-                  if(models.every(model => manModels.map(each => each.model_name).includes(model.model_name))){
-                    
+
+                  if(models.filter(each => each.model_group === modelGroup).length === 0){
                     selectionDispatch(setModels({
-                      models: [...models.filter(each => !manModels.some(model => model.model_id === each.model_id && model.model_name === each.model_name && model.man_id === each.man_id))]
-                     }))
+                      models: [...models, ...manModels.map(each => {return {man_id: each.man_id, model_name: each.model_name, model_id: each.model_id, model_group: each.model_group}})]
+                    }))
                   }
                 }}
+    
               ></input>
               <p
                 onClick={() => {
@@ -124,6 +123,7 @@ function DropDownModels({
                                   man_id: eachInnerModel.man_id,
                                   model_name: eachInnerModel.model_name,
                                   model_id: eachInnerModel.model_id,
+                                  model_group: eachInnerModel.model_group
                                 },
                               ],
                             })
@@ -169,6 +169,7 @@ function DropDownModels({
                                   man_id: eachInnerModel.man_id,
                                   model_name: eachInnerModel.model_name,
                                   model_id: eachInnerModel.model_id,
+                                   model_group: eachInnerModel.model_group
                                 },
                               ],
                             })
@@ -226,6 +227,7 @@ function DropDownModels({
                             man_id: each.man_id,
                             model_name: each.model_name,
                             model_id: each.model_id,
+                            model_group: each.model_group
                           },
                         ],
                       })
@@ -261,6 +263,7 @@ function DropDownModels({
                               man_id: each.man_id,
                               model_name: each.model_name,
                               model_id: each.model_id,
+                              model_group: each.model_group
                             },
                           ],
                         })

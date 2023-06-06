@@ -26,7 +26,14 @@ function Models() {
 
   useEffect(() => {
     setModelsDataToManipulate(modelsData);
+  
   }, [modelsData]);
+
+  useEffect(() => {
+      if(modelsDataToManipulate?.length === 0){
+        setModelsTXT("ყველა მოდელი")
+      }
+  }, [modelsDataToManipulate?.length])
 
   const { models_type } = useAppSelector((state) => state.selectionReducer);
   const [selectedModels, setSelectedModels] = useState<number[]>([]);
@@ -39,16 +46,18 @@ function Models() {
         <div className={selectionStyling["models-outer-div"]}>
           <div className={selectionStyling["models-search-div"]}>
             <input
-              value={modelsTXT}
+              value={models.map(each => each.model_name).join(", ")}
               onChange={(e) => {
-                if(manufacturers.length !== 0){
-                setModelsTXT(e.target.value);
+                if (modelsDataToManipulate?.length !== 0) {
+                  setModelsTXT(e.target.value);
                 }
               }}
-              readOnly={manufacturers.length === 0}
+              readOnly={modelsDataToManipulate?.length === 0}
               onClick={() => {
-                setModelsTXT("");
-                if (manufacturers.length !== 0) {
+                  
+
+                if (modelsDataToManipulate?.length !== 0) {
+                  setModelsTXT("")
                   selectionDispatch(
                     setSearchingTypeState({
                       deal_type: false,
@@ -68,19 +77,26 @@ function Models() {
             <img
               alt="Dropdown"
               src={
-                models_type
-                  ? selectedModels.length === 0
+                models_type && modelsDataToManipulate?.length !== 0
+                  ? models.length === 0
                     ? ExpandLessSVG
                     : CloseSVG
                   : ExpandMoreSVG
               }
               onClick={() => {
+
+                if(models.length !== 0){
+                  selectionDispatch(setModels({
+                    models: []
+                  }))
+                }
                 selectionDispatch(
                   setSearchingTypeState({
                     deal_type: false,
                     manufacturer_type: false,
                     category_type: false,
-                    models_type: !models_type && manufacturers.length !== 0,
+                    models_type:
+                      !models_type && modelsDataToManipulate?.length !== 0,
                   })
                 );
               }}
@@ -92,11 +108,12 @@ function Models() {
           </div>
         </div>
         {models_type &&
+          modelsDataToManipulate?.length !== 0 &&
           modelsDataToManipulate !== undefined &&
           modelsData.length !== 0 && (
             <div className={selectionStyling["models-list"]}>
               <div className={selectionStyling["scrollable-models"]}>
-                {modelsDataToManipulate.map((eachManModels) => (
+                {modelsDataToManipulate.map((eachManModel) => (
                   <div key={v4()}>
                     <div className={selectionStyling["each-models-man"]}>
                       <div>
@@ -104,22 +121,62 @@ function Models() {
                           type={"checkbox"}
                           checked={true}
                           readOnly={true}
+                          onClick={() => {
+                            setModelsDataToManipulate(
+                              (prev) =>
+                                prev &&
+                                prev.filter(
+                                  (each) => each.man_id !== eachManModel.man_id
+                                )
+                            );
+                            selectionDispatch(
+                              setModels({
+                                models: [
+                                  ...models.filter(
+                                    (each) =>
+                                      each.man_id !== eachManModel.man_id
+                                  ),
+                                ],
+                              })
+                            );
+                          }}
                           name="Manufacturers"
                         ></input>
-                        <p style={{ color: "black" }}>
-                          {eachManModels.man_name}
+                        <p
+                          onClick={() => {
+                            setModelsDataToManipulate(
+                              (prev) =>
+                                prev &&
+                                prev.filter(
+                                  (each) => each.man_id !== eachManModel.man_id
+                                )
+                            );
+                            selectionDispatch(
+                              setModels({
+                                models: [
+                                  ...models.filter(
+                                    (each) =>
+                                      each.man_id !== eachManModel.man_id
+                                  ),
+                                ],
+                              })
+                            );
+                          }}
+                          style={{ color: "black" }}
+                        >
+                          {eachManModel.man_name}
                         </p>
                       </div>
                       <hr
                         style={
-                          eachManModels.man_name.length >= 8
+                          eachManModel.man_name.length >= 8
                             ? { width: "30%", marginRight: "5px" }
                             : { width: "90%", marginRight: "10px" }
                         }
                       ></hr>
                     </div>
 
-                    {eachManModels.models_group.map((eachObject) => (
+                    {eachManModel.models_group.map((eachObject) => (
                       <div key={v4()}>
                         {Object.entries(eachObject).map(
                           ([modelGroup, models]) => {

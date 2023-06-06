@@ -33,5 +33,6 @@ export interface Model {
 
 export interface SortedManModel {
   man_name: string;
+  man_id: number,
   models_group: {[key:string]: Model[]}[];
 }

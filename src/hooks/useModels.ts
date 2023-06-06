@@ -12,14 +12,14 @@ export const useModels = (mans: {man_name: string, man_id:number}[]) => {
     const abortController = new AbortController();
 
     const fetchData = async () => {
-      const manModels:{man_models:Model[], man_name: string}[] = [];
+      const manModels:{man_models:Model[], man_name: string, man_id: number}[] = [];
       for (const man of mans) {
         const req = await fetch(
           `https://api2.myauto.ge/ka/getManModels?man_id=${man.man_id}`
         );
         const models = await req.json();
 
-        manModels.push({man_models: models.data, man_name: man.man_name });
+        manModels.push({man_models: models.data, man_name: man.man_name, man_id: man.man_id });
       }
 
       return manModels;

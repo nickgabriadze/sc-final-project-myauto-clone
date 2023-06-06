@@ -4,6 +4,7 @@ const sortByModelTypes = (
   data: {
     man_models: Model[];
     man_name: string;
+    man_id: number
   }[]
 ): SortedManModel[] => {
   const result: SortedManModel[] = [];
@@ -31,6 +32,7 @@ const sortByModelTypes = (
     result.push({
       man_name: eachEntry.man_name,
       models_group: sortedObjectsArr,
+      man_id:  eachEntry.man_id
     });
   }
 
