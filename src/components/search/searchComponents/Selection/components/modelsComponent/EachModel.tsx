@@ -18,7 +18,7 @@ function EachModel({
 }) {
   const selectionDispatch = useAppDispatch();
   const { models } = useAppSelector((state) => state.searchReducer);
-  console.log(innerModels);
+ 
   return (
     <>
       {parentManID == innerModelsManID &&

@@ -61,7 +61,7 @@ const CarSearchSlice = createSlice({
       state,
       action: { type: string; payload:{models: {man_id: number, model_name: string, model_id: number, model_group: string}[]} }
     ) => {
-      console.log(action.payload.models)
+    
       return {
         ...state,
         models: action.payload.models,
