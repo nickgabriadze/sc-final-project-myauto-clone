@@ -11,8 +11,13 @@ import useModels from "../../../../../../hooks/useModels";
 import { setSearchingTypeState } from "../../../../../../features/selectionSlice";
 import { useEffect, useState } from "react";
 import DropDownModels from "./DropDownModels";
-import { setManuFacturers, setModels } from "../../../../../../features/searchSlice";
-import { SortedManModel } from "../../../../searchInterfaces";
+import {
+  setManuFacturers,
+  setModels,
+} from "../../../../../../features/searchSlice";
+import { MergedModel, SortedManModel } from "../../../../searchInterfaces";
+import filterModelsByText from "../../../../../../hooks/filterModelsByText";
+import EachModel from "./EachModel";
 
 function Models() {
   const { manufacturers, models } = useAppSelector(
@@ -20,24 +25,23 @@ function Models() {
   );
   const selectionDispatch = useAppDispatch();
 
-  const { modelsData } = useModels(manufacturers);
+  const { modelsData, mergedModelsData } = useModels(manufacturers);
+
   const [modelsDataToManipulate, setModelsDataToManipulate] =
     useState<SortedManModel[]>();
 
+  const [mergedModelsDataToManipulate, setMergedModelsDataToManipulate] =
+    useState<MergedModel[]>();
+
   useEffect(() => {
     setModelsDataToManipulate(modelsData);
-  
-  }, [modelsData]);
-
-  useEffect(() => {
-      if(modelsDataToManipulate?.length === 0){
-        setModelsTXT("ყველა მოდელი")
-      }
-  }, [modelsDataToManipulate?.length])
+    setMergedModelsDataToManipulate(mergedModelsData);
+  }, [modelsData, mergedModelsData]);
 
   const { models_type } = useAppSelector((state) => state.selectionReducer);
-  const [selectedModels, setSelectedModels] = useState<number[]>([]);
-  const [modelsTXT, setModelsTXT] = useState<string>("ყველა მოდელი");
+  const [searchModelsTXT, setSearchModelsTXT] =
+    useState<string>("ყველა მოდელი");
+  const [searching, setSearching] = useState<boolean>(false);
 
   return (
     <div className={selectionStyling["type-models-wrappers"]}>
@@ -46,18 +50,24 @@ function Models() {
         <div className={selectionStyling["models-outer-div"]}>
           <div className={selectionStyling["models-search-div"]}>
             <input
-              value={models.map(each => each.model_name).join(", ")}
+              value={
+                searching
+                  ? searchModelsTXT
+                  : models.length === 0
+                  ? "ყველა მოდელი"
+                  : models.map((each) => each.model_name).join(", ")
+              }
               onChange={(e) => {
                 if (modelsDataToManipulate?.length !== 0) {
-                  setModelsTXT(e.target.value);
+                  setSearchModelsTXT(e.target.value);
                 }
               }}
               readOnly={modelsDataToManipulate?.length === 0}
               onClick={() => {
-                  
+                setSearching(true);
 
                 if (modelsDataToManipulate?.length !== 0) {
-                  setModelsTXT("")
+                  setSearchModelsTXT("");
                   selectionDispatch(
                     setSearchingTypeState({
                       deal_type: false,
@@ -84,11 +94,12 @@ function Models() {
                   : ExpandMoreSVG
               }
               onClick={() => {
-
-                if(models.length !== 0){
-                  selectionDispatch(setModels({
-                    models: []
-                  }))
+                if (models.length !== 0) {
+                  selectionDispatch(
+                    setModels({
+                      models: [],
+                    })
+                  );
                 }
                 selectionDispatch(
                   setSearchingTypeState({
@@ -112,97 +123,246 @@ function Models() {
           modelsDataToManipulate !== undefined &&
           modelsData.length !== 0 && (
             <div className={selectionStyling["models-list"]}>
-              <div className={selectionStyling["scrollable-models"]}>
-                {modelsDataToManipulate.map((eachManModel) => (
-                  <div key={v4()}>
-                    <div className={selectionStyling["each-models-man"]}>
-                      <div>
-                        <input
-                          type={"checkbox"}
-                          checked={true}
-                          readOnly={true}
-                          onClick={() => {
-                            setModelsDataToManipulate(
-                              (prev) =>
-                                prev &&
-                                prev.filter(
-                                  (each) => each.man_id !== eachManModel.man_id
-                                )
-                            );
-                            selectionDispatch(
-                              setModels({
-                                models: [
-                                  ...models.filter(
-                                    (each) =>
-                                      each.man_id !== eachManModel.man_id
-                                  ),
-                                ],
-                              })
-                            );
-                          }}
-                          name="Manufacturers"
-                        ></input>
-                        <p
-                          onClick={() => {
-                            setModelsDataToManipulate(
-                              (prev) =>
-                                prev &&
-                                prev.filter(
-                                  (each) => each.man_id !== eachManModel.man_id
-                                )
-                            );
-                            
-                            selectionDispatch(setManuFacturers({
-                              manufacturers: [...manufacturers.filter((each) => each.man_id !== eachManModel.man_id)]
-                            }))
+              {filterModelsByText(
+                searchModelsTXT,
+                mergedModelsDataToManipulate === undefined
+                  ? []
+                  : mergedModelsDataToManipulate
+              )
+                .map((each) => each.models_group)
+                .reduce((first, second) => first + second.length, 0) !== 0 ? (
+                <div
+                  className={selectionStyling["scrollable-models"]}
+                  style={
+                    searchModelsTXT.length > 0 &&
+                    filterModelsByText(
+                      searchModelsTXT,
+                      mergedModelsDataToManipulate === undefined
+                        ? []
+                        : mergedModelsDataToManipulate
+                    )
+                      .map((each) => each.models_group)
+                      .reduce((first, second) => first + second.length, 0) < 5
+                      ? { height: "fit-content" }
+                      : {}
+                  }
+                >
+                  {modelsDataToManipulate.map((eachManModel) => (
+                    <div key={v4()}>
+                      {searchModelsTXT.length > 0 ? (
+                        filterModelsByText(
+                          searchModelsTXT,
+                          mergedModelsDataToManipulate === undefined
+                            ? []
+                            : mergedModelsDataToManipulate
+                        )
+                          .filter((each) => each.man_id == eachManModel.man_id)
+                          .map((each) => each.models_group)[0].length !== 0 && (
+                          <div className={selectionStyling["each-models-man"]}>
+                            <div>
+                              <input
+                                type={"checkbox"}
+                                checked={true}
+                                readOnly={true}
+                                onClick={() => {
+                                  setSearching(false);
+                                  setModelsDataToManipulate(
+                                    (prev) =>
+                                      prev &&
+                                      prev.filter(
+                                        (each) =>
+                                          each.man_id !== eachManModel.man_id
+                                      )
+                                  );
+                                  selectionDispatch(
+                                    setModels({
+                                      models: [
+                                        ...models.filter(
+                                          (each) =>
+                                            each.man_id !== eachManModel.man_id
+                                        ),
+                                      ],
+                                    })
+                                  );
+                                }}
+                                name="Manufacturers"
+                              ></input>
+                              <p
+                                onClick={() => {
+                                  setSearching(false);
+                                  setModelsDataToManipulate(
+                                    (prev) =>
+                                      prev &&
+                                      prev.filter(
+                                        (each) =>
+                                          each.man_id !== eachManModel.man_id
+                                      )
+                                  );
 
-                            selectionDispatch(
-                              setModels({
-                                models: [
-                                  ...models.filter(
-                                    (each) =>
-                                      each.man_id !== eachManModel.man_id
-                                  ),
-                                ],
-                              })
-                            );
-                          }}
-                          style={{ color: "black" }}
-                        >
-                          {eachManModel.man_name}
-                        </p>
-                      </div>
-                      <hr
-                        style={
-                          eachManModel.man_name.length >= 8
-                            ? { width: "30%", marginRight: "5px" }
-                            : { width: "90%", marginRight: "10px" }
-                        }
-                      ></hr>
+                                  selectionDispatch(
+                                    setManuFacturers({
+                                      manufacturers: [
+                                        ...manufacturers.filter(
+                                          (each) =>
+                                            each.man_id !== eachManModel.man_id
+                                        ),
+                                      ],
+                                    })
+                                  );
+
+                                  selectionDispatch(
+                                    setModels({
+                                      models: [
+                                        ...models.filter(
+                                          (each) =>
+                                            each.man_id !== eachManModel.man_id
+                                        ),
+                                      ],
+                                    })
+                                  );
+                                }}
+                                style={{ color: "black" }}
+                              >
+                                {eachManModel.man_name}
+                              </p>
+                            </div>
+                            <hr
+                              style={
+                                eachManModel.man_name.length >= 8
+                                  ? { width: "30%", marginRight: "5px" }
+                                  : { width: "90%", marginRight: "10px" }
+                              }
+                            ></hr>
+                          </div>
+                        )
+                      ) : (
+                        <div className={selectionStyling["each-models-man"]}>
+                          <div>
+                            <input
+                              type={"checkbox"}
+                              checked={true}
+                              readOnly={true}
+                              onClick={() => {
+                                setSearching(false);
+                                setModelsDataToManipulate(
+                                  (prev) =>
+                                    prev &&
+                                    prev.filter(
+                                      (each) =>
+                                        each.man_id !== eachManModel.man_id
+                                    )
+                                );
+                                selectionDispatch(
+                                  setModels({
+                                    models: [
+                                      ...models.filter(
+                                        (each) =>
+                                          each.man_id !== eachManModel.man_id
+                                      ),
+                                    ],
+                                  })
+                                );
+                              }}
+                              name="Manufacturers"
+                            ></input>
+                            <p
+                              onClick={() => {
+                                setSearching(false);
+                                setModelsDataToManipulate(
+                                  (prev) =>
+                                    prev &&
+                                    prev.filter(
+                                      (each) =>
+                                        each.man_id !== eachManModel.man_id
+                                    )
+                                );
+
+                                selectionDispatch(
+                                  setManuFacturers({
+                                    manufacturers: [
+                                      ...manufacturers.filter(
+                                        (each) =>
+                                          each.man_id !== eachManModel.man_id
+                                      ),
+                                    ],
+                                  })
+                                );
+
+                                selectionDispatch(
+                                  setModels({
+                                    models: [
+                                      ...models.filter(
+                                        (each) =>
+                                          each.man_id !== eachManModel.man_id
+                                      ),
+                                    ],
+                                  })
+                                );
+                              }}
+                              style={{ color: "black" }}
+                            >
+                              {eachManModel.man_name}
+                            </p>
+                          </div>
+                          <hr
+                            style={
+                              eachManModel.man_name.length >= 8
+                                ? { width: "30%", marginRight: "5px" }
+                                : { width: "90%", marginRight: "10px" }
+                            }
+                          ></hr>
+                        </div>
+                      )}
+
+                      {searching &&
+                        searchModelsTXT.length !== 0 &&
+                        filterModelsByText(
+                          searchModelsTXT,
+                          mergedModelsDataToManipulate === undefined
+                            ? []
+                            : mergedModelsDataToManipulate
+                        ).map((eachModel) => (
+                          <EachModel
+                            key={v4()}
+                            parentManID={eachManModel.man_id}
+                            innerModelsManID={eachModel.man_id}
+                            innerModels={eachModel.models_group}
+                          />
+                        ))}
+
+                      {searchModelsTXT.length === 0 &&
+                        eachManModel.models_group.map((eachObject) => (
+                          <div key={v4()}>
+                            {Object.entries(eachObject).map(
+                              ([modelGroup, models]) => {
+                                return (
+                                  <DropDownModels
+                                    key={v4()}
+                                    setSearchingState={setSearching}
+                                    modelGroup={modelGroup}
+                                    manModels={models}
+                                  />
+                                );
+                              }
+                            )}
+                          </div>
+                        ))}
                     </div>
-
-                    {eachManModel.models_group.map((eachObject) => (
-                      <div key={v4()}>
-                        {Object.entries(eachObject).map(
-                          ([modelGroup, models]) => {
-                            return (
-                              <DropDownModels
-                                key={v4()}
-                                modelGroup={modelGroup}
-                                manModels={models}
-                              />
-                            );
-                          }
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <p
+                  style={{ marginLeft: "10px" }}
+                  className={selectionStyling["no-search-result"]}
+                >
+                  ჩანაწერი არ არის
+                </p>
+              )}
               {models.length !== 0 && (
                 <div className={selectionStyling["clear-mans-submit"]}>
                   <p
                     onClick={() => {
+                      setSearching(false);
                       selectionDispatch(
                         setModels({
                           models: [],
@@ -214,6 +374,7 @@ function Models() {
                   </p>
                   <button
                     onClick={() => {
+                      setSearching(false);
                       selectionDispatch(
                         setSearchingTypeState({
                           deal_type: false,

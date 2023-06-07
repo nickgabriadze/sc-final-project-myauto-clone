@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { Model, SortedManModel } from "../components/search/searchInterfaces";
+import { MergedModel, Model, SortedManModel } from "../components/search/searchInterfaces";
 import sortByModelTypes from "./sortByModelTypes";
+import mergeModels from "./mergeModels";
 
 
 export const useModels = (mans: {man_name: string, man_id:number}[]) => {
   const [modelsData, setModelsData] = useState<SortedManModel[]>([]);
   const [modelsError, setModelsError] = useState<string>("");
   const [modelsLoading, setModelsLoading] = useState<boolean>(false);
+  const [mergedModelsData, setMergedModelsData] = useState<MergedModel[]>() 
   
   useEffect(() => {
     const abortController = new AbortController();
@@ -29,7 +31,9 @@ export const useModels = (mans: {man_name: string, man_id:number}[]) => {
       setModelsLoading(true);
       const innerFunc = async () => {
         const fetchedData = await fetchData();
-        setModelsData(sortByModelTypes(fetchedData));
+        const sortedByModelTypes = sortByModelTypes(fetchedData)
+        setModelsData(sortedByModelTypes);
+        setMergedModelsData(mergeModels(sortedByModelTypes))
       };
 
       innerFunc();
@@ -44,7 +48,7 @@ export const useModels = (mans: {man_name: string, man_id:number}[]) => {
     return () => abortController.abort();
   }, [mans.length, mans]);
 
-  return { modelsData, modelsLoading, modelsError };
+  return { mergedModelsData, modelsData, modelsLoading, modelsError };
 };
 
 export default useModels;

@@ -13,7 +13,9 @@ function Manufacturers() {
     "https://static.my.ge/myauto/js/mans.json"
   );
   const selectionDispatch = useAppDispatch();
-  const { main_type, manufacturers } = useAppSelector((state) => state.searchReducer);
+  const { main_type, manufacturers } = useAppSelector(
+    (state) => state.searchReducer
+  );
 
   const [manufacturersData, setManufacturersData] = useState(
     mansData === undefined ? undefined : mansData[main_type]
@@ -23,23 +25,14 @@ function Manufacturers() {
     (state) => state.selectionReducer
   );
 
-  const [searchMansTXT, setSearchMansTXT] = useState<string>("ყველა მწარმოებელი");
-
- 
-
-  const [searching, setSearching] = useState<boolean>(false)
-
-  
-
+  const [searchMansTXT, setSearchMansTXT] =
+    useState<string>("ყველა მწარმოებელი");
+  const [searching, setSearching] = useState<boolean>(false);
 
   useEffect(() => {
-    
     setSearchMansTXT("ყველა მწარმოებელი");
     setManufacturersData(mansData && mansData[main_type]);
   }, [main_type, mansData]);
-
-
-
 
   return (
     <div className={selectionStyling["type-mans-wrapper"]}>
@@ -49,16 +42,20 @@ function Manufacturers() {
           <div className={selectionStyling["mans-search-div"]}>
             <input
               type="text"
-              value={searching ? searchMansTXT: 
-                manufacturers.length === 0 ? "ყველა მწარმოებელი":
-                manufacturers.map(each => each.man_name).join(", ")}
+              value={
+                searching
+                  ? searchMansTXT
+                  : manufacturers.length === 0
+                  ? "ყველა მწარმოებელი"
+                  : manufacturers.map((each) => each.man_name).join(", ")
+              }
               style={
                 manufacturer_type
                   ? { cursor: "initial" }
                   : { cursor: "pointer" }
               }
               onClick={() => {
-                setSearching(true)
+                setSearching(true);
                 selectionDispatch(
                   setSearchingTypeState({
                     deal_type: false,
@@ -96,13 +93,7 @@ function Manufacturers() {
               className={selectionStyling["expand-close-delete"]}
               draggable={false}
               onClick={() => {
-               
-                if (
-                  manufacturers.length !== 0 &&
-                  manufacturer_type === true
-                ) {
-                 
-                  
+                if (manufacturers.length !== 0 && manufacturer_type === true) {
                   selectionDispatch(
                     setManuFacturers({
                       manufacturers: [],
@@ -162,7 +153,7 @@ function Manufacturers() {
                         : false
                     }
                     onClick={() => {
-                      setSearching(false)
+                      setSearching(false);
 
                       if (
                         manufacturers.some(
@@ -171,32 +162,26 @@ function Manufacturers() {
                             eachMan.man_id === Number(eachManufacturer.man_id)
                         )
                       ) {
-                      
-
-
                         selectionDispatch(
                           setManuFacturers({
                             manufacturers: [
-                              ...manufacturers
-                                .filter(
-                                  (eachMan) =>
-                                    eachMan.man_id !==
-                                    Number(eachManufacturer.man_id)
-                                )
-                              
+                              ...manufacturers.filter(
+                                (eachMan) =>
+                                  eachMan.man_id !==
+                                  Number(eachManufacturer.man_id)
+                              ),
                             ],
                           })
                         );
                       } else {
-                        
-
-                    
-
                         selectionDispatch(
                           setManuFacturers({
                             manufacturers: [
                               ...manufacturers,
-                              {man_name: eachManufacturer.man_name, man_id: Number(eachManufacturer.man_id)}
+                              {
+                                man_name: eachManufacturer.man_name,
+                                man_id: Number(eachManufacturer.man_id),
+                              },
                             ],
                           })
                         );
@@ -205,7 +190,7 @@ function Manufacturers() {
                   ></input>
                   <p
                     onClick={() => {
-                      setSearching(false)
+                      setSearching(false);
                       if (
                         manufacturers.some(
                           (eachMan) =>
@@ -213,31 +198,26 @@ function Manufacturers() {
                             eachMan.man_id === Number(eachManufacturer.man_id)
                         )
                       ) {
-                       
-
-
                         selectionDispatch(
                           setManuFacturers({
                             manufacturers: [
-                              ...manufacturers
-                                .filter(
-                                  (eachMan) =>
-                                    eachMan.man_id !==
-                                    Number(eachManufacturer.man_id)
-                                )
-                                
+                              ...manufacturers.filter(
+                                (eachMan) =>
+                                  eachMan.man_id !==
+                                  Number(eachManufacturer.man_id)
+                              ),
                             ],
                           })
                         );
                       } else {
-                      
-
-
                         selectionDispatch(
                           setManuFacturers({
                             manufacturers: [
                               ...manufacturers,
-                              {man_name: eachManufacturer.man_name, man_id: Number(eachManufacturer.man_id)},
+                              {
+                                man_name: eachManufacturer.man_name,
+                                man_id: Number(eachManufacturer.man_id),
+                              },
                             ],
                           })
                         );
@@ -253,9 +233,8 @@ function Manufacturers() {
               <div className={selectionStyling["clear-mans-submit"]}>
                 <p
                   onClick={() => {
-                   
                     setSearchMansTXT("ყველა მწარმოებელი");
-                    setSearching(false)
+                    setSearching(false);
                     selectionDispatch(
                       setManuFacturers({
                         manufacturers: [],
@@ -267,7 +246,7 @@ function Manufacturers() {
                 </p>
                 <button
                   onClick={() => {
-                    setSearching(false)
+                    setSearching(false);
                     selectionDispatch(
                       setSearchingTypeState({
                         deal_type: false,
@@ -276,8 +255,6 @@ function Manufacturers() {
                         models_type: false,
                       })
                     );
-
-              
                   }}
                 >
                   არჩევა

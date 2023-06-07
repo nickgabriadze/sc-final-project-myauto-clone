@@ -1,4 +1,3 @@
-
 import { Model } from "../../../../searchInterfaces";
 import selectionStyling from "../../selection.module.css";
 import ExpandMoreSVG from "../../../../icons/expand-more.svg";
@@ -13,74 +12,124 @@ useAppDispatch;
 function DropDownModels({
   modelGroup,
   manModels,
+  setSearchingState,
 }: {
   modelGroup: string;
   manModels: Model[];
+  setSearchingState: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const allOpenedModelGroups = useAppSelector((state) => state.selectionReducer.openedModelGroups);
-  const openedModelGroup = useAppSelector(state =>  state.selectionReducer.openedModelGroups).includes(modelGroup)
+  const allOpenedModelGroups = useAppSelector(
+    (state) => state.selectionReducer.openedModelGroups
+  );
+  const openedModelGroup = useAppSelector(
+    (state) => state.selectionReducer.openedModelGroups
+  ).includes(modelGroup);
   const selectionDispatch = useAppDispatch();
   const { models } = useAppSelector((state) => state.searchReducer);
-
 
   return (
     <>
       {modelGroup.trim().length !== 0 && (
         <>
-          <div className={selectionStyling["each-models-man"]}
-
-        >
+          <div className={selectionStyling["each-models-man"]}>
             <div>
               <input
                 type={"checkbox"}
                 readOnly={true}
-                checked={models.some(model => manModels.map(each => each.model_name).includes(model.model_name))}
+                checked={models.some((model) =>
+                  manModels
+                    .map((each) => each.model_name)
+                    .includes(model.model_name)
+                )}
                 name="Manufacturers"
                 onClick={() => {
-                  if(manModels.length === models.filter(each => each.model_group === modelGroup).length){
-                    selectionDispatch(setModels({
-                      models: [...models.filter(each => each.model_group !== modelGroup )]
-                    }))
+                  setSearchingState(false);
+                  if (
+                    manModels.length ===
+                    models.filter((each) => each.model_group === modelGroup)
+                      .length
+                  ) {
+                    selectionDispatch(
+                      setModels({
+                        models: [
+                          ...models.filter(
+                            (each) => each.model_group !== modelGroup
+                          ),
+                        ],
+                      })
+                    );
                   }
 
-                  if(models.filter(each => each.model_group === modelGroup).length === 0){
-                    selectionDispatch(setModels({
-                      models: [...models, ...manModels.map(each => {return {man_id: each.man_id, model_name: each.model_name, model_id: each.model_id, model_group: each.model_group}})]
-                    }))
+                  if (
+                    models.filter((each) => each.model_group === modelGroup)
+                      .length === 0
+                  ) {
+                    selectionDispatch(
+                      setModels({
+                        models: [
+                          ...models,
+                          ...manModels.map((each) => {
+                            return {
+                              man_id: each.man_id,
+                              model_name: each.model_name,
+                              model_id: each.model_id,
+                              model_group: each.model_group,
+                            };
+                          }),
+                        ],
+                      })
+                    );
                   }
                 }}
-    
               ></input>
               <p
                 onClick={() => {
-                  if(allOpenedModelGroups.includes(modelGroup)){
-                    selectionDispatch(setOpenedModelGroups({
-                      modelGroups: [...allOpenedModelGroups.filter(eachModelGroup => eachModelGroup !== modelGroup)]
-                     }))
-                  }else{
-                   selectionDispatch(setOpenedModelGroups({
-                    modelGroups: [...allOpenedModelGroups, modelGroup]
-                   }))
+                  setSearchingState(false);
+                  if (allOpenedModelGroups.includes(modelGroup)) {
+                    selectionDispatch(
+                      setOpenedModelGroups({
+                        modelGroups: [
+                          ...allOpenedModelGroups.filter(
+                            (eachModelGroup) => eachModelGroup !== modelGroup
+                          ),
+                        ],
+                      })
+                    );
+                  } else {
+                    selectionDispatch(
+                      setOpenedModelGroups({
+                        modelGroups: [...allOpenedModelGroups, modelGroup],
+                      })
+                    );
                   }
-                
                 }}
-              >{modelGroup}</p>
+              >
+                {modelGroup}
+              </p>
             </div>
             <img
               alt="Dropdown"
               src={!openedModelGroup ? ExpandMoreSVG : ExpandLessSVG}
-                onClick={() => {
-                  if(allOpenedModelGroups.includes(modelGroup)){
-                    selectionDispatch(setOpenedModelGroups({
-                      modelGroups: [...allOpenedModelGroups.filter(eachModelGroup => eachModelGroup !== modelGroup)]
-                     }))
-                  }else{
-                   selectionDispatch(setOpenedModelGroups({
-                    modelGroups: [...allOpenedModelGroups, modelGroup]
-                   }))
-                  }
-                
-                }}
+              onClick={() => {
+                setSearchingState(false);
+                if (allOpenedModelGroups.includes(modelGroup)) {
+                  selectionDispatch(
+                    setOpenedModelGroups({
+                      modelGroups: [
+                        ...allOpenedModelGroups.filter(
+                          (eachModelGroup) => eachModelGroup !== modelGroup
+                        ),
+                      ],
+                    })
+                  );
+                } else {
+                  selectionDispatch(
+                    setOpenedModelGroups({
+                      modelGroups: [...allOpenedModelGroups, modelGroup],
+                    })
+                  );
+                }
+              }}
               width={20}
               height={20}
               style={{ marginRight: "5px" }}
@@ -97,6 +146,7 @@ function DropDownModels({
                   >
                     <input
                       onClick={() => {
+                        setSearchingState(false);
                         if (
                           models.some(
                             (model) =>
@@ -109,7 +159,8 @@ function DropDownModels({
                             setModels({
                               models: [
                                 ...models.filter(
-                                  (model) => model.model_id !== eachInnerModel.model_id
+                                  (model) =>
+                                    model.model_id !== eachInnerModel.model_id
                                 ),
                               ],
                             })
@@ -123,26 +174,28 @@ function DropDownModels({
                                   man_id: eachInnerModel.man_id,
                                   model_name: eachInnerModel.model_name,
                                   model_id: eachInnerModel.model_id,
-                                  model_group: eachInnerModel.model_group
+                                  model_group: eachInnerModel.model_group,
                                 },
                               ],
                             })
                           );
                         }
                       }}
-
                       readOnly={true}
                       type={"checkbox"}
-                      checked={ models.some(
-                        (model) =>
-                          model.model_id === eachInnerModel.model_id &&
-                          model.model_name === eachInnerModel.model_name &&
-                          model.man_id === eachInnerModel.man_id
-                      ) && true}
+                      checked={
+                        models.some(
+                          (model) =>
+                            model.model_id === eachInnerModel.model_id &&
+                            model.model_name === eachInnerModel.model_name &&
+                            model.man_id === eachInnerModel.man_id
+                        ) && true
+                      }
                       name="Manufacturers"
                     ></input>
                     <p
-                    onClick={() => {
+                      onClick={() => {
+                        setSearchingState(false);
                         if (
                           models.some(
                             (model) =>
@@ -155,7 +208,8 @@ function DropDownModels({
                             setModels({
                               models: [
                                 ...models.filter(
-                                  (model) => model.model_id !== eachInnerModel.model_id
+                                  (model) =>
+                                    model.model_id !== eachInnerModel.model_id
                                 ),
                               ],
                             })
@@ -169,14 +223,16 @@ function DropDownModels({
                                   man_id: eachInnerModel.man_id,
                                   model_name: eachInnerModel.model_name,
                                   model_id: eachInnerModel.model_id,
-                                   model_group: eachInnerModel.model_group
+                                  model_group: eachInnerModel.model_group,
                                 },
                               ],
                             })
                           );
                         }
                       }}
-                    >{eachInnerModel.model_name}</p>
+                    >
+                      {eachInnerModel.model_name}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -201,6 +257,7 @@ function DropDownModels({
                 readOnly={true}
                 name="Manufacturers"
                 onClick={() => {
+                  setSearchingState(false);
                   if (
                     models.some(
                       (model) =>
@@ -227,7 +284,7 @@ function DropDownModels({
                             man_id: each.man_id,
                             model_name: each.model_name,
                             model_id: each.model_id,
-                            model_group: each.model_group
+                            model_group: each.model_group,
                           },
                         ],
                       })
@@ -237,40 +294,43 @@ function DropDownModels({
               ></input>
               <p
                 onClick={() => {
-                    if (
-                      models.some(
-                        (model) =>
-                          model.model_id === each.model_id &&
-                          model.model_name === each.model_name &&
-                          model.man_id === each.man_id
-                      )
-                    ) {
-                      selectionDispatch(
-                        setModels({
-                          models: [
-                            ...models.filter(
-                              (model) => model.model_id !== each.model_id
-                            ),
-                          ],
-                        })
-                      );
-                    } else {
-                      selectionDispatch(
-                        setModels({
-                          models: [
-                            ...models,
-                            {
-                              man_id: each.man_id,
-                              model_name: each.model_name,
-                              model_id: each.model_id,
-                              model_group: each.model_group
-                            },
-                          ],
-                        })
-                      );
-                    }
-                  }}
-              >{each.model_name}</p>
+                  setSearchingState(false);
+                  if (
+                    models.some(
+                      (model) =>
+                        model.model_id === each.model_id &&
+                        model.model_name === each.model_name &&
+                        model.man_id === each.man_id
+                    )
+                  ) {
+                    selectionDispatch(
+                      setModels({
+                        models: [
+                          ...models.filter(
+                            (model) => model.model_id !== each.model_id
+                          ),
+                        ],
+                      })
+                    );
+                  } else {
+                    selectionDispatch(
+                      setModels({
+                        models: [
+                          ...models,
+                          {
+                            man_id: each.man_id,
+                            model_name: each.model_name,
+                            model_id: each.model_id,
+                            model_group: each.model_group,
+                          },
+                        ],
+                      })
+                    );
+                  }
+                }}
+              >
+                {each.model_name}
+              </p>
             </div>
           </div>
         ))}
