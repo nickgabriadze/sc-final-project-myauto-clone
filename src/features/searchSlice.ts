@@ -50,6 +50,7 @@ const CarSearchSlice = createSlice({
         payload: { manufacturers: { man_name: string; man_id: number }[] };
       }
     ) => {
+      console.log(action.payload.manufacturers)
       return {
         ...state,
         manufacturers: action.payload.manufacturers,

@@ -1,7 +1,7 @@
 import useManufacturers from "../../../../../hooks/useManufacturers";
 import { useAppSelector, useAppDispatch } from "../../../../../features/hooks";
 import ExpandMoreSVG from "../../../icons/expand-more.svg";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ExpandLessSVG from "../../../icons/expand-less.svg";
 import CloseSVG from "../../../icons/close.svg";
 import selectionStyling from "../selection.module.css";
@@ -13,7 +13,7 @@ function Manufacturers() {
     "https://static.my.ge/myauto/js/mans.json"
   );
   const selectionDispatch = useAppDispatch();
-  const { main_type } = useAppSelector((state) => state.searchReducer);
+  const { main_type, manufacturers } = useAppSelector((state) => state.searchReducer);
 
   const [manufacturersData, setManufacturersData] = useState(
     mansData === undefined ? undefined : mansData[main_type]
@@ -25,17 +25,21 @@ function Manufacturers() {
 
   const [searchMansTXT, setSearchMansTXT] = useState<string>("ყველა მწარმოებელი");
 
-  const [selectedCarBrands, setSelectedCarBrands] = useState<
-    { man_name: string; man_id: number }[]
-  >([]);
+ 
 
-  const inputFocusRef = useRef<HTMLInputElement>(null);
+  const [searching, setSearching] = useState<boolean>(false)
+
+  
+
 
   useEffect(() => {
-    setSelectedCarBrands([]);
+    
     setSearchMansTXT("ყველა მწარმოებელი");
     setManufacturersData(mansData && mansData[main_type]);
   }, [main_type, mansData]);
+
+
+
 
   return (
     <div className={selectionStyling["type-mans-wrapper"]}>
@@ -45,14 +49,16 @@ function Manufacturers() {
           <div className={selectionStyling["mans-search-div"]}>
             <input
               type="text"
-              value={searchMansTXT}
-              ref={inputFocusRef}
+              value={searching ? searchMansTXT: 
+                manufacturers.length === 0 ? "ყველა მწარმოებელი":
+                manufacturers.map(each => each.man_name).join(", ")}
               style={
                 manufacturer_type
                   ? { cursor: "initial" }
                   : { cursor: "pointer" }
               }
               onClick={() => {
+                setSearching(true)
                 selectionDispatch(
                   setSearchingTypeState({
                     deal_type: false,
@@ -82,7 +88,7 @@ function Manufacturers() {
             <img
               src={
                 manufacturer_type
-                  ? selectedCarBrands.length === 0
+                  ? manufacturers.length === 0
                     ? ExpandLessSVG
                     : CloseSVG
                   : ExpandMoreSVG
@@ -90,15 +96,13 @@ function Manufacturers() {
               className={selectionStyling["expand-close-delete"]}
               draggable={false}
               onClick={() => {
-                if (selectedCarBrands.length === 0) {
-                  setSearchMansTXT("ყველა მწარმოებელი");
-                }
+               
                 if (
-                  selectedCarBrands.length !== 0 &&
+                  manufacturers.length !== 0 &&
                   manufacturer_type === true
                 ) {
-                  setSelectedCarBrands([]);
-                  setSearchMansTXT("ყველა მწარმოებელი");
+                 
+                  
                   selectionDispatch(
                     setManuFacturers({
                       manufacturers: [],
@@ -149,7 +153,7 @@ function Manufacturers() {
                     readOnly={true}
                     name="Manufacturers"
                     checked={
-                      selectedCarBrands.some(
+                      manufacturers.some(
                         (eachMan) =>
                           eachMan.man_name === eachManufacturer.man_name &&
                           eachMan.man_id === Number(eachManufacturer.man_id)
@@ -158,34 +162,22 @@ function Manufacturers() {
                         : false
                     }
                     onClick={() => {
+                      setSearching(false)
+
                       if (
-                        selectedCarBrands.some(
+                        manufacturers.some(
                           (eachMan) =>
                             eachMan.man_name === eachManufacturer.man_name &&
                             eachMan.man_id === Number(eachManufacturer.man_id)
                         )
                       ) {
-                        setSelectedCarBrands((prev) =>
-                          prev.filter(
-                            (eachBrand) =>
-                              eachBrand.man_name !== eachManufacturer.man_name
-                          )
-                        );
+                      
 
-                        setSearchMansTXT(
-                          selectedCarBrands
-                            .filter(
-                              (eachBrand) =>
-                                eachBrand.man_name !== eachManufacturer.man_name
-                            )
-                            .map((eachMan) => eachMan.man_name)
-                            .join(", ")
-                        );
 
                         selectionDispatch(
                           setManuFacturers({
                             manufacturers: [
-                              ...selectedCarBrands
+                              ...manufacturers
                                 .filter(
                                   (eachMan) =>
                                     eachMan.man_id !==
@@ -196,27 +188,14 @@ function Manufacturers() {
                           })
                         );
                       } else {
-                        setSelectedCarBrands((prev) => [
-                          ...prev,
-                          {
-                            man_name: eachManufacturer.man_name,
-                            man_id: Number(eachManufacturer.man_id),
-                          },
-                        ]);
+                        
 
-                        setSearchMansTXT(
-                          [
-                            ...selectedCarBrands.map(
-                              (eachMan) => eachMan.man_name
-                            ),
-                            eachManufacturer.man_name,
-                          ].join(", ")
-                        );
+                    
 
                         selectionDispatch(
                           setManuFacturers({
                             manufacturers: [
-                              ...selectedCarBrands,
+                              ...manufacturers,
                               {man_name: eachManufacturer.man_name, man_id: Number(eachManufacturer.man_id)}
                             ],
                           })
@@ -226,34 +205,21 @@ function Manufacturers() {
                   ></input>
                   <p
                     onClick={() => {
+                      setSearching(false)
                       if (
-                        selectedCarBrands.some(
+                        manufacturers.some(
                           (eachMan) =>
                             eachMan.man_name === eachManufacturer.man_name &&
                             eachMan.man_id === Number(eachManufacturer.man_id)
                         )
                       ) {
-                        setSelectedCarBrands((prev) =>
-                          prev.filter(
-                            (eachBrand) =>
-                              eachBrand.man_name !== eachManufacturer.man_name
-                          )
-                        );
+                       
 
-                        setSearchMansTXT(
-                          selectedCarBrands
-                            .filter(
-                              (eachBrand) =>
-                                eachBrand.man_name !== eachManufacturer.man_name
-                            )
-                            .map((eachMan) => eachMan.man_name)
-                            .join(", ")
-                        );
 
                         selectionDispatch(
                           setManuFacturers({
                             manufacturers: [
-                              ...selectedCarBrands
+                              ...manufacturers
                                 .filter(
                                   (eachMan) =>
                                     eachMan.man_id !==
@@ -264,27 +230,13 @@ function Manufacturers() {
                           })
                         );
                       } else {
-                        setSelectedCarBrands((prev) => [
-                          ...prev,
-                          {
-                            man_name: eachManufacturer.man_name,
-                            man_id: Number(eachManufacturer.man_id),
-                          },
-                        ]);
+                      
 
-                        setSearchMansTXT(
-                          [
-                            ...selectedCarBrands.map(
-                              (eachMan) => eachMan.man_name
-                            ),
-                            eachManufacturer.man_name,
-                          ].join(", ")
-                        );
 
                         selectionDispatch(
                           setManuFacturers({
                             manufacturers: [
-                              ...selectedCarBrands,
+                              ...manufacturers,
                               {man_name: eachManufacturer.man_name, man_id: Number(eachManufacturer.man_id)},
                             ],
                           })
@@ -297,12 +249,13 @@ function Manufacturers() {
                 </div>
               ))}
             </div>
-            {selectedCarBrands.length !== 0 && (
+            {manufacturers.length !== 0 && (
               <div className={selectionStyling["clear-mans-submit"]}>
                 <p
                   onClick={() => {
-                    setSelectedCarBrands([]);
+                   
                     setSearchMansTXT("ყველა მწარმოებელი");
+                    setSearching(false)
                     selectionDispatch(
                       setManuFacturers({
                         manufacturers: [],
@@ -314,6 +267,7 @@ function Manufacturers() {
                 </p>
                 <button
                   onClick={() => {
+                    setSearching(false)
                     selectionDispatch(
                       setSearchingTypeState({
                         deal_type: false,
@@ -323,11 +277,7 @@ function Manufacturers() {
                       })
                     );
 
-                    setSearchMansTXT(
-                      selectedCarBrands
-                        .map((eachMan) => eachMan.man_name)
-                        .join(", ")
-                    );
+              
                   }}
                 >
                   არჩევა

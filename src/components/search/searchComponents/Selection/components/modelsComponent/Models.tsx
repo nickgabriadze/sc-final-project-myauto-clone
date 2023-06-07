@@ -11,7 +11,7 @@ import useModels from "../../../../../../hooks/useModels";
 import { setSearchingTypeState } from "../../../../../../features/selectionSlice";
 import { useEffect, useState } from "react";
 import DropDownModels from "./DropDownModels";
-import { setModels } from "../../../../../../features/searchSlice";
+import { setManuFacturers, setModels } from "../../../../../../features/searchSlice";
 import { SortedManModel } from "../../../../searchInterfaces";
 
 function Models() {
@@ -151,6 +151,11 @@ function Models() {
                                   (each) => each.man_id !== eachManModel.man_id
                                 )
                             );
+                            
+                            selectionDispatch(setManuFacturers({
+                              manufacturers: [...manufacturers.filter((each) => each.man_id !== eachManModel.man_id)]
+                            }))
+
                             selectionDispatch(
                               setModels({
                                 models: [
