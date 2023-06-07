@@ -1,6 +1,5 @@
 .search-wrap {
   width: 250px;
-  position: fixed;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   box-shadow: 0 0 0 0.1em #dfdfe6;
@@ -14,7 +13,6 @@
   justify-content: space-between;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  background-color: dfdfe6;
 }
 
 .three-types > div > img {
@@ -54,7 +52,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
   background-color: white;
   padding: 10px;
   padding-bottom: 30px;

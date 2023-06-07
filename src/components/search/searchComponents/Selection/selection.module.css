@@ -3,8 +3,8 @@
 .type-cats-wrapper,
 .type-models-wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
+
+
 }
 
 .deals-type,
@@ -34,7 +34,7 @@
 .models-outer-div {
   cursor: pointer;
   display: flex;
-  justify-content: space-around;
+ 
 }
 
 .deals-search-div,
@@ -139,7 +139,7 @@ margin-left: 5px;;
   padding-left: 0px;
   position: absolute;
   top: 75px;
-  width: 82%;
+  width: 80%;
 }
 
 .mans-list {
@@ -152,7 +152,7 @@ margin-left: 5px;;
   padding-left: 0px;
   position: absolute;
   top: 148px;
-  width: 82%;
+  width: 80%;
 }
 
 .cats-list {
@@ -165,7 +165,7 @@ margin-left: 5px;;
   padding-left: 0px;
   position: absolute;
   top: 295px;
-  width: 82%;
+  width: 80%;
 }
 
 .models-list{
@@ -178,7 +178,7 @@ margin-left: 5px;;
   padding-left: 0px;
   position: absolute;
   top: 220px;
-  width: 82%;
+  width: 80%;
 }
 
 .scrollable-mans,

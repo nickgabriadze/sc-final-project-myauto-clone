@@ -44,7 +44,7 @@ function Models() {
   const [searching, setSearching] = useState<boolean>(false);
 
   return (
-    <div className={selectionStyling["type-models-wrappers"]}>
+    <div className={selectionStyling["type-models-wrapper"]}>
       <div className={selectionStyling["models-type"]}>
         <h5>მოდელები</h5>
         <div className={selectionStyling["models-outer-div"]}>
