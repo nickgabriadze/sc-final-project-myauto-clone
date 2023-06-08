@@ -1,23 +1,18 @@
-import useProducts from "../../../hooks/products/useProducts";
 import carProductsStyling from "../carProducts.module.css";
 import { useState } from "react";
 import ExpandMoreSVG from "../../search/icons/expand-more.svg";
 import ExpandLessSVG from "../../search/icons/expand-less.svg";
+import { useAppSelector } from "../../../features/hooks";
 
-function ProductsHeader() {
+function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
   const [sorters, setSorters] = useState({
     first: false,
     second: false,
   });
-  const [trackPage, setTrackPage] = useState<number>(1);
-
-  const { productsData } = useProducts(
-    `https://api2.myauto.ge/ka/products?page=${trackPage}`
-  );
 
   return (
     <div className={carProductsStyling["products-header"]}>
-      <p>{productsData?.meta.total} განცხადებება</p>
+      <p>{productsMetaTotal} განცხადებება</p>
       <div className={carProductsStyling["sort-by-s"]}>
         <div className={carProductsStyling["select-style-sort"]}>
           <div

@@ -1,5 +1,7 @@
 .products-wrapper {
   width: 800px;
+  display: flex;
+  flex-direction: column;
   font-family: "Poppins";
   height: fit-content;
   padding: 5px;

@@ -174,6 +174,17 @@ function Models() {
                                           each.man_id !== eachManModel.man_id
                                       )
                                   );
+
+                                  selectionDispatch(
+                                    setManuFacturers({
+                                      manufacturers: [
+                                        ...manufacturers.filter(
+                                          (each) =>
+                                            each.man_id !== eachManModel.man_id
+                                        ),
+                                      ],
+                                    })
+                                  );
                                   selectionDispatch(
                                     setModels({
                                       models: [
@@ -251,6 +262,16 @@ function Models() {
                                       (each) =>
                                         each.man_id !== eachManModel.man_id
                                     )
+                                );
+                                selectionDispatch(
+                                  setManuFacturers({
+                                    manufacturers: [
+                                      ...manufacturers.filter(
+                                        (each) =>
+                                          each.man_id !== eachManModel.man_id
+                                      ),
+                                    ],
+                                  })
                                 );
                                 selectionDispatch(
                                   setModels({

@@ -1,12 +1,19 @@
 import { useState, useEffect } from "react";
 import {Products } from "../../components/products/productsInterfaces";
 
-function useProducts(url: string):{productsData: Products | undefined, productsError: string, productsLoading: boolean}{
+function useProducts(url: string):{productsData: Products  , productsError: string, productsLoading: boolean}{
 
-    const [productsData, setProductsData] = useState<Products>();
+    const [productsData, setProductsData] = useState<Products>({
+        data: [],
+        meta: {
+            total: 0,
+            per_page: 15,
+            current_page: 1,
+            last_page: 0,
+        }
+    });
     const [productsError, setProductsError] = useState<string>("");
     const [productsLoading, setProductsLoading] = useState<boolean>(true);
-
 
     useEffect(() => {
         setProductsLoading(true);
@@ -22,9 +29,10 @@ function useProducts(url: string):{productsData: Products | undefined, productsE
             const innerFunc = async () => {
                 const fetchedData = await fetchProducts();
                 setProductsData(fetchedData.data)
-              };
-        
+               
+            }
               innerFunc();
+              
         }catch(err){
             setProductsError(`${err}`)
         }finally{
