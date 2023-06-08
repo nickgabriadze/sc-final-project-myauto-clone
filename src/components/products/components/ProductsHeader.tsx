@@ -2,7 +2,6 @@ import carProductsStyling from "../carProducts.module.css";
 import { useState } from "react";
 import ExpandMoreSVG from "../../search/icons/expand-more.svg";
 import ExpandLessSVG from "../../search/icons/expand-less.svg";
-import { useAppSelector } from "../../../features/hooks";
 
 function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
   const [sorters, setSorters] = useState({
@@ -12,7 +11,7 @@ function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
 
   return (
     <div className={carProductsStyling["products-header"]}>
-      <p>{productsMetaTotal} განცხადებება</p>
+      <p className={carProductsStyling['number-of-cars']}>{productsMetaTotal} განცხადება</p>
       <div className={carProductsStyling["sort-by-s"]}>
         <div className={carProductsStyling["select-style-sort"]}>
           <div
@@ -30,7 +29,7 @@ function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
           >
             <p>პერიოდი</p>
             <img
-              src={sorters.first ? ExpandMoreSVG : ExpandLessSVG}
+              src={sorters.first ? ExpandLessSVG : ExpandMoreSVG}
               width={15}
               height={15}
               alt="Dropdown"
@@ -63,7 +62,7 @@ function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
           >
             <p>თარიღი კლებადი</p>
             <img
-              src={sorters.second ? ExpandMoreSVG : ExpandLessSVG}
+              src={sorters.second ? ExpandLessSVG : ExpandMoreSVG}
               width={15}
               height={15}
               alt="Dropdown"

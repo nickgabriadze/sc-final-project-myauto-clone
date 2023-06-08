@@ -6,7 +6,7 @@ import PriceFromTo from "./searchComponents/PriceFromTo";
 function CarSearch() {
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: "flex", flexDirection: "column", fontFamily: 'Noto Sans Georgian' }}>
         <p
           style={{
             fontSize: "15px",

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MergedModel, Model, SortedManModel } from "../components/search/searchInterfaces";
+import { MergedModel, Model, SortedManModel } from "../../components/search/searchInterfaces";
 import sortByModelTypes from "./sortByModelTypes";
 import mergeModels from "./mergeModels";
 

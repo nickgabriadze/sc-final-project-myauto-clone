@@ -114,7 +114,7 @@ export interface Product{
 
 
 export interface Products {
-  data: Product[],
+  items: Product[],
   meta: {
     total: number;
     per_page: 15;

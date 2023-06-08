@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import {Products } from "../../components/products/productsInterfaces";
 
-function useProducts(url: string):{productsData: Products  , productsError: string, productsLoading: boolean}{
+function useProducts(url: string){
 
     const [productsData, setProductsData] = useState<Products>({
-        data: [],
+        items: [],
         meta: {
             total: 0,
             per_page: 15,
@@ -18,9 +18,10 @@ function useProducts(url: string):{productsData: Products  , productsError: stri
     useEffect(() => {
         setProductsLoading(true);
         const abortController = new AbortController();
+
         const fetchProducts = async () =>{
-            const request = fetch(url);
-            const response = await (await request).json();
+            const request = await fetch(url);
+            const response = await request.json();
 
             return response
         }
@@ -29,7 +30,7 @@ function useProducts(url: string):{productsData: Products  , productsError: stri
             const innerFunc = async () => {
                 const fetchedData = await fetchProducts();
                 setProductsData(fetchedData.data)
-               
+               console.log(fetchedData.data)
             }
               innerFunc();
               

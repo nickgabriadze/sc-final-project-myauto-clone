@@ -139,7 +139,7 @@ margin-left: 5px;;
   padding-left: 0px;
   position: absolute;
   top: 75px;
-  width: 80%;
+  width: 75%;
 }
 
 .mans-list {
@@ -151,8 +151,9 @@ margin-left: 5px;;
   padding-right: 0px;
   padding-left: 0px;
   position: absolute;
-  top: 148px;
-  width: 80%;
+  top: 152px;
+  width: 75%;
+
 }
 
 .cats-list {
@@ -164,8 +165,8 @@ margin-left: 5px;;
   padding-right: 0px;
   padding-left: 0px;
   position: absolute;
-  top: 295px;
-  width: 80%;
+  top: 303px;
+  width: 75%;
 }
 
 .models-list{
@@ -177,8 +178,8 @@ margin-left: 5px;;
   padding-right: 0px;
   padding-left: 0px;
   position: absolute;
-  top: 220px;
-  width: 80%;
+  top: 227px;
+  width: 75%;
 }
 
 .scrollable-mans,
@@ -189,6 +190,7 @@ margin-left: 5px;;
   background-color: #ffffff;
   padding-left: 10px;
   padding-top: 0;
+ 
 }
 
 .scrollable-mans::-webkit-scrollbar,
@@ -225,6 +227,7 @@ margin-left: 5px;;
   font-size: 1rem;
   font-weight: 600;
   color: #1c1b1ba7;
+  font-size: 14px;
 }
 .popular-options hr {
   transform: rotate(90deg);
@@ -326,6 +329,7 @@ input[type="checkbox"]:checked::after {
   align-items: center;
   border-top: 1px solid #d9dbdf;
   padding: 5px;
+  margin-top: 10px;
 }
 
 .clear-mans-submit p,
@@ -352,6 +356,6 @@ input[type="checkbox"]:checked::after {
   border-radius: 5px;
   padding: 3px 10px 5px 10px;
   margin-right: 5px;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
 }
