@@ -1,4 +1,4 @@
-import { MergedModel } from "../../components/search/searchInterfaces";
+import { MergedModel } from "../components/search/searchInterfaces";
 
 const filterModelsByText = (text: string, mergedModels: MergedModel[]) => {
   

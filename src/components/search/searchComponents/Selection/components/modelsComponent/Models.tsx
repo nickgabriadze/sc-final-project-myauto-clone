@@ -7,7 +7,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../../../features/hooks";
-import useModels from "../../../../../../hooks/search/useModels";
+import useModels from "../../../../../../hooks/useModels";
 import { setSearchingTypeState } from "../../../../../../features/selectionSlice";
 import { useEffect, useState } from "react";
 import DropDownModels from "./DropDownModels";
@@ -16,7 +16,7 @@ import {
   setModels,
 } from "../../../../../../features/searchSlice";
 import { MergedModel, SortedManModel } from "../../../../searchInterfaces";
-import filterModelsByText from "../../../../../../hooks/search/filterModelsByText";
+import filterModelsByText from "../../../../../../hooks/filterModelsByText";
 import EachModel from "./EachModel";
 
 function Models() {
@@ -228,8 +228,8 @@ function Models() {
                             </div>
                             <hr
                               style={
-                                eachManModel.man_name.length >= 9
-                                  ? { width: "20%", marginRight: "10px" }
+                                eachManModel.man_name.length >= 8
+                                  ? { width: "30%", marginRight: "5px" }
                                   : { width: "90%", marginRight: "10px" }
                               }
                             ></hr>
@@ -306,8 +306,8 @@ function Models() {
                           </div>
                           <hr
                             style={
-                              eachManModel.man_name.length >= 9
-                                ? { width: "20%", marginRight: "5px" }
+                              eachManModel.man_name.length >= 8
+                                ? { width: "30%", marginRight: "5px" }
                                 : { width: "90%", marginRight: "10px" }
                             }
                           ></hr>
