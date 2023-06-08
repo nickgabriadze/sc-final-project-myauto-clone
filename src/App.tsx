@@ -13,12 +13,14 @@ function App() {
       }}
     >
       <Header />
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '1rem',
-        padding: '20px'
-      }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "1rem",
+          padding: "20px",
+        }}
+      >
         <CarSearch />
         <CarProducts />
       </div>
