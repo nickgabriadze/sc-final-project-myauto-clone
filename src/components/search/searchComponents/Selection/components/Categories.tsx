@@ -1,5 +1,5 @@
 import selectionStyling from "../selection.module.css";
-import useCategories from "../../../../../hooks/useCategories";
+import useCategories from "../../../../../hooks/search/useCategories";
 import { useAppDispatch, useAppSelector } from "../../../../../features/hooks";
 import ExpandMoreSVG from "../../../icons/expand-more.svg";
 import { useState, useRef, useEffect } from "react";

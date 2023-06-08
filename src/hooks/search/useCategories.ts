@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Category } from "../components/search/searchInterfaces";
+import { Category } from "../../components/search/searchInterfaces";
 import sortByCatTypes from "./sortByCatTypes";
 
 export const useCategories = (url: string) => {

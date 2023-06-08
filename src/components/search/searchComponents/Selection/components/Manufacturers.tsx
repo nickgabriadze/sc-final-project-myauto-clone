@@ -1,4 +1,4 @@
-import useManufacturers from "../../../../../hooks/useManufacturers";
+import useManufacturers from "../../../../../hooks/search/useManufacturers";
 import { useAppSelector, useAppDispatch } from "../../../../../features/hooks";
 import ExpandMoreSVG from "../../../icons/expand-more.svg";
 import { useState, useEffect } from "react";

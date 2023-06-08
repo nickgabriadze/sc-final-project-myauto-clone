@@ -1,0 +1,69 @@
+.products-wrapper {
+  width: 800px;
+  font-family: "Poppins";
+  height: fit-content;
+  padding: 5px;
+  color: #60636e;
+  margin-top: 40px;
+}
+
+.products-header {
+  display: flex;
+  font-family: "Poppins";
+  justify-content: space-between;
+}
+
+.select-style-sort {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sort-by-s {
+  display: inherit;
+  gap: 0.5rem;
+}
+
+.search {
+  border: 1px solid #d8dbe2;
+  border-radius: 6px;
+  transition: all 300ms linear;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.search:hover {
+  border: 1px solid #87888c97;
+}
+
+.last-hours,
+.sort-by-date-price {
+  background-color: white;
+  position: absolute;
+  z-index: 5;
+  top: 190px;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 0 0 0.1em #dfdfe67b;
+}
+.last-hours{
+    width: 95px;
+}
+.sort-by-date-price {
+    width: 160px;
+}
+
+.last-hours p,
+.sort-by-date-price p {
+  cursor: pointer;
+}
+.last-hours p:hover,
+.sort-by-date-price p:hover {
+  cursor: pointer;
+  color: #4a4a4b;
+}
