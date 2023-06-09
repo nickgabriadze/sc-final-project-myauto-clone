@@ -79,7 +79,7 @@ function ThreeTypes() {
               chosenSearchType.car
                 ? {
                     filter:
-                      "invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%)",
+                      "invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%)"
                   }
                 : {}
             }

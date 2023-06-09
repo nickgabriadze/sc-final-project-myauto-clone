@@ -19,7 +19,6 @@
 .number-of-cars {
   margin-top: 10px;
   color: black;
-
 }
 
 .select-style-sort {
@@ -57,11 +56,12 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  align-items: left;
+  justify-content: center;
   position: absolute;
   z-index: 5;
   top: 190px;
   border-radius: 6px;
-  padding: 10px;
   font-size: 15px;
   box-shadow: 0 0 0 0.1em #dfdfe67b;
 }
@@ -75,11 +75,15 @@
 .last-hours p,
 .sort-by-date-price p {
   cursor: pointer;
+  line-height: 16.9px;
+  padding: 4px;
 }
 .last-hours p:hover,
 .sort-by-date-price p:hover {
   cursor: pointer;
   color: #4a4a4b;
+  background-color: #b9b9b944;
+  width: 100%;
 }
 
 .car-products {
@@ -95,6 +99,8 @@
   padding: 15px;
   display: flex;
   gap: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
 .car-visual-picture img {
@@ -102,11 +108,11 @@
   object-fit: contain;
   cursor: pointer;
 }
-.car-info{
+.car-info {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 2rem
+  gap: 1rem;
 }
 .model-year-customs-location {
   display: flex;
@@ -118,36 +124,116 @@
   gap: 10px;
 }
 
-.customs-location{
+.customs-location {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  font-size: 13px;
 }
 
+.country-place{
+  display: flex;
+  gap: 5px;
+}
 
-.hardware-price{
+.hardware-price {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-
-
-.engine-gearbox, .odometer-sWheel{
+.engine-gearbox,
+.odometer-sWheel,
+.price {
   display: flex;
   flex-direction: column;
-  
-  gap: 15px;
 
+  gap: 15px;
 }
 
-.engine-gearbox div, .odometer-sWheel div {
+.engine-gearbox div,
+.odometer-sWheel div,
+.price div {
   display: flex;
   gap: 10px;
 }
 
-.engine-gearbox div > p, .odometer-sWheel div > p {
+.engine-gearbox div > p,
+.odometer-sWheel div > p {
   color: black;
   font-size: 14px;
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+}
+.price > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.price p {
+  font-size: 20px;
+  color: #272a37;
+  font-weight: bold;
+}
+
+.price img {
+  padding: 5px;
+  background-color: #e2e5eb;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.for-rent-sticker {
+  background-color: #1db676;
+  padding: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.views-date-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-counter {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #6F7383;
+}
+
+.views-date-icons p {
+  font-size: 12px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icons img {
+  cursor: pointer;
+}
+
+.note-icon:hover{
+  filter: invert(48%) sepia(67%) saturate(486%) hue-rotate(87deg) brightness(101%) contrast(94%)
+}
+
+.favorite-icon:hover{
+  filter: invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%);
+
 }
