@@ -3,9 +3,17 @@ import { Product } from "../productsInterfaces";
 import GreenCheckSVG from "../icons/greenCheck.svg";
 import { useEffect, useState } from "react";
 import { Manufacturer, Model } from "../../search/searchInterfaces";
+import GearBoxSVG from "../icons/gearbox.svg";
+import EngineSVG from "../icons/engine.svg";
+import OdometerSVG from "../icons/odometer.svg";
+import SteeringWheel from "../icons/steeringWheel.svg"
+
+
 
 function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
   const [modelName, setModelName] = useState<string>();
+
+  const eachEngineVolume = carAsProduct.engine_volume.toString().slice(0, 2).split("").join(".")
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -51,7 +59,7 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
     return () => abortController.abort();
   }, [carAsProduct.man_id, carAsProduct.model_id]);
 
-  console.log(modelName);
+
   return (
     <div className={carProductsStyling["car-wrapper"]}>
       <div className={carProductsStyling["car-visual-picture"]}>
@@ -83,10 +91,40 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
                 <p style={{ color: "#26B753" }}>განბაჟებული</p>
               </>
             ) : (
-              <p style={{ color: "#FF3B30" }}>გაბაჟება ...</p>
+              <p style={{ color: "#FF3B30" }}>განუბაჟებელი</p>
             )}
-            <p>{carAsProduct.location_id}</p>
+            <p>ლოკაცია</p>
           </div>
+        </div>
+        <div className={carProductsStyling['hardware-price']}>
+              <div className={carProductsStyling['engine-gearbox']}>
+                <div>
+                  <img src={EngineSVG}></img>
+                  <p>{eachEngineVolume}</p>
+                </div>
+
+                <div>
+                  <img src={GearBoxSVG}></img>
+                  <p>{carAsProduct.gear_type_id}</p>
+                </div>
+              </div>
+
+              <div className={carProductsStyling['odometer-sWheel']}>
+              <div>
+                  <img src={OdometerSVG}></img>
+                  <p>{carAsProduct.car_run_km} კმ</p>
+                </div>
+
+                <div>
+                  <img src={SteeringWheel}></img>
+                  <p>{carAsProduct.right_wheel ? "მარჯვენა" : "მარცხენა"}</p>
+                </div>
+              </div>
+
+
+              <div>
+
+              </div>
         </div>
       </div>
     </div>
