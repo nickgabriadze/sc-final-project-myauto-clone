@@ -3,34 +3,50 @@ import { useState } from "react";
 import ExpandMoreSVG from "../../search/icons/expand-more.svg";
 import ExpandLessSVG from "../../search/icons/expand-less.svg";
 import { useAppDispatch, useAppSelector } from "../../../features/hooks";
-import { setSortIncDec } from "../../../features/productSlice";
+import { setSortIncDec, setSortPeriod } from "../../../features/productSlice";
 
-function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
+function ProductsHeader({ productsMetaTotal }: { productsMetaTotal: number }) {
   const [sorters, setSorters] = useState({
     first: false,
     second: false,
   });
 
   const productDispatch = useAppDispatch();
-  const { sortIncDec } = useAppSelector((state) => state.productsReducer)
-  const filterObjects:{
-    sortIncDec: {
-      [key: number]: string
-    }
-  } = {
-    sortIncDec: {
-      1 : "თარიღი კლებადი",
-      2 : "თარიღი ზრდადი",
-      3 : "ფასი კლებადი",
-      4 : "ფასი ზრდადი",
-      5 : "გარბენი კლებადი",
-      6 : "გარბენი ზრდადი",
-    }
-  }
+  const { sortIncDec, sortPeriod } = useAppSelector(
+    (state) => state.productsReducer
+  );
+  const filterObjects: {
+    sortByIncDec: {
+      [key: number]: string;
+    };
 
+    sortByPeriod: {
+      [key: number]: string;
+    };
+  } = {
+    sortByIncDec: {
+      1: "თარიღი კლებადი",
+      2: "თარიღი ზრდადი",
+      3: "ფასი კლებადი",
+      4: "ფასი ზრდადი",
+      5: "გარბენი კლებადი",
+      6: "გარბენი ზრდადი",
+    },
+
+    sortByPeriod: {
+      0: "პერიოდი",
+      1: "1 საათი",
+      2: "3 საათი",
+      3: "6 საათი",
+      4: "12 საათი",
+      5: "24 საათი",
+    },
+  };
   return (
     <div className={carProductsStyling["products-header"]}>
-      <p className={carProductsStyling['number-of-cars']}>{productsMetaTotal} განცხადება</p>
+      <p className={carProductsStyling["number-of-cars"]}>
+        {productsMetaTotal} განცხადება
+      </p>
       <div className={carProductsStyling["sort-by-s"]}>
         <div className={carProductsStyling["select-style-sort"]}>
           <div
@@ -46,7 +62,11 @@ function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
               });
             }}
           >
-            <p>პერიოდი</p>
+            <p>
+              {filterObjects.sortByPeriod[sortPeriod] !== "პერიოდი"
+                ? `ბოლო ${filterObjects.sortByPeriod[sortPeriod]}`
+                : "პერიოდი"}
+            </p>
             <img
               src={sorters.first ? ExpandLessSVG : ExpandMoreSVG}
               width={15}
@@ -56,12 +76,43 @@ function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
           </div>
 
           {sorters.first && (
-            <div className={carProductsStyling["last-hours"]}>
-              <p>1 საათი</p>
-              <p>3 საათი</p>
-              <p>6 საათი</p>
-              <p>12 საათი</p>
-              <p>24 საათი</p>
+            <div
+              className={carProductsStyling["last-hours"]}
+              style={
+                filterObjects.sortByPeriod[sortPeriod] === "პერიოდი"
+                  ? { width: "100px" }
+                  : filterObjects.sortByPeriod[sortPeriod].length < 8
+                  ? { width: "140px" }
+                  : { width: "150px" }
+              }
+            >
+              {[1, 2, 3, 4, 5].map((eachPeriod) => {
+                {
+                  return (
+                    eachPeriod !== sortPeriod && (
+                      <p
+                        key={eachPeriod}
+                        onClick={() => {
+                          productDispatch(
+                            setSortPeriod({
+                              sortPeriod: eachPeriod,
+                            })
+                          );
+
+                          setSorters((prev) => {
+                            return {
+                              ...prev,
+                              first: false,
+                            };
+                          });
+                        }}
+                      >
+                        {filterObjects.sortByPeriod[eachPeriod]}
+                      </p>
+                    )
+                  );
+                }
+              })}
             </div>
           )}
         </div>
@@ -79,7 +130,7 @@ function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
               });
             }}
           >
-            <p>{filterObjects.sortIncDec[sortIncDec]}</p>
+            <p>{filterObjects.sortByIncDec[sortIncDec]}</p>
             <img
               src={sorters.second ? ExpandLessSVG : ExpandMoreSVG}
               width={15}
@@ -90,21 +141,30 @@ function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
 
           {sorters.second && (
             <div className={carProductsStyling["sort-by-date-price"]}>
-             {[1,2,3,4,5,6].map((eachFilteringID) => 
-              {return eachFilteringID !== sortIncDec && <p key={eachFilteringID}
-              onClick={() => {
-                productDispatch(setSortIncDec({
-                  sortIncDec: eachFilteringID
-                }))
-                setSorters((prev) =>{
-                  return {
-                    ...prev,
-                    second: false
-                  }
-                })
-              }}
-              >{filterObjects.sortIncDec[eachFilteringID]}</p>}
-             )}
+              {[1, 2, 3, 4, 5, 6].map((eachFilteringID) => {
+                return (
+                  eachFilteringID !== sortIncDec && (
+                    <p
+                      key={eachFilteringID}
+                      onClick={() => {
+                        productDispatch(
+                          setSortIncDec({
+                            sortIncDec: eachFilteringID,
+                          })
+                        );
+                        setSorters((prev) => {
+                          return {
+                            ...prev,
+                            second: false,
+                          };
+                        });
+                      }}
+                    >
+                      {filterObjects.sortByIncDec[eachFilteringID]}
+                    </p>
+                  )
+                );
+              })}
             </div>
           )}
         </div>
