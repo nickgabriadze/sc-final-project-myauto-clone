@@ -16,7 +16,7 @@ const initialState: ProductsState= {
     sortPeriod: "1h",
     sortIncDec: 1,
     products: {
-        data: [],
+        items: [],
         meta: {
             total: 0,
             per_page: 15,
@@ -62,5 +62,5 @@ const productsSlice = createSlice({
     }
 })
 
-export const {setSortPeriod, setSortIncDec, setProducts} = productsSlice.actions;
+export const {setPage, setSortPeriod, setSortIncDec, setProducts} = productsSlice.actions;
 export default productsSlice.reducer

@@ -92,6 +92,26 @@
   gap: 10px;
 }
 
+
+.pages-wrapper{
+  background-color: #ffffff;
+  padding: inherit;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.pages{
+  display: flex;
+  gap: 15px;
+}
+.pages img {
+  cursor: pointer;
+}
+
+
 /* EachCarAsProduct */
 .car-wrapper {
   background-color: #ffffff;
@@ -258,6 +278,4 @@
   color: white;
   padding: 3px 10px 3px;
   font-weight: bold;
-
-
 }
