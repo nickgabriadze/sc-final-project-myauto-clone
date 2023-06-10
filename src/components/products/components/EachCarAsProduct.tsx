@@ -74,13 +74,13 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
 
   useEffect(() => {
     const abortController = new AbortController();
-    setModelNameLoading(true)
+    setModelNameLoading(true);
     const fetchModels = async () => {
       const request = await fetch(
         `https://api2.myauto.ge/ka/getManModels?man_id=${carAsProduct.man_id}`
       );
       const manModels = request.json();
-       
+
       return manModels;
     };
 
@@ -93,23 +93,23 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
 
     try {
       const innerFunc = async () => {
-        const fetchedModels:{
-          data: Model[]
+        const fetchedModels: {
+          data: Model[];
         } = await fetchModels();
-        
-        const mans:Manufacturer[] = await fetchMans();
+
+        const mans: Manufacturer[] = await fetchMans();
 
         const model = fetchedModels.data.filter(
           (eachModel: Model) => eachModel.model_id === carAsProduct.model_id
         )[0].model_name;
 
-        const man= mans.filter(
+        const man = mans.filter(
           (eachMan: Manufacturer) =>
             Number(eachMan.man_id) === carAsProduct.man_id
         )[0].man_name;
 
         setModelName(man.concat(" ").concat(model));
-        setModelNameLoading(false)
+        setModelNameLoading(false);
       };
       innerFunc();
     } catch (err) {
@@ -146,7 +146,7 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
                 cursor: "pointer",
               }}
             >
-              {modelNameLoading ? "Loading...":modelName}
+              {modelNameLoading ? "Loading..." : modelName}
             </p>
             <p style={{ color: "#8C929B", fontWeight: "bold" }}>
               {carAsProduct.prod_year} წ
@@ -230,8 +230,11 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
 
         <div className={carProductsStyling["views-date-icons"]}>
           <div className={carProductsStyling["view-counter"]}>
-            {carAsProduct.tech_inspection && 
-            <div className={carProductsStyling['tech-inspection-vip']}>S-VIP</div>}
+            {carAsProduct.tech_inspection && (
+              <div className={carProductsStyling["tech-inspection-vip"]}>
+                S-VIP
+              </div>
+            )}
             <p>{carAsProduct.views} ნახვა</p>•
             <p>{formatDateDifference(new Date(carAsProduct.order_date))}</p>
           </div>
