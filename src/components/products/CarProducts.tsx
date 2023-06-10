@@ -10,10 +10,10 @@ import { setPage } from "../../features/productSlice";
 
 
 function CarProducts() {
-  const { page } = useAppSelector((state) => state.productsReducer);
+  const { page,sortIncDec } = useAppSelector((state) => state.productsReducer);
 
   const { productsData } = useProducts(
-    `https://api2.myauto.ge/ka/products?Page=${page}`
+    `https://api2.myauto.ge/ka/products?Page=${page}&&SortOrder=${sortIncDec}`
   );
 
   const productsDispatch = useAppDispatch();

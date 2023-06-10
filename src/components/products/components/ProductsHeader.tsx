@@ -2,12 +2,31 @@ import carProductsStyling from "../carProducts.module.css";
 import { useState } from "react";
 import ExpandMoreSVG from "../../search/icons/expand-more.svg";
 import ExpandLessSVG from "../../search/icons/expand-less.svg";
+import { useAppDispatch, useAppSelector } from "../../../features/hooks";
+import { setSortIncDec } from "../../../features/productSlice";
 
 function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
   const [sorters, setSorters] = useState({
     first: false,
     second: false,
   });
+
+  const productDispatch = useAppDispatch();
+  const { sortIncDec } = useAppSelector((state) => state.productsReducer)
+  const filterObjects:{
+    sortIncDec: {
+      [key: number]: string
+    }
+  } = {
+    sortIncDec: {
+      1 : "თარიღი კლებადი",
+      2 : "თარიღი ზრდადი",
+      3 : "ფასი კლებადი",
+      4 : "ფასი ზრდადი",
+      5 : "გარბენი კლებადი",
+      6 : "გარბენი ზრდადი",
+    }
+  }
 
   return (
     <div className={carProductsStyling["products-header"]}>
@@ -60,7 +79,7 @@ function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
               });
             }}
           >
-            <p>თარიღი კლებადი</p>
+            <p>{filterObjects.sortIncDec[sortIncDec]}</p>
             <img
               src={sorters.second ? ExpandLessSVG : ExpandMoreSVG}
               width={15}
@@ -71,12 +90,21 @@ function ProductsHeader({productsMetaTotal}: {productsMetaTotal: number}) {
 
           {sorters.second && (
             <div className={carProductsStyling["sort-by-date-price"]}>
-              <p>თარიღი კლებადი</p>
-              <p>თარიღი ზრდადი</p>
-              <p>ფასი კლებადი</p>
-              <p>ფასი ზრდადი</p>
-              <p>გარბენი კლებადი</p>
-              <p>გარბენი ზრდადი</p>
+             {[1,2,3,4,5,6].map((eachFilteringID) => 
+              {return eachFilteringID !== sortIncDec && <p key={eachFilteringID}
+              onClick={() => {
+                productDispatch(setSortIncDec({
+                  sortIncDec: eachFilteringID
+                }))
+                setSorters((prev) =>{
+                  return {
+                    ...prev,
+                    second: false
+                  }
+                })
+              }}
+              >{filterObjects.sortIncDec[eachFilteringID]}</p>}
+             )}
             </div>
           )}
         </div>

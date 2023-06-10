@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Products} from "../components/products/productsInterfaces";
 
 type sortingPeriod =  "1h" | "3h" | "6h" | "1d" | "2d"
-type sortingIncDec =  1 | 2 |3 | 4 | 5 | 6
+
 
 
 interface ProductsState {
     sortPeriod:sortingPeriod,
-    sortIncDec: sortingIncDec,
+    sortIncDec: number,
     products: Products,
     page: number
 }
@@ -38,7 +38,7 @@ const productsSlice = createSlice({
             }
         },
 
-        setSortIncDec: (state, action: {type: string, payload: {sortIncDec: sortingIncDec}}) => {
+        setSortIncDec: (state, action: {type: string, payload: {sortIncDec: number}}) => {
             return {
                 ...state,
                 sortIncDec: action.payload.sortIncDec
