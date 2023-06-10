@@ -31,18 +31,19 @@ function useProducts(url: string){
                 const fetchedData = await fetchProducts();
                 setProductsData(fetchedData.data)
                console.log(fetchedData.data)
+              
             }
-              innerFunc();
+              innerFunc()
               
         }catch(err){
             setProductsError(`${err}`)
-        }finally{
             setProductsLoading(false)
         }
 
         return () => abortController.abort();
 
     },[url])
+
     return {productsData, productsError, productsLoading}
 }
 

@@ -82,7 +82,7 @@ function PriceFromTo() {
 
       <div className={carSearchStyling["search-btn-wrapper"]}>
         <button className={carSearchStyling["search-btn"]}>
-          ძებნა {(197963).toString()}
+          ძებნა
         </button>
       </div>
     </div>

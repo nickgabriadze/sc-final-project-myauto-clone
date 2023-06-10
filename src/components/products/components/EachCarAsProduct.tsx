@@ -10,17 +10,16 @@ import SteeringWheel from "../icons/steeringWheel.svg";
 import { useAppSelector } from "../../../features/hooks";
 import GELSVG from "../../search/icons/gel-black.svg";
 import USDSVG from "../../search/icons/dollar-black.svg";
-import formatDateDifference from "../dateFormatter";
+import formatDateDifference from "../helpers/dateFormatter";
 import NoteSVG from "../icons/note.svg";
 import CompareSVG from "../icons/compare.svg";
-import FavoriteSVG from "../icons/favorite.svg"
-import GeorgiaSVG from "../icons/georgia.svg"
-import getRandomInt from "../getRandomInt";
+import FavoriteSVG from "../icons/favorite.svg";
+import GeorgiaSVG from "../icons/georgia.svg";
+import getRandomInt from "../helpers/getRandomInt";
 
 function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
   const [modelName, setModelName] = useState<string>();
   const { currency } = useAppSelector((state) => state.searchReducer);
-
 
   const severalIDMappings: {
     gearTypeIds: {
@@ -33,7 +32,7 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
 
     locations: {
       [key: string]: string;
-    }
+    };
   } = {
     gearTypeIds: {
       1: "მექანიკა",
@@ -50,7 +49,7 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
       8: "ბუნებრივი აირი",
       9: "თხევადი გაზი",
       10: "დატ. ჰიბრიდი",
-      12: "წყალბადი"
+      12: "წყალბადი",
     },
 
     locations: {
@@ -64,8 +63,8 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
       8: "ფოთი",
       9: "მცხეთა",
       10: "სამტრედია",
-      11: "გორი"
-    }
+      11: "გორი",
+    },
   };
 
   const eachEngineVolume =
@@ -81,7 +80,7 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
         `https://api2.myauto.ge/ka/getManModels?man_id=${carAsProduct.man_id}`
       );
       const manModels = request.json();
-
+       
       return manModels;
     };
 
@@ -94,14 +93,17 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
 
     try {
       const innerFunc = async () => {
-        const fetchedModels = await fetchModels();
-        const mans = await fetchMans();
+        const fetchedModels:{
+          data: Model[]
+        } = await fetchModels();
+        
+        const mans:Manufacturer[] = await fetchMans();
 
         const model = fetchedModels.data.filter(
           (eachModel: Model) => eachModel.model_id === carAsProduct.model_id
         )[0].model_name;
 
-        const man = mans.filter(
+        const man= mans.filter(
           (eachMan: Manufacturer) =>
             Number(eachMan.man_id) === carAsProduct.man_id
         )[0].man_name;
@@ -116,7 +118,6 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
     return () => abortController.abort();
   }, [carAsProduct.man_id, carAsProduct.model_id]);
 
-  
   return (
     <div className={carProductsStyling["car-wrapper"]}>
       <div className={carProductsStyling["car-visual-picture"]}>
@@ -132,14 +133,15 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
       <div className={carProductsStyling["car-info"]}>
         <div className={carProductsStyling["model-year-customs-location"]}>
           <div className={carProductsStyling["model-year"]}>
-            {carAsProduct.for_rent && 
-              <div className={carProductsStyling['for-rent-sticker']}>ქირავდება</div>
-            }
+            {carAsProduct.for_rent && (
+              <div className={carProductsStyling["for-rent-sticker"]}>
+                ქირავდება
+              </div>
+            )}
             <p
               style={{
                 color: "black",
                 fontWeight: "bold",
-                maxWidth: "250px",
                 cursor: "pointer",
               }}
             >
@@ -152,17 +154,20 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
 
           <div className={carProductsStyling["customs-location"]}>
             {carAsProduct.customs_passed ? (
-              <div style={{display: 'flex', gap: "3px"}}>
-                <img src={GreenCheckSVG} className="Customs passed icon check"></img>
+              <div style={{ display: "flex", gap: "3px" }}>
+                <img
+                  src={GreenCheckSVG}
+                  className="Customs passed icon check"
+                ></img>
                 <p style={{ color: "#26B753" }}>განბაჟებული</p>
               </div>
             ) : (
               <p style={{ color: "#FF3B30" }}>განბაჟება 2,176 ₾</p>
             )}
-           <div className={carProductsStyling['country-place']}>
-           <img src={GeorgiaSVG} alt="Georgia country icon"></img>
-            <p>{severalIDMappings.locations[getRandomInt(1, 11)]}</p>
-           </div>
+            <div className={carProductsStyling["country-place"]}>
+              <img src={GeorgiaSVG} alt="Georgia country icon"></img>
+              <p>{severalIDMappings.locations[getRandomInt(1, 11)]}</p>
+            </div>
           </div>
         </div>
         <div className={carProductsStyling["hardware-price"]}>
@@ -194,44 +199,55 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
           </div>
 
           <div className={carProductsStyling["price"]}>
-            <div>
-              <p>
-                {currency
-                  ? new Intl.NumberFormat().format(
-                      Number(carAsProduct.price_usd.toFixed(1))
-                    )
-                  : new Intl.NumberFormat().format(
-                      Number(carAsProduct.price_value.toFixed(1))
-                    )}
+            {carAsProduct.price !== 0 ? (
+              <div>
+                <p className={carProductsStyling["price-set"]}>
+                  {currency
+                    ? new Intl.NumberFormat().format(
+                        Number(carAsProduct.price_usd.toFixed(1))
+                      )
+                    : new Intl.NumberFormat().format(
+                        Number(carAsProduct.price_value.toFixed(1))
+                      )}
+                </p>
+
+                <img
+                  src={currency ? USDSVG : GELSVG}
+                  width={26}
+                  height={24}
+                  alt="Currency icon"
+                ></img>
+              </div>
+            ) : (
+              <p className={carProductsStyling["price-not-set"]}>
+                ფასი შეთანხმებით
               </p>
-
-              <img
-                src={currency ? USDSVG : GELSVG}
-                width={26}
-                height={24}
-                alt="Currency icon"
-              ></img>
-            </div>
-
+            )}
             <div></div>
           </div>
         </div>
 
-        <div className={carProductsStyling['views-date-icons']}>
-            <div className={carProductsStyling['view-counter']}> 
-           
-            <p>{carAsProduct.views} ნახვა</p>
-            •
+        <div className={carProductsStyling["views-date-icons"]}>
+          <div className={carProductsStyling["view-counter"]}>
+            {carAsProduct.tech_inspection && 
+            <div className={carProductsStyling['tech-inspection-vip']}>S-VIP</div>}
+            <p>{carAsProduct.views} ნახვა</p>•
             <p>{formatDateDifference(new Date(carAsProduct.order_date))}</p>
-            </div>
+          </div>
 
-            <div className={carProductsStyling['icons']}>
-              <img
-              className={carProductsStyling['note-icon']}
-              src={NoteSVG} alt="Note icon"></img>
-              <img src={CompareSVG} alt="Compare cars icon"></img>
-              <img className={carProductsStyling['favorite-icon']} src={FavoriteSVG} alt="Favorite icon"></img>
-            </div>
+          <div className={carProductsStyling["icons"]}>
+            <img
+              className={carProductsStyling["note-icon"]}
+              src={NoteSVG}
+              alt="Note icon"
+            ></img>
+            <img src={CompareSVG} alt="Compare cars icon"></img>
+            <img
+              className={carProductsStyling["favorite-icon"]}
+              src={FavoriteSVG}
+              alt="Favorite icon"
+            ></img>
+          </div>
         </div>
       </div>
     </div>

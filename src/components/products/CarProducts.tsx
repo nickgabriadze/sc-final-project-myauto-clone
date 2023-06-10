@@ -1,8 +1,10 @@
 
+import { useEffect, useState } from "react";
 import useProducts from "../../hooks/products/useProducts";
 import carProductsStyling from "./carProducts.module.css";
 import EachCarAsProduct from "./components/EachCarAsProduct";
 import ProductsHeader from "./components/ProductsHeader";
+import { Product } from "./productsInterfaces";
 
 function CarProducts() {
   const { productsData } = useProducts(
@@ -10,17 +12,23 @@ function CarProducts() {
   );
 
   console.log(productsData)
- 
+
 
 
   return (
     <div className={carProductsStyling["products-wrapper"]}>
       <ProductsHeader productsMetaTotal={productsData.meta.total}/>
-      <div className={carProductsStyling['car-products']}>
-        {productsData.items.map((eachCarAsProduct) => (
+     {productsData.items.length !== 0 && 
+     <>
+     <div className={carProductsStyling['car-products']}>
+         {productsData.items.map((eachCarAsProduct:Product) => (
           <EachCarAsProduct key={eachCarAsProduct.car_id} carAsProduct={eachCarAsProduct}/>
         ))}
       </div>
+      
+      <div></div>
+      </>
+      }
     </div>
   );
 }
