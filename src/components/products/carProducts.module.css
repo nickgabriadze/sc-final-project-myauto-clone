@@ -111,6 +111,11 @@
   cursor: pointer;
 }
 
+.page-number{
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
 /* EachCarAsProduct */
 .car-wrapper {

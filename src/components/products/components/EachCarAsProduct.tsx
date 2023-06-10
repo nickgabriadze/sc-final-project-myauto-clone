@@ -20,7 +20,7 @@ import getRandomInt from "../helpers/getRandomInt";
 function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
   const [modelName, setModelName] = useState<string>();
   const { currency } = useAppSelector((state) => state.searchReducer);
-
+  const [modelNameLoading, setModelNameLoading] = useState<boolean>(true);
   const severalIDMappings: {
     gearTypeIds: {
       [key: number]: string;
@@ -74,7 +74,7 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
 
   useEffect(() => {
     const abortController = new AbortController();
-
+    setModelNameLoading(true)
     const fetchModels = async () => {
       const request = await fetch(
         `https://api2.myauto.ge/ka/getManModels?man_id=${carAsProduct.man_id}`
@@ -109,6 +109,7 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
         )[0].man_name;
 
         setModelName(man.concat(" ").concat(model));
+        setModelNameLoading(false)
       };
       innerFunc();
     } catch (err) {
@@ -145,7 +146,7 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
                 cursor: "pointer",
               }}
             >
-              {modelName}
+              {modelNameLoading ? "Loading...":modelName}
             </p>
             <p style={{ color: "#8C929B", fontWeight: "bold" }}>
               {carAsProduct.prod_year} წ

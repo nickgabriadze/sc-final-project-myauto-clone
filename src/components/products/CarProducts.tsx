@@ -19,11 +19,59 @@ function CarProducts() {
   const productsDispatch = useAppDispatch();
   console.log(productsData);
 
-  const generatePagesArray = () => {
-    return [1, 2, 3, 4, 5, 6, 7];
+  const generatePagesArray = (currPage: number): number[] => {
+    let pageArray:number[] = []
+
+    if(currPage === 1){
+      return [1,2,3,4,6,7]
+    }
+
+    
+    if(currPage > 1  && currPage < productsData.meta.last_page){
+   
+      if(currPage - 4 > 0){
+        for(let i = currPage; i > currPage - 4; i-- ){
+          pageArray.push(i - 1)
+        }  
+      }else{
+        for(let i = 1; i < currPage; i++ ){
+          pageArray.push(currPage - i)
+        }  
+      }
+
+   
+      pageArray = pageArray.reverse()
+      pageArray.push(currPage)
+
+      if(currPage + 3 < productsData.meta.last_page){
+      for(let i = currPage; i < currPage + 4; i++){
+        pageArray.push(i + 1)
+      }
+    }else{
+      for(let i = currPage; i < productsData.meta.last_page; i++){
+        pageArray.push(i + 1)
+      }
+
+
+    }
+
+   
+  }
+
+  if(currPage === productsData.meta.last_page){
+    for(let i = 0; i < 5; i++){
+      pageArray.push(productsData.meta.last_page - i)
+    }
+
+    pageArray = pageArray.reverse()
+    
+  }
+
+
+    return pageArray
   };
 
-  const generatedPages = generatePagesArray();
+  const generatedPages:number[] = generatePagesArray(page);
 
   return (
     <div className={carProductsStyling["products-wrapper"]}>
@@ -41,9 +89,72 @@ function CarProducts() {
 
           <div className={carProductsStyling["pages-wrapper"]}>
             <div className={carProductsStyling["pages"]}>
-          
+              {
+                page !== 1 && 
+                <img src={GoToTheFirstAndTheLastPageSVG} 
+                onClick={() => {
+                  productsDispatch(setPage({
+                    page: 1
+                  }))
+                }}
+                alt="Go to the first page"></img>
+              }
+
+              {
+                page > 1 && 
+                <img src={GoBackAndForwardSVG} 
+                onClick={() => {
+                  productsDispatch(setPage({
+                    page: page - 1
+                  }))
+                }}
+                style={{rotate: "180deg"}}
+                alt="Go one page back"></img>
+              }
+
+               {/* actual page numbering go here */}
 
               
+                  {
+                   generatedPages.map((eachPageNumber) =>  
+                      <p
+                      className={carProductsStyling['page-number']}
+                      onClick={() => {
+                        productsDispatch(setPage({
+                          page: eachPageNumber
+                        }))
+                      }}
+                      style={eachPageNumber === page ? {color: "#e34c0e"}: {}}
+                      key={eachPageNumber}>{eachPageNumber}</p>
+                   )
+                  }
+
+{page < productsData.meta.last_page && 
+                 
+                 <img src={GoBackAndForwardSVG} 
+                 onClick={() => {
+                   productsDispatch(setPage({
+                     page: page + 1
+                   }))
+                 }}
+                 
+                 alt="Go one page forward"></img>
+               }
+               {
+                page !== productsData.meta.last_page && 
+                <img src={GoToTheFirstAndTheLastPageSVG} 
+                onClick={() => {
+                  productsDispatch(setPage({
+                    page: productsData.meta.last_page
+                  }))
+                }}
+                style={{rotate: "180deg"}}
+                alt="Go to the last page"></img>
+               }
+
+
+
+
             </div>
           </div>
         </>

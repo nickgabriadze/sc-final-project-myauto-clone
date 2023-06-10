@@ -5,7 +5,12 @@
   font-family: 'Noto Sans Georgian', sans-serif;
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #f1f3f7;
+  
 }
 
