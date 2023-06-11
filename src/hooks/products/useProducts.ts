@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Products } from "../../components/products/productsInterfaces";
 
-function useProducts(url: string) {
+function useProducts(url: string): [Products, string, boolean] {
   const [productsData, setProductsData] = useState<Products>({
     items: [],
     meta: {
@@ -34,12 +34,18 @@ function useProducts(url: string) {
     } catch (err) {
       setProductsError(`${err}`);
       setProductsLoading(false);
+    } finally {
+      const timeout = setTimeout(() => {
+        setProductsLoading(false);
+
+        return () => clearTimeout(timeout)
+      }, 1000);
     }
 
     return () => abortController.abort();
   }, [url]);
 
-  return { productsData, productsError, productsLoading };
+  return [productsData, productsError, productsLoading];
 }
 
 export default useProducts;

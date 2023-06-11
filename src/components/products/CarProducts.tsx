@@ -3,11 +3,12 @@ import useProducts from "../../hooks/products/useProducts";
 import carProductsStyling from "./carProducts.module.css";
 import EachCarAsProduct from "./components/EachCarAsProduct";
 import ProductsHeader from "./components/ProductsHeader";
-import { Product } from "./productsInterfaces";
+import { Product, Products } from "./productsInterfaces";
 import GoToTheFirstAndTheLastPageSVG from "./icons/goToTheFirstAndTheLastPage.svg";
 import GoBackAndForwardSVG from "./icons/goBackAndForward.svg";
 import { setPage } from "../../features/productSlice";
 import NoSearchResult from "./components/NoSearchResult";
+import CarLoading from "./components/CarLoading";
 
 function CarProducts() {
   const { page, sortIncDec, sortPeriod, searchLink, pressedSearch } =
@@ -24,25 +25,23 @@ function CarProducts() {
     5: "1d",
   };
 
-  const { productsData } = useProducts(
+  const [productsData, productsError, productsLoading] = useProducts(
     `https://api2.myauto.ge/ka/products?Page=${page}&&SortOrder=${sortIncDec}&&Period=${sortByPeriod[sortPeriod]}&&${searchLink}`
   );
 
   const productsDispatch = useAppDispatch();
-  
 
   const generatePagesArray = (currPage: number): number[] => {
     let pageArray: number[] = [];
 
     if (currPage === 1) {
       if (productsData.meta.last_page < 7) {
-        
         for (let i = 1; i < productsData.meta.last_page; i++) {
           pageArray.push(i);
         }
         return pageArray.length === 0 ? [1] : pageArray;
       } else {
-        return [1, 2, 3, 4, 6, 7];
+        return [1, 2, 3, 4, 5, 6, 7];
       }
     }
 
@@ -72,7 +71,7 @@ function CarProducts() {
     }
 
     if (currPage === productsData.meta.last_page) {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 4; i++) {
         pageArray.push(productsData.meta.last_page - i);
       }
 
@@ -90,12 +89,16 @@ function CarProducts() {
       {productsData.items.length !== 0 ? (
         <>
           <div className={carProductsStyling["car-products"]}>
-            {productsData.items.map((eachCarAsProduct: Product) => (
-              <EachCarAsProduct
-                key={eachCarAsProduct.car_id}
-                carAsProduct={eachCarAsProduct}
-              />
-            ))}
+            {productsLoading ? (
+             <CarLoading />
+            ) : (
+              productsData.items.map((eachCarAsProduct: Product) => (
+                <EachCarAsProduct
+                  key={eachCarAsProduct.car_id}
+                  carAsProduct={eachCarAsProduct}
+                />
+              ))
+            )}
           </div>
 
           <div className={carProductsStyling["pages-wrapper"]}>
