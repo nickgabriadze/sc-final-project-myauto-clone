@@ -1,4 +1,4 @@
-import { Model, SortedManModel } from "../components/search/searchInterfaces"
+import { Model, SortedManModel } from "../../components/search/searchInterfaces"
 
 const mergeModels = (modelsObject: SortedManModel[]) => {
     return modelsObject.map(each => {return {

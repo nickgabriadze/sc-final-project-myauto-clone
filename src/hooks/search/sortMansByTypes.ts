@@ -1,4 +1,4 @@
-import { Manufacturer } from "../components/search/searchInterfaces";
+import { Manufacturer } from "../../components/search/searchInterfaces";
 
 function sortMansByTypes(data: Manufacturer[]) {
     const result: { [key: string]: Manufacturer[] } = {

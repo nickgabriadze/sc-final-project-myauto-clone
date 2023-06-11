@@ -9,6 +9,7 @@ import GoBackAndForwardSVG from "./icons/goBackAndForward.svg";
 import { setPage } from "../../features/productSlice";
 import NoSearchResult from "./components/NoSearchResult";
 import CarLoading from "./components/CarLoading";
+import generatePageNumbers from "./helpers/generatePageNumbers";
 
 function CarProducts() {
   const { page, sortIncDec, sortPeriod, searchLink, pressedSearch } =
@@ -29,81 +30,31 @@ function CarProducts() {
     `https://api2.myauto.ge/ka/products?Page=${page}&&SortOrder=${sortIncDec}&&Period=${sortByPeriod[sortPeriod]}&&${searchLink}`
   );
 
-  
-
   const productsDispatch = useAppDispatch();
 
-  const generatePagesArray = (currPage: number): number[] => {
-    let pageArray: number[] = [];
-
-    if (currPage === 1) {
-      if (productsData.meta.last_page < 7) {
-        for (let i = 1; i < productsData.meta.last_page; i++) {
-          pageArray.push(i);
-        }
-        return pageArray.length === 0 ? [1] : pageArray;
-      } else {
-        return [1, 2, 3, 4, 5, 6, 7];
-      }
-    }
-
-    if (currPage > 1 && currPage < productsData.meta.last_page) {
-      if (currPage - 4 > 0) {
-        for (let i = currPage; i > currPage - 4; i--) {
-          pageArray.push(i - 1);
-        }
-      } else {
-        for (let i = 1; i < currPage; i++) {
-          pageArray.push(currPage - i);
-        }
-      }
-
-      pageArray = pageArray.reverse();
-      pageArray.push(currPage);
-
-      if (currPage + 3 < productsData.meta.last_page) {
-        for (let i = currPage; i < currPage + 4; i++) {
-          pageArray.push(i + 1);
-        }
-      } else {
-        for (let i = currPage; i < productsData.meta.last_page; i++) {
-          pageArray.push(i + 1);
-        }
-      }
-    }
-
-    if (currPage === productsData.meta.last_page) {
-      for (let i = 0; i < 4; i++) {
-        pageArray.push(productsData.meta.last_page - i);
-      }
-
-      pageArray = pageArray.reverse();
-    }
-
-    return pageArray;
-  };
-
-  const generatedPages: number[] = generatePagesArray(page);
-  if(productsError){
-    return <NoSearchResult />
+  const generatedPages: number[] = generatePageNumbers(
+    page,
+    productsData.meta.last_page
+  );
+  
+  if (productsError) {
+    return <NoSearchResult />;
   }
+
   return (
     <div className={carProductsStyling["products-wrapper"]}>
       <ProductsHeader productsMetaTotal={productsData.meta.total} />
       {productsData.items.length !== 0 ? (
         <>
           <div className={carProductsStyling["car-products"]}>
-            {productsLoading ? (
-             Array.from({length: 15}).map((_, i) => <CarLoading key={i}/>)
-            ) : (
-              productsData.items.map((eachCarAsProduct: Product) => (
-                <EachCarAsProduct
-                  key={eachCarAsProduct.car_id}
-                  carAsProduct={eachCarAsProduct}
-                />
-               
-              ))
-            )}
+            {productsLoading
+              ? Array.from({ length: 15 }).map((_, i) => <CarLoading key={i} />)
+              : productsData.items.map((eachCarAsProduct: Product) => (
+                  <EachCarAsProduct
+                    key={eachCarAsProduct.car_id}
+                    carAsProduct={eachCarAsProduct}
+                  />
+                ))}
           </div>
 
           <div className={carProductsStyling["pages-wrapper"]}>

@@ -1,4 +1,4 @@
-import { Category } from "../components/search/searchInterfaces";
+import { Category } from "../../components/search/searchInterfaces";
 
 function sortByCatTypes(data: Category[]){
     const result:{

@@ -25,6 +25,8 @@ function Manufacturers() {
     (state) => state.selectionReducer
   );
 
+
+
   const [searchMansTXT, setSearchMansTXT] =
     useState<string>("ყველა მწარმოებელი");
   const [searching, setSearching] = useState<boolean>(false);
@@ -43,7 +45,7 @@ function Manufacturers() {
             <input
               type="text"
               value={
-                searching
+                searching 
                   ? searchMansTXT
                   : manufacturers.length === 0
                   ? "ყველა მწარმოებელი"
@@ -93,6 +95,7 @@ function Manufacturers() {
               className={selectionStyling["expand-close-delete"]}
               draggable={false}
               onClick={() => {
+
                 if (manufacturers.length !== 0 && manufacturer_type === true) {
                   selectionDispatch(
                     setManuFacturers({

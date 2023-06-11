@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Manufacturer } from "../components/search/searchInterfaces";
+import { Manufacturer } from "../../components/search/searchInterfaces";
 import sortMansByTypes from "./sortMansByTypes";
 
 
