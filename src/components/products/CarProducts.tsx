@@ -3,7 +3,7 @@ import useProducts from "../../hooks/products/useProducts";
 import carProductsStyling from "./carProducts.module.css";
 import EachCarAsProduct from "./components/EachCarAsProduct";
 import ProductsHeader from "./components/ProductsHeader";
-import { Product, Products } from "./productsInterfaces";
+import { Product } from "./productsInterfaces";
 import GoToTheFirstAndTheLastPageSVG from "./icons/goToTheFirstAndTheLastPage.svg";
 import GoBackAndForwardSVG from "./icons/goBackAndForward.svg";
 import { setPage } from "../../features/productSlice";
@@ -28,6 +28,8 @@ function CarProducts() {
   const [productsData, productsError, productsLoading] = useProducts(
     `https://api2.myauto.ge/ka/products?Page=${page}&&SortOrder=${sortIncDec}&&Period=${sortByPeriod[sortPeriod]}&&${searchLink}`
   );
+
+  
 
   const productsDispatch = useAppDispatch();
 
@@ -82,7 +84,9 @@ function CarProducts() {
   };
 
   const generatedPages: number[] = generatePagesArray(page);
-
+  if(productsError){
+    return <NoSearchResult />
+  }
   return (
     <div className={carProductsStyling["products-wrapper"]}>
       <ProductsHeader productsMetaTotal={productsData.meta.total} />
