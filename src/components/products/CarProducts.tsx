@@ -94,13 +94,14 @@ function CarProducts() {
         <>
           <div className={carProductsStyling["car-products"]}>
             {productsLoading ? (
-             <CarLoading />
+             Array.from({length: 15}).map((_, i) => <CarLoading key={i}/>)
             ) : (
               productsData.items.map((eachCarAsProduct: Product) => (
                 <EachCarAsProduct
                   key={eachCarAsProduct.car_id}
                   carAsProduct={eachCarAsProduct}
                 />
+               
               ))
             )}
           </div>

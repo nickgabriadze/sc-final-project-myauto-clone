@@ -25,22 +25,18 @@ function useProducts(url: string): [Products, string, boolean] {
       return response;
     };
 
-    try {
-      const innerFunc = async () => {
+    const innerFunc = async () => {
+      try {
         const fetchedData = await fetchProducts();
         setProductsData(fetchedData.data);
-      };
-      innerFunc();
-    } catch (err) {
-      setProductsError(`${err}`);
-      setProductsLoading(false);
-    } finally {
-      const timeout = setTimeout(() => {
+      } catch (err) {
+        setProductsError(`${err}`);
         setProductsLoading(false);
-
-        return () => clearTimeout(timeout)
-      }, 1000);
-    }
+      } finally {
+        setProductsLoading(false);
+      }
+    };
+    innerFunc();
 
     return () => abortController.abort();
   }, [url]);
