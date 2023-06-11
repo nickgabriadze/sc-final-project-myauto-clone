@@ -4,7 +4,7 @@ interface SearchState {
   main_type: string; //car, tractor or motorcycle
   deal_type: number[]; //for sale or for rent
   manufacturers: { man_name: string; man_id: number }[];
-  categories: number[]; // main_type into detail
+  categories:{ cat_name: string; cat_id: number }[]; // main_type into detail
   currency: boolean; //gel or dollar
   pricesFrom: number;
   pricesTo: number;
@@ -73,10 +73,11 @@ const CarSearchSlice = createSlice({
       action: {
         type: string;
         payload: {
-          categories: number[];
+          categories: { cat_name: string; cat_id: number }[];
         };
       }
     ) => {
+
       return {
         ...state,
         categories: action.payload.categories,

@@ -10,7 +10,9 @@ import { setCategories } from "../../../../../features/searchSlice";
 
 function Categories() {
   const { catsData } = useCategories("https://api2.myauto.ge/ka/cats/get");
-  const { main_type } = useAppSelector((state) => state.searchReducer);
+  const { main_type, categories } = useAppSelector(
+    (state) => state.searchReducer
+  );
 
   const [categoriesData, setCategoriesData] = useState(
     catsData === undefined ? undefined : catsData[main_type]
@@ -25,6 +27,7 @@ function Categories() {
     { cat_name: string; cat_id: number }[]
   >([]);
   const inputFocusRef = useRef<HTMLInputElement>(null);
+  const [searching, setSearching] = useState<boolean>(false);
 
   useEffect(() => {
     setSelectedCategories([]);
@@ -41,7 +44,13 @@ function Categories() {
             <input
               type="text"
               className={selectionStyling["cats-input"]}
-              value={searchCatsTXT}
+              value={
+                searching
+                  ? searchCatsTXT
+                  : categories.length === 0
+                  ? "ყველა კატეგორია"
+                  : categories.map((each) => each.cat_name).join(", ")
+              }
               ref={inputFocusRef}
               style={
                 category_type ? { cursor: "initial" } : { cursor: "pointer" }
@@ -55,7 +64,7 @@ function Categories() {
                     models_type: false,
                   })
                 );
-
+                setSearching(true);
                 setSearchCatsTXT("");
                 setCategoriesData(catsData && catsData[main_type]);
               }}
@@ -117,12 +126,9 @@ function Categories() {
           <div className={selectionStyling["cats-list"]}>
             <div
               className={selectionStyling["scrollable-cats"]}
-              style={
-                categoriesData.length < 5  ? { height: "fit-content" } : {}
-              }
+              style={categoriesData.length < 5 ? { height: "fit-content" } : {}}
             >
-
-{categoriesData.length === 0 ? (
+              {categoriesData.length === 0 ? (
                 <p className={selectionStyling["no-search-result"]}>
                   ჩანაწერი არ არის
                 </p>
@@ -151,6 +157,7 @@ function Categories() {
                         : false
                     }
                     onClick={() => {
+                      setSearching(false);
                       if (
                         selectedCategories.some(
                           (eachCat) =>
@@ -167,12 +174,10 @@ function Categories() {
                         selectionDispatch(
                           setCategories({
                             categories: [
-                              ...selectedCategories
-                                .filter(
-                                  (each) =>
-                                    each.cat_id !== eachCategory.category_id
-                                )
-                                .map((each) => each.cat_id),
+                              ...selectedCategories.filter(
+                                (each) =>
+                                  each.cat_id !== eachCategory.category_id
+                              ),
                             ],
                           })
                         );
@@ -197,8 +202,11 @@ function Categories() {
                         selectionDispatch(
                           setCategories({
                             categories: [
-                              ...selectedCategories.map((each) => each.cat_id),
-                              eachCategory.category_id,
+                              ...selectedCategories,
+                              {
+                                cat_id: eachCategory.category_id,
+                                cat_name: eachCategory.title,
+                              },
                             ],
                           })
                         );
@@ -214,6 +222,7 @@ function Categories() {
                   ></input>
                   <p
                     onClick={() => {
+                      setSearching(false);
                       if (
                         selectedCategories.some(
                           (eachCat) =>
@@ -231,12 +240,10 @@ function Categories() {
                         selectionDispatch(
                           setCategories({
                             categories: [
-                              ...selectedCategories
-                                .filter(
-                                  (each) =>
-                                    each.cat_id !== eachCategory.category_id
-                                )
-                                .map((each) => each.cat_id),
+                              ...selectedCategories.filter(
+                                (each) =>
+                                  each.cat_id !== eachCategory.category_id
+                              ),
                             ],
                           })
                         );
@@ -261,8 +268,11 @@ function Categories() {
                         selectionDispatch(
                           setCategories({
                             categories: [
-                              ...selectedCategories.map((each) => each.cat_id),
-                              eachCategory.category_id,
+                              ...selectedCategories,
+                              {
+                                cat_id: eachCategory.category_id,
+                                cat_name: eachCategory.title,
+                              },
                             ],
                           })
                         );

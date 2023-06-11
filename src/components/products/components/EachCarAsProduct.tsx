@@ -16,6 +16,7 @@ import CompareSVG from "../icons/compare.svg";
 import FavoriteSVG from "../icons/favorite.svg";
 import GeorgiaSVG from "../icons/georgia.svg";
 import getRandomInt from "../helpers/getRandomInt";
+import NoCarImageSVG from "../icons/nocarImage.svg";
 
 function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
   const [modelName, setModelName] = useState<string>();
@@ -106,9 +107,11 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
         const man = mans.filter(
           (eachMan: Manufacturer) =>
             Number(eachMan.man_id) === carAsProduct.man_id
-        )[0].man_name;
+        );
 
-        setModelName(man.concat(" ").concat(model));
+        setModelName(
+          man.length !== 0 ? man[0]?.man_name.concat(" ").concat(model) : model
+        );
         setModelNameLoading(false);
       };
       innerFunc();
@@ -119,13 +122,25 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
     return () => abortController.abort();
   }, [carAsProduct.man_id, carAsProduct.model_id]);
 
+  const [imgError, setImgError] = useState(false);
+
   return (
     <div className={carProductsStyling["car-wrapper"]}>
-      <div className={carProductsStyling["car-visual-picture"]}>
+      <div
+        className={carProductsStyling["car-visual-picture"]}
+        style={
+          imgError ? { backgroundColor: "#d8dbe2", borderRadius: "10px" } : {}
+        }
+      >
         <img
-          src={`https://static.my.ge/myauto/photos/${carAsProduct.photo}/thumbs/${carAsProduct.car_id}_1.jpg?v=${carAsProduct.photo_ver}`}
+          src={
+            !imgError
+              ? `https://static.my.ge/myauto/photos/${carAsProduct.photo}/thumbs/${carAsProduct.car_id}_1.jpg?v=${carAsProduct.photo_ver}`
+              : NoCarImageSVG
+          }
           width={182}
           height={144}
+          onError={() => setImgError(true)}
           draggable={false}
           alt="Car picture"
         ></img>

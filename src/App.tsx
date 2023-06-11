@@ -2,6 +2,7 @@ import Header from "./components/header/Header";
 import CarSearch from "./components/search/CarSearch";
 import CarProducts from "./components/products/CarProducts";
 
+
 function App() {
   document.title = "ავტომობილები";
   return (

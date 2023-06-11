@@ -42,7 +42,7 @@ function Models() {
   const [searchModelsTXT, setSearchModelsTXT] =
     useState<string>("ყველა მოდელი");
   const [searching, setSearching] = useState<boolean>(false);
-
+  
   return (
     <div className={selectionStyling["type-models-wrapper"]}>
       <div className={selectionStyling["models-type"]}>
@@ -51,7 +51,7 @@ function Models() {
           <div className={selectionStyling["models-search-div"]}>
             <input
               value={
-                searching
+                searching && manufacturers.length !== 0
                   ? searchModelsTXT
                   : models.length === 0
                   ? "ყველა მოდელი"

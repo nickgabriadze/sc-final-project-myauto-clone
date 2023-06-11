@@ -9,7 +9,9 @@ interface ProductsState {
     sortPeriod: number,
     sortIncDec: number,
     products: Products,
-    page: number
+    page: number,
+    searchLink: string,
+    pressedSearch: boolean
 }
 
 const initialState: ProductsState= {
@@ -24,7 +26,9 @@ const initialState: ProductsState= {
             last_page: 0
         }
     },
-    page: 1
+    page: 1,
+    searchLink: '',
+    pressedSearch: false
 }
 
 const productsSlice = createSlice({
@@ -58,9 +62,24 @@ const productsSlice = createSlice({
                 ...state,
                 page: action.payload.page
             }
+        },
+
+        setSearchLink: (state, action: {type: string, payload: {searchLink: string}}) => {
+
+            return {
+                ...state,
+                searchLink: action.payload.searchLink
+            }
+        },
+
+        setPressedSearch: (state, action: {type: string, payload: {pressedSearch: true}}) => {
+            return {
+                ...state,
+                pressedSearch: action.payload.pressedSearch
+            }
         }
     }
 })
 
-export const {setPage, setSortPeriod, setSortIncDec, setProducts} = productsSlice.actions;
+export const {setPage, setSortPeriod, setSortIncDec, setProducts, setSearchLink, setPressedSearch} = productsSlice.actions;
 export default productsSlice.reducer

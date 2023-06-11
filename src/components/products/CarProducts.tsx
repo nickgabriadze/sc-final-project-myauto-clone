@@ -7,11 +7,11 @@ import { Product } from "./productsInterfaces";
 import GoToTheFirstAndTheLastPageSVG from "./icons/goToTheFirstAndTheLastPage.svg";
 import GoBackAndForwardSVG from "./icons/goBackAndForward.svg";
 import { setPage } from "../../features/productSlice";
+import NoSearchResult from "./components/NoSearchResult";
 
 function CarProducts() {
-  const { page, sortIncDec, sortPeriod } = useAppSelector(
-    (state) => state.productsReducer
-  );
+  const { page, sortIncDec, sortPeriod, searchLink, pressedSearch } =
+    useAppSelector((state) => state.productsReducer);
 
   const sortByPeriod: {
     [key: number]: string;
@@ -25,7 +25,7 @@ function CarProducts() {
   };
 
   const { productsData } = useProducts(
-    `https://api2.myauto.ge/ka/products?Page=${page}&&SortOrder=${sortIncDec}&&Period=${sortByPeriod[sortPeriod]}`
+    `https://api2.myauto.ge/ka/products?Page=${page}&&SortOrder=${sortIncDec}&&Period=${sortByPeriod[sortPeriod]}&&${searchLink}`
   );
 
   const productsDispatch = useAppDispatch();
@@ -35,7 +35,15 @@ function CarProducts() {
     let pageArray: number[] = [];
 
     if (currPage === 1) {
-      return [1, 2, 3, 4, 6, 7];
+      if (productsData.meta.last_page < 7) {
+        
+        for (let i = 1; i < productsData.meta.last_page; i++) {
+          pageArray.push(i);
+        }
+        return pageArray.length === 0 ? [1] : pageArray;
+      } else {
+        return [1, 2, 3, 4, 6, 7];
+      }
     }
 
     if (currPage > 1 && currPage < productsData.meta.last_page) {
@@ -79,7 +87,7 @@ function CarProducts() {
   return (
     <div className={carProductsStyling["products-wrapper"]}>
       <ProductsHeader productsMetaTotal={productsData.meta.total} />
-      {productsData.items.length !== 0 && (
+      {productsData.items.length !== 0 ? (
         <>
           <div className={carProductsStyling["car-products"]}>
             {productsData.items.map((eachCarAsProduct: Product) => (
@@ -168,6 +176,8 @@ function CarProducts() {
             </div>
           </div>
         </>
+      ) : (
+        pressedSearch && <NoSearchResult />
       )}
     </div>
   );

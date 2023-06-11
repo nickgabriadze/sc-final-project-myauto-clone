@@ -6,14 +6,14 @@ import ExpandLessSVG from "../../../icons/expand-less.svg";
 import CloseSVG from "../../../icons/close.svg";
 import selectionStyling from "../selection.module.css";
 import { setSearchingTypeState } from "../../../../../features/selectionSlice";
-import { setManuFacturers } from "../../../../../features/searchSlice";
+import { setManuFacturers, setModels } from "../../../../../features/searchSlice";
 
 function Manufacturers() {
   const { mansData } = useManufacturers(
     "https://static.my.ge/myauto/js/mans.json"
   );
   const selectionDispatch = useAppDispatch();
-  const { main_type, manufacturers } = useAppSelector(
+  const { main_type, manufacturers, models } = useAppSelector(
     (state) => state.searchReducer
   );
 
@@ -173,6 +173,11 @@ function Manufacturers() {
                             ],
                           })
                         );
+
+                        selectionDispatch(setModels({
+                          models: [...models.filter(each => each.man_id !== Number(eachManufacturer.man_id))]
+                        }))
+
                       } else {
                         selectionDispatch(
                           setManuFacturers({
@@ -209,6 +214,10 @@ function Manufacturers() {
                             ],
                           })
                         );
+
+                        selectionDispatch(setModels({
+                          models: [...models.filter(each => each.man_id !== Number(eachManufacturer.man_id))]
+                        }))
                       } else {
                         selectionDispatch(
                           setManuFacturers({
