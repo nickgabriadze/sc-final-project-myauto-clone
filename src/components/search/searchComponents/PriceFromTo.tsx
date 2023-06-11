@@ -135,11 +135,12 @@ function PriceFromTo() {
             onChange={(e) =>
               dispatch(
                 setPricesFrom({
-                  pricesFrom: Number(e.target.value),
+                  pricesFrom: Math.abs(Number(e.target.value)),
                 })
               )
             }
-            value={pricesFrom === 0 ? "" : pricesFrom}
+            min={0}
+            value={pricesFrom === 0 ? "" : pricesFrom < 0 ? Math.abs(pricesFrom):pricesFrom}
           ></input>
           <hr className={carSearchStyling["range-hr"]}></hr>
           <input
@@ -148,11 +149,12 @@ function PriceFromTo() {
             onChange={(e) =>
               dispatch(
                 setPricesTo({
-                  pricesTo: Number(e.target.value),
+                  pricesTo: Math.abs(Number(e.target.value)),
                 })
               )
             }
-            value={pricesTo === 0 ? "" : pricesTo}
+            min={0}
+            value={pricesTo === 0 ? "" : pricesTo < 0 ? Math.abs(pricesTo): pricesTo}
           ></input>
         </div>
       </div>
