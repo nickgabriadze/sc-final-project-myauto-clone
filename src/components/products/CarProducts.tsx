@@ -29,7 +29,7 @@ function CarProducts() {
   );
 
   const productsDispatch = useAppDispatch();
-  console.log(productsData);
+  
 
   const generatePagesArray = (currPage: number): number[] => {
     let pageArray: number[] = [];

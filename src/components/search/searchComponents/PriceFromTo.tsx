@@ -10,7 +10,11 @@ import {
   setPricesFrom,
   setPricesTo,
 } from "../../../features/searchSlice";
-import { setPage, setPressedSearch, setSearchLink } from "../../../features/productSlice";
+import {
+  setPage,
+  setPressedSearch,
+  setSearchLink,
+} from "../../../features/productSlice";
 function PriceFromTo() {
   const styleToSet = {
     backgroundColor: "#282a37",
@@ -71,7 +75,6 @@ function PriceFromTo() {
         mansWithoutModels.push(eachMan.man_id);
       }
     }
-    console.log(mansWithoutModels);
 
     let modelsString = "";
 
@@ -86,8 +89,6 @@ function PriceFromTo() {
     modelsString = modelsString.concat(
       mansWithoutModels.length !== 0 ? `-${mansWithoutModels.join("-")}` : ""
     );
-
-    console.log(modelsString);
 
     return `${dealTypesString}&&${categoriesString}&&Mans=${modelsString}&&PriceFrom=${
       pricesFrom === 0 ? "" : pricesFrom
@@ -173,9 +174,11 @@ function PriceFromTo() {
               })
             );
 
-            dispatch(setPressedSearch({
-              pressedSearch: true
-            }))
+            dispatch(
+              setPressedSearch({
+                pressedSearch: true,
+              })
+            );
 
             dispatch(
               setPage({
