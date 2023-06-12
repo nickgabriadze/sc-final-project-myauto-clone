@@ -16,9 +16,10 @@ import CompareSVG from "../icons/compare.svg";
 import FavoriteSVG from "../icons/favorite.svg";
 import GeorgiaSVG from "../icons/georgia.svg";
 import NoCarImageSVG from "../icons/nocarImage.svg";
+import MobileCar from "./mobile/MobileCar";
 
-function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
-  const [modelName, setModelName] = useState<string>();
+function EachCarAsProduct({ carAsProduct, width }: { carAsProduct: Product, width: number }) {
+  const [modelName, setModelName] = useState<string>('');
   const { currency } = useAppSelector((state) => state.searchReducer);
   const [modelNameLoading, setModelNameLoading] = useState<boolean>(true);
   const severalIDMappings: {
@@ -156,6 +157,7 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
     },
   };
 
+
   const eachEngineVolume =
     carAsProduct.engine_volume < 1000
       ? `0.${carAsProduct.engine_volume.toString().slice(0, 1)}`
@@ -190,7 +192,7 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
 
         const model = fetchedModels.data.filter(
           (eachModel: Model) => eachModel.model_id === carAsProduct.model_id
-        )[0].model_name;
+        );
 
         const man = mans.filter(
           (eachMan: Manufacturer) =>
@@ -198,7 +200,8 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
         );
 
         setModelName(
-          man.length !== 0 ? man[0]?.man_name.concat(" ").concat(model) : model
+        ''.concat(man.length !== 0 ? man[0].man_name : '').concat(" ").concat(model.length !== 0 ? model[0].model_name : '')
+          
         );
         setModelNameLoading(false);
       };
@@ -212,7 +215,9 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
 
   const [imgError, setImgError] = useState(false);
 
+
   return (
+    <>
     <div className={carProductsStyling["car-wrapper"]}>
       <div
         className={carProductsStyling["car-visual-picture"]}
@@ -358,6 +363,9 @@ function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
         </div>
       </div>
     </div>
+
+    <MobileCar/>
+    </>
   );
 }
 

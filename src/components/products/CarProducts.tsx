@@ -10,10 +10,25 @@ import { setPage } from "../../features/productSlice";
 import NoSearchResult from "./components/NoSearchResult";
 import CarLoading from "./components/CarLoading";
 import generatePageNumbers from "./helpers/generatePageNumbers";
+import { useEffect, useState } from "react";
 
 function CarProducts() {
   const { page, sortIncDec, sortPeriod, searchLink, pressedSearch } =
     useAppSelector((state) => state.productsReducer);
+
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
+  
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const sortByPeriod: {
     [key: number]: string;
@@ -36,7 +51,7 @@ function CarProducts() {
     page,
     productsData.meta.last_page
   );
-  
+
   if (productsError) {
     return <NoSearchResult />;
   }
@@ -51,6 +66,7 @@ function CarProducts() {
               ? Array.from({ length: 15 }).map((_, i) => <CarLoading key={i} />)
               : productsData.items.map((eachCarAsProduct: Product) => (
                   <EachCarAsProduct
+                    width={width}
                     key={eachCarAsProduct.car_id}
                     carAsProduct={eachCarAsProduct}
                   />

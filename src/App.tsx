@@ -5,7 +5,9 @@ import CarProducts from "./components/products/CarProducts";
 
 function App() {
   document.title = "ავტომობილები";
+
   return (
+    
     <div
       style={{
         display: "flex",
