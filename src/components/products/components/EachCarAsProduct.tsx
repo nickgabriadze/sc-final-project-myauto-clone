@@ -18,7 +18,7 @@ import GeorgiaSVG from "../icons/georgia.svg";
 import NoCarImageSVG from "../icons/nocarImage.svg";
 import MobileCar from "./mobile/MobileCar";
 
-function EachCarAsProduct({ carAsProduct, width }: { carAsProduct: Product, width: number }) {
+function EachCarAsProduct({ carAsProduct }: { carAsProduct: Product }) {
   const [modelName, setModelName] = useState<string>('');
   const { currency } = useAppSelector((state) => state.searchReducer);
   const [modelNameLoading, setModelNameLoading] = useState<boolean>(true);
