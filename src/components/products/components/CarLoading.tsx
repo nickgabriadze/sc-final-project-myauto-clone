@@ -1,7 +1,9 @@
 import carProductsStyling from "../carProducts.module.css";
+import MobileCarLoading from "./mobile/MobileCarLoading";
 
 function CarLoading() {
   return (
+    <>
     <div className={carProductsStyling["skeleton-wrapper"]}>
       <div className={carProductsStyling["img-skeleton"]}></div>
 
@@ -45,6 +47,9 @@ function CarLoading() {
         </div>
       </div>
     </div>
+
+    <MobileCarLoading />
+    </>
   );
 }
 

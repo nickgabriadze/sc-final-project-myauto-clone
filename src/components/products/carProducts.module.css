@@ -483,4 +483,8 @@
   .car-products{
     gap: 0;
   }
+
+  .skeleton-wrapper{
+    display: none;
+  }
 }

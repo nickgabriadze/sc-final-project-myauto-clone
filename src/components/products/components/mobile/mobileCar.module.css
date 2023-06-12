@@ -104,4 +104,12 @@
   .mobile-car-wrapper {
     display: none;
   }
+
+  .views-date-icons{
+    display: none;
+  }
+
+  .mobile-car-loading-skeleton{
+    display: none;
+  }
 }
