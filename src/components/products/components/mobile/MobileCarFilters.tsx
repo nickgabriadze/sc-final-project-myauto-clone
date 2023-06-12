@@ -45,7 +45,7 @@ function MobileCarFilters() {
 
                 productsDispatch(setSearchLink({
                     searchLink: generateFilterLink(
-                      deal_type,
+                     [],
                       models,
                       categories,
                       pricesFrom,
@@ -76,7 +76,7 @@ function MobileCarFilters() {
                 
                 productsDispatch(setSearchLink({
                     searchLink: generateFilterLink(
-                      deal_type,
+                      [],
                       models,
                       categories,
                       pricesFrom,

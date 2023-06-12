@@ -72,7 +72,7 @@ const productsSlice = createSlice({
             }
         },
 
-        setPressedSearch: (state, action: {type: string, payload: {pressedSearch: true}}) => {
+        setPressedSearch: (state, action: {type: string, payload: {pressedSearch: boolean}}) => {
             return {
                 ...state,
                 pressedSearch: action.payload.pressedSearch

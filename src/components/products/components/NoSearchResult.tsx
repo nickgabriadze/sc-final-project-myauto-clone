@@ -1,5 +1,5 @@
 import { useAppDispatch } from "../../../features/hooks";
-import { setSearchLink } from "../../../features/productSlice";
+import { setPressedSearch, setSearchLink } from "../../../features/productSlice";
 import {
   setCategories,
   setDealType,
@@ -25,6 +25,11 @@ function NoSearchResult() {
       </p>
       <button
         onClick={() => {
+
+          selectionDispatch(setPressedSearch({
+              pressedSearch: false
+          }))
+
           selectionDispatch(
             setManuFacturers({
               manufacturers: [],
