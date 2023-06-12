@@ -466,7 +466,7 @@
     }
 }
 
-@media only screen and (max-width: 375px){
+@media only screen and (max-width: 376px){
   
   .products-header{
     display: none;
@@ -474,5 +474,13 @@
 
   .car-wrapper{
     display: none;
+  }
+
+  .products-wrapper{
+    padding: 0;
+  }
+
+  .car-products{
+    gap: 0;
   }
 }
