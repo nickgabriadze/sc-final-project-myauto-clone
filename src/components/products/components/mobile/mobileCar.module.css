@@ -1,4 +1,4 @@
-.mobile-car-outer-wrapper{
+.mobile-car-outer-wrapper {
   width: 100%;
   background-color: #ffffff;
 }
@@ -25,70 +25,65 @@
   color: #ffffff;
   font-weight: bold;
   height: fit-content;
-  
 }
 
-
-.price-customs{
-    display: flex;
-    height: 30px;
-    justify-content: space-between;
-    align-items: center;
-    
+.price-customs {
+  display: flex;
+  height: 30px;
+  justify-content: space-between;
+  align-items: center;
 }
-.customs{
-    height: fit-content;
-    border-radius: 6px;
-    padding: 4px 8px 4px 4px
+.customs {
+  height: fit-content;
+  border-radius: 6px;
+  padding: 4px 8px 4px 4px;
 }
 
-.car-img{
-   
-    border-radius: 16px;
-    object-fit: cover;
-    width: 100%;
+.car-img {
+  border-radius: 16px;
+  object-fit: cover;
+  width: 100%;
 }
 
-.price-set{
-    margin-left: 10px;
+.price-set {
+  margin-left: 10px;
 }
-.price-not-set{
-    font-size: 12px;
-    width: 140px;
-}
-
-.favorite-icon{
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    z-index: 2;
+.price-not-set {
+  font-size: 12px;
+  width: 140px;
 }
 
-.car-info{
-    display: flex;
-    justify-content: space-between;
+.favorite-icon {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  z-index: 2;
 }
 
-.car-info p{
+.car-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.car-info p {
   color: #454857;
   font-size: 12px;
 }
 
-.run-fuel-gear,.cat-wheel-location{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.run-fuel-gear,
+.cat-wheel-location {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-
-.views-date-icons{
+.views-date-icons {
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid #E4E7EB;
-  
+  border-top: 1px solid #e4e7eb;
 }
 
-.views-date-icons > div{
+.views-date-icons > div {
   padding: 20px;
   display: inherit;
   gap: 8px;
@@ -99,17 +94,138 @@
   width: 300px;
 }
 
+/* Mobile car loading skeleton */
+
+.m-skeleton{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.mobile-car-loading-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+
+  background-color: #ffffff;
+  height: 451px;
+  padding: 20px;
+  border-bottom: 1px solid #f1f1f1;
+  
+}
+
+.m-skeleton-1,
+.m-skeleton-2,
+.m-skeleton-3 {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.vip-skeleton,
+.model-year-skeleton,
+.m-skeleton-2 div {
+  height: 20px;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  animation: skeletonLoading 3s infinite ease-in-out
+}
+.vip-skeleton {
+  width: 20%;
+}
+
+.model-year-skeleton {
+  width: 80%;
+}
+
+.m-skeleton-2 div {
+  width: 33%;
+}
+
+.m-skeleton-3 {
+  background-color: #f1f1f1;
+  height: 250px;
+  border-radius: 16px;
+  animation: skeletonLoading 3s infinite ease-in-out
+}
+
+.m-skeleton-4 {
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.m-skeleton-4 > div{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.m-skeleton-4 > div div{
+  width: 100px;
+  height: 20px;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  animation: skeletonLoading 3s infinite ease-in-out
+}
+
+.m-skeleton-5{
+  padding: 20px;
+  border-top: 1px solid #e4e7eb;
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+
+}
+
+.m-skeleton-5 > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.m-skeleton-5 > div .m-skeleton-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  animation: skeletonLoading 3s infinite ease-in-out
+}
+
+.m-text-skeleton{
+  width: 70px;
+  height: 20px;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  animation: skeletonLoading 3s infinite ease-in-out
+}
+
+
+
+@keyframes skeletonLoading {
+  100% {
+    background-color: #f1f1f1;
+  }
+  50% {
+    background-color: #f1f1f175;
+  }
+
+  0% {
+    background-color: #f1f1f1;
+  }
+}
 
 @media only screen and (min-width: 376px) {
   .mobile-car-wrapper {
     display: none;
   }
 
-  .views-date-icons{
+  .views-date-icons {
     display: none;
   }
 
-  .mobile-car-loading-skeleton{
+  .mobile-car-loading-skeleton {
     display: none;
   }
 }
