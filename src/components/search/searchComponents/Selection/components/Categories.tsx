@@ -148,7 +148,7 @@ function Categories() {
                     readOnly={true}
                     name="Categories"
                     checked={
-                      selectedCategories.some(
+                      categories.some(
                         (eachCat) =>
                           eachCat.cat_name === eachCategory.title &&
                           eachCat.cat_id === eachCategory.category_id
@@ -159,7 +159,7 @@ function Categories() {
                     onClick={() => {
                       setSearching(false);
                       if (
-                        selectedCategories.some(
+                        categories.some(
                           (eachCat) =>
                             eachCat.cat_name === eachCategory.title &&
                             eachCat.cat_id === eachCategory.category_id
@@ -174,7 +174,7 @@ function Categories() {
                         selectionDispatch(
                           setCategories({
                             categories: [
-                              ...selectedCategories.filter(
+                              ...categories.filter(
                                 (each) =>
                                   each.cat_id !== eachCategory.category_id
                               ),
@@ -182,7 +182,7 @@ function Categories() {
                           })
                         );
                         setSearchCatsTXT(
-                          selectedCategories
+                          categories
                             .filter(
                               (eachBrand) =>
                                 eachBrand.cat_name !== eachCategory.title
@@ -202,7 +202,7 @@ function Categories() {
                         selectionDispatch(
                           setCategories({
                             categories: [
-                              ...selectedCategories,
+                              ...categories,
                               {
                                 cat_id: eachCategory.category_id,
                                 cat_name: eachCategory.title,
@@ -213,7 +213,7 @@ function Categories() {
 
                         setSearchCatsTXT(
                           [
-                            ...selectedCategories.map((each) => each.cat_name),
+                            ...categories.map((each) => each.cat_name),
                             eachCategory.title,
                           ].join(", ")
                         );
@@ -221,70 +221,69 @@ function Categories() {
                     }}
                   ></input>
                   <p
-                    onClick={() => {
-                      setSearching(false);
-                      if (
-                        selectedCategories.some(
-                          (eachCat) =>
-                            eachCat.cat_name === eachCategory.title &&
-                            eachCat.cat_id === eachCategory.category_id
+                   onClick={() => {
+                    setSearching(false);
+                    if (
+                      categories.some(
+                        (eachCat) =>
+                          eachCat.cat_name === eachCategory.title &&
+                          eachCat.cat_id === eachCategory.category_id
+                      )
+                    ) {
+                      setSelectedCategories((prev) =>
+                        prev.filter(
+                          (eachBrand) =>
+                            eachBrand.cat_name !== eachCategory.title
                         )
-                      ) {
-                        setSelectedCategories((prev) =>
-                          prev.filter(
+                      );
+                      selectionDispatch(
+                        setCategories({
+                          categories: [
+                            ...categories.filter(
+                              (each) =>
+                                each.cat_id !== eachCategory.category_id
+                            ),
+                          ],
+                        })
+                      );
+                      setSearchCatsTXT(
+                        categories
+                          .filter(
                             (eachBrand) =>
                               eachBrand.cat_name !== eachCategory.title
                           )
-                        );
+                          .map((each) => each.cat_name)
+                          .join(", ")
+                      );
+                    } else {
+                      setSelectedCategories((prev) => [
+                        ...prev,
+                        {
+                          cat_name: eachCategory.title,
+                          cat_id: eachCategory.category_id,
+                        },
+                      ]);
 
-                        selectionDispatch(
-                          setCategories({
-                            categories: [
-                              ...selectedCategories.filter(
-                                (each) =>
-                                  each.cat_id !== eachCategory.category_id
-                              ),
-                            ],
-                          })
-                        );
-                        setSearchCatsTXT(
-                          selectedCategories
-                            .filter(
-                              (eachBrand) =>
-                                eachBrand.cat_name !== eachCategory.title
-                            )
-                            .map((each) => each.cat_name)
-                            .join(", ")
-                        );
-                      } else {
-                        setSelectedCategories((prev) => [
-                          ...prev,
-                          {
-                            cat_name: eachCategory.title,
-                            cat_id: eachCategory.category_id,
-                          },
-                        ]);
+                      selectionDispatch(
+                        setCategories({
+                          categories: [
+                            ...categories,
+                            {
+                              cat_id: eachCategory.category_id,
+                              cat_name: eachCategory.title,
+                            },
+                          ],
+                        })
+                      );
 
-                        selectionDispatch(
-                          setCategories({
-                            categories: [
-                              ...selectedCategories,
-                              {
-                                cat_id: eachCategory.category_id,
-                                cat_name: eachCategory.title,
-                              },
-                            ],
-                          })
-                        );
-
-                        setSearchCatsTXT(
-                          [
-                            ...selectedCategories.map((each) => each.cat_name),
-                            eachCategory.title,
-                          ].join(", ")
-                        );
-                      }
-                    }}
+                      setSearchCatsTXT(
+                        [
+                          ...categories.map((each) => each.cat_name),
+                          eachCategory.title,
+                        ].join(", ")
+                      );
+                    }
+                  }}
                   >
                     {eachCategory.title}
                   </p>
@@ -318,7 +317,7 @@ function Categories() {
                     );
 
                     setSearchCatsTXT(
-                      selectedCategories.map((each) => each.cat_name).join(", ")
+                      categories.map((each) => each.cat_name).join(", ")
                     );
                   }}
                 >

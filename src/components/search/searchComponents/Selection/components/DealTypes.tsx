@@ -20,7 +20,9 @@ function DealTypes() {
   const [searchDealsTXT, setSearchDealsTXT] =
     useState<string>("გარიგების ტიპი");
   const selectionDispatch = useAppDispatch();
-  const { deal_type } = useAppSelector((state) => state.selectionReducer);
+  const { deal_type: dealType, } = useAppSelector((state) => state.selectionReducer);
+   const {deal_type} = useAppSelector(state => state.searchReducer);
+
   const [selectedDeals, setSelectedDeals] = useState<Deal>({
     იყიდება: [0, false],
     ქირავდება: [1, false],
@@ -54,7 +56,7 @@ function DealTypes() {
 
       return [
         constructedString.split(", ").slice(0, -1).join(", "),
-        chosenDealIds,
+        chosenDealIds
       ];
     };
     const updatedString = updateSearchTXT();
@@ -75,6 +77,7 @@ function DealTypes() {
     selectedDeals.ქირავდება,
     selectedDeals.შესყიდვით,
     selectedDeals.მძღოლით,
+   
   ]);
 
   return (
@@ -90,7 +93,7 @@ function DealTypes() {
               onClick={() => {
                 selectionDispatch(
                   setSearchingTypeState({
-                    deal_type: !deal_type,
+                    deal_type: !dealType,
                     manufacturer_type: false,
                     category_type: false,
                     models_type: false,
@@ -104,7 +107,7 @@ function DealTypes() {
               width={15}
               height={15}
               onClick={() => {
-                if (deal_type && checkSelectedDeals()) {
+                if (dealType && checkSelectedDeals()) {
                   setSearchDealsTXT("გარიგების ტიპი");
                   setSelectedDeals((prev) => ({
                     ...prev,
@@ -116,9 +119,10 @@ function DealTypes() {
                     დაზღვეული: [4, false],
                   }));
                 } else {
+                  
                   selectionDispatch(
                     setSearchingTypeState({
-                      deal_type: !deal_type,
+                      deal_type: !dealType,
                       manufacturer_type: false,
                       category_type: false,
                       models_type: false,
@@ -127,7 +131,7 @@ function DealTypes() {
                 }
               }}
               src={
-                deal_type
+                dealType
                   ? !checkSelectedDeals()
                     ? ExpandLessSVG
                     : CloseSVG
@@ -137,7 +141,7 @@ function DealTypes() {
             />
           </div>
         </div>
-        {deal_type && (
+        {dealType && (
           <div className={selectionStyling["deals-list"]}>
             <div className={selectionStyling["each-deal-wrapper"]}>
               <div className={selectionStyling["each-deal"]}>

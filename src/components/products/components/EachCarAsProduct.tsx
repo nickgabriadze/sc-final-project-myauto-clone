@@ -157,7 +157,7 @@ function EachCarAsProduct({
               <div>
                 <img src={EngineSVG} alt="Engine icon"></img>
                 <p>
-                  {eachEngineVolume}
+                  {eachEngineVolume} {" "}
                   {severalIDMappings.fuelTypeIds[carAsProduct.fuel_type_id]}
                 </p>
               </div>

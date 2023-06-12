@@ -13,6 +13,7 @@ import generatePageNumbers from "./helpers/generatePageNumbers";
 import useCategories from "../../hooks/search/useCategories";
 import { useEffect, useState } from "react";
 import { Category } from "../search/searchInterfaces";
+import MobileCarFilters from "./components/mobile/MobileCarFilters";
 
 
 function CarProducts() {
@@ -54,6 +55,7 @@ function CarProducts() {
 
   return (
     <div className={carProductsStyling["products-wrapper"]}>
+      <MobileCarFilters />
       <ProductsHeader productsMetaTotal={productsData.meta.total} />
       {productsData.items.length !== 0 ? (
         <>

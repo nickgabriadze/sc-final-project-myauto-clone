@@ -5,15 +5,11 @@ import CarProducts from "./components/products/CarProducts";
 function App() {
   document.title = "ავტომობილები";
 
-  const padding:string = window.innerWidth <=375 ? '0':'20px';
-
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "1rem",
-      
       }}
     >
       <Header />
@@ -22,7 +18,7 @@ function App() {
           display: "flex",
           justifyContent: "center",
           gap: "1rem",
-          padding: padding,
+          paddingTop: "20px",
         }}
       >
         <CarSearch />

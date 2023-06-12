@@ -474,10 +474,12 @@
 
   .car-wrapper{
     display: none;
+    
   }
 
   .products-wrapper{
     padding: 0;
+    margin-top: 0;
   }
 
   .car-products{
