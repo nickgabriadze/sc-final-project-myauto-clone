@@ -1,4 +1,3 @@
-import { v4 } from "uuid";
 import selectionStyling from "../../selection.module.css";
 import ExpandMoreSVG from "../../../../icons/expand-more.svg";
 import ExpandLessSVG from "../../../../icons/expand-less.svg";
@@ -147,8 +146,8 @@ function Models() {
                       : {}
                   }
                 >
-                  {modelsDataToManipulate.map((eachManModel) => (
-                    <div key={v4()}>
+                  {modelsDataToManipulate.map((eachManModel, i) => (
+                    <div key={i}>
                       {searchModelsTXT.length > 0 ? (
                         filterModelsByText(
                           searchModelsTXT,
@@ -342,9 +341,9 @@ function Models() {
                           mergedModelsDataToManipulate === undefined
                             ? []
                             : mergedModelsDataToManipulate
-                        ).map((eachModel) => (
+                        ).map((eachModel, i) => (
                           <EachModel
-                            key={v4()}
+                            key={i}
                             parentManID={eachManModel.man_id}
                             innerModelsManID={eachModel.man_id}
                             innerModels={eachModel.models_group}
@@ -352,13 +351,13 @@ function Models() {
                         ))}
 
                       {searchModelsTXT.length === 0 &&
-                        eachManModel.models_group.map((eachObject) => (
-                          <div key={v4()}>
+                        eachManModel.models_group.map((eachObject,i) => (
+                          <div key={i}>
                             {Object.entries(eachObject).map(
-                              ([modelGroup, models]) => {
+                              ([modelGroup, models], i) => {
                                 return (
                                   <DropDownModels
-                                    key={v4()}
+                                    key={i}
                                     setSearchingState={setSearching}
                                     modelGroup={modelGroup}
                                     manModels={models}
