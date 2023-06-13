@@ -72,7 +72,7 @@ function EachCarAsProduct({
           ""
             .concat(man.length !== 0 ? man[0].man_name : "")
             .concat(" ")
-            .concat(model.length !== 0 ? model[0].model_name : "")
+            .concat(model.length !== 0 ? model[0].model_name : "No Data Available")
         );
         setModelNameLoading(false);
       };

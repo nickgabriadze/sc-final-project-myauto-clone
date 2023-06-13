@@ -28,7 +28,7 @@ function CarSearch() {
                 "invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%)",
             }}
           >
-            {deal_type[0] === 0 ? "იყიდება" : "ქირავდება"}
+            {deal_type.length !== 0 ? deal_type[0] === 0 ? "იყიდება" : "ქირავდება" : "იყიდება"}
           </span>
         </p>
         <section className={carSearchStyling["search-wrap"]}>
