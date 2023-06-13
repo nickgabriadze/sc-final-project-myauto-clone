@@ -10,6 +10,7 @@ function App() {
       style={{
         display: "flex",
         flexDirection: "column",
+        
       }}
     >
       <Header />
