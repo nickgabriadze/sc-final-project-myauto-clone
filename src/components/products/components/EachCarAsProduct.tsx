@@ -22,9 +22,11 @@ import severalIDMappings from "../helpers/mappings";
 function EachCarAsProduct({
   carAsProduct,
   cats,
+  mans
 }: {
   carAsProduct: Product;
   cats: Category[];
+  mans: Manufacturer[]
 }) {
   const [modelName, setModelName] = useState<string>("");
   const { currency } = useAppSelector((state) => state.searchReducer);
@@ -47,12 +49,7 @@ function EachCarAsProduct({
       return manModels;
     };
 
-    const fetchMans = async () => {
-      const request = await fetch(`https://static.my.ge/myauto/js/mans.json`);
-      const mans = request.json();
-
-      return mans;
-    };
+   
 
     try {
       const innerFunc = async () => {
@@ -60,7 +57,7 @@ function EachCarAsProduct({
           data: Model[];
         } = await fetchModels();
 
-        const mans: Manufacturer[] = await fetchMans();
+       
 
         const model = fetchedModels.data.filter(
           (eachModel: Model) => eachModel.model_id === carAsProduct.model_id
@@ -85,7 +82,7 @@ function EachCarAsProduct({
     }
 
     return () => abortController.abort();
-  }, [carAsProduct.man_id, carAsProduct.model_id]);
+  }, [carAsProduct.man_id, carAsProduct.model_id, mans]);
 
   const [imgError, setImgError] = useState(false);
 

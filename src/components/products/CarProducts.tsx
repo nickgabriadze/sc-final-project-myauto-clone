@@ -12,8 +12,9 @@ import CarLoading from "./components/CarLoading";
 import generatePageNumbers from "./helpers/generatePageNumbers";
 import useCategories from "../../hooks/search/useCategories";
 import { useEffect, useState } from "react";
-import { Category } from "../search/searchInterfaces";
+import { Category, Manufacturer } from "../search/searchInterfaces";
 import MobileCarFilters from "./components/mobile/MobileCarFilters";
+import useManufacturers from "../../hooks/search/useManufacturers";
 
 
 function CarProducts() {
@@ -22,10 +23,13 @@ function CarProducts() {
     const {main_type} = useAppSelector(state => state.searchReducer)
     const {catsData} = useCategories("https://api2.myauto.ge/ka/cats/get");
     const [cats, setCats] = useState<Category[]>();
-  
+    const {mansData} = useManufacturers("https://static.my.ge/myauto/js/mans.json");
+    const [mans, setMans] = useState<Manufacturer[]>();
+
     useEffect(() => {
         setCats(catsData && catsData[main_type])
-    }, [catsData, main_type])
+        setMans(mansData && mansData[main_type])
+    }, [catsData, main_type, mansData])
   
   const sortByPeriod: {
     [key: number]: string;
@@ -67,6 +71,7 @@ function CarProducts() {
                     cats={cats !== undefined ? cats: []}
                     key={eachCarAsProduct.car_id}
                     carAsProduct={eachCarAsProduct}
+                    mans={mans !== undefined ? mans: []} 
                   />
                 ))}
           </div>
