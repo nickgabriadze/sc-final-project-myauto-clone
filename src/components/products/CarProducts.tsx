@@ -42,10 +42,17 @@ function CarProducts() {
     5: "1d",
   };
 
+  const types:{[key:string]: number}={
+    "cars": 0,
+    "tractors": 1,
+    "motorcycles": 2
+  }
+
   const [productsData, productsError, productsLoading] = useProducts(
-    `https://api2.myauto.ge/ka/products?Page=${page}&&SortOrder=${sortIncDec}&&Period=${sortByPeriod[sortPeriod]}&&${searchLink}`
+    `https://api2.myauto.ge/ka/products?TypeID=${types[main_type]}&&Page=${page}&&SortOrder=${sortIncDec}&&Period=${sortByPeriod[sortPeriod]}&&${searchLink}`
   );
 
+ 
   const productsDispatch = useAppDispatch();
 
   const generatedPages: number[] = generatePageNumbers(
