@@ -2,8 +2,10 @@ import carSearchStyling from "./carSearch.module.css";
 import SelectionTypes from "./searchComponents/Selection/Selection";
 import ThreeTypes from "./searchComponents/ThreeTypes";
 import PriceFromTo from "./searchComponents/PriceFromTo";
+import { useAppSelector } from "../../features/hooks";
 
 function CarSearch() {
+  const {deal_type} = useAppSelector(state => state.searchReducer);
   return (
     <div
     className={carSearchStyling['car-search-entire-container']}>
@@ -26,7 +28,7 @@ function CarSearch() {
                 "invert(37%) sepia(82%) saturate(4017%) hue-rotate(2deg) brightness(97%) contrast(112%)",
             }}
           >
-            იყიდება
+            {deal_type[0] === 0 ? "იყიდება" : "ქირავდება"}
           </span>
         </p>
         <section className={carSearchStyling["search-wrap"]}>
