@@ -6,15 +6,12 @@ import { useAppSelector, useAppDispatch } from "../../../../../features/hooks";
 import { setSearchingTypeState } from "../../../../../features/selectionSlice";
 import { setDealType } from "../../../../../features/searchSlice";
 
-
 function DealTypes() {
-  
   const selectionDispatch = useAppDispatch();
   const { deal_type: dealType } = useAppSelector(
     (state) => state.selectionReducer
   );
   const { deal_type } = useAppSelector((state) => state.searchReducer);
-
 
   const generateStringFromDealTypes = () => {
     const deals = [];
@@ -47,12 +44,8 @@ function DealTypes() {
   };
 
   const checkSelectedDeals = (): boolean => {
-    return (
-     deal_type.includes(0) || deal_type.includes(1)
-    );
+    return deal_type.includes(0) || deal_type.includes(1);
   };
-
-
 
   return (
     <div className={selectionStyling["type-deals-wrapper"]}>
@@ -62,7 +55,11 @@ function DealTypes() {
           <div className={selectionStyling["deals-search-div"]}>
             <input
               type="text"
-              value={generateStringFromDealTypes().length === 0? "გარიგების ტიპი":generateStringFromDealTypes() }
+              value={
+                generateStringFromDealTypes().length === 0
+                  ? "გარიგების ტიპი"
+                  : generateStringFromDealTypes()
+              }
               readOnly={true}
               onClick={() => {
                 selectionDispatch(
@@ -82,12 +79,11 @@ function DealTypes() {
               height={15}
               onClick={() => {
                 if (dealType && checkSelectedDeals()) {
-                
-
-                  selectionDispatch(setDealType({
-                    deal_type: []
-                  }))
-                  
+                  selectionDispatch(
+                    setDealType({
+                      deal_type: [],
+                    })
+                  );
                 } else {
                   selectionDispatch(
                     setSearchingTypeState({
@@ -119,27 +115,39 @@ function DealTypes() {
                   readOnly={true}
                   checked={deal_type.includes(0)}
                   onClick={() => {
-                    if(deal_type.includes(0)){
-                    selectionDispatch(setDealType({
-                      deal_type: [...deal_type.filter(deal => deal !== 0)]
-                    }))
-                  }else{
-                    selectionDispatch(setDealType({
-                      deal_type: [0]
-                    }))
-                  }
+                    if (deal_type.includes(0)) {
+                      selectionDispatch(
+                        setDealType({
+                          deal_type: [
+                            ...deal_type.filter((deal) => deal !== 0),
+                          ],
+                        })
+                      );
+                    } else {
+                      selectionDispatch(
+                        setDealType({
+                          deal_type: [0],
+                        })
+                      );
+                    }
                   }}
                 ></input>
                 <p
                   onClick={() => {
-                    if(deal_type.includes(0)){
-                      selectionDispatch(setDealType({
-                        deal_type: [...deal_type.filter(deal => deal !== 0)]
-                      }))
-                    }else{
-                      selectionDispatch(setDealType({
-                        deal_type: [0]
-                      }))
+                    if (deal_type.includes(0)) {
+                      selectionDispatch(
+                        setDealType({
+                          deal_type: [
+                            ...deal_type.filter((deal) => deal !== 0),
+                          ],
+                        })
+                      );
+                    } else {
+                      selectionDispatch(
+                        setDealType({
+                          deal_type: [0],
+                        })
+                      );
                     }
                   }}
                 >
@@ -153,30 +161,36 @@ function DealTypes() {
                   readOnly={true}
                   checked={deal_type.includes(1)}
                   onClick={() => {
-                    if(deal_type.includes(1)){
-                      selectionDispatch(setDealType({
-                        deal_type: []
-                      }))
-                    }else{
-                      selectionDispatch(setDealType({
-                        deal_type: [1]
-                      }))
+                    if (deal_type.includes(1)) {
+                      selectionDispatch(
+                        setDealType({
+                          deal_type: [],
+                        })
+                      );
+                    } else {
+                      selectionDispatch(
+                        setDealType({
+                          deal_type: [1],
+                        })
+                      );
                     }
                   }}
                 ></input>
                 <p
                   onClick={() => {
-                    if(deal_type.includes(1)){
-                      selectionDispatch(setDealType({
-                        deal_type: [...deal_type.filter(deal => deal !== 1)]
-                      }))
-                    }else{
-                      selectionDispatch(setDealType({
-                        deal_type: [1]
-                      }))
+                    if (deal_type.includes(1)) {
+                      selectionDispatch(
+                        setDealType({
+                          deal_type: []
+                        })
+                      );
+                    } else {
+                      selectionDispatch(
+                        setDealType({
+                          deal_type: [1],
+                        })
+                      );
                     }
-                  
-                  
                   }}
                 >
                   ქირავდება
@@ -194,30 +208,58 @@ function DealTypes() {
                         deal_type.filter((deal) => deal === 1).length == 2
                       }
                       onClick={() => {
-                        if(deal_type.filter(deal => deal === 1).length === 2){
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type.filter(deal => deal !== 1), 1]
-                          }))
-                        }else{
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type,...(deal_type.filter(deal => deal === 1).length === 0 ? [1,1]: [1])]
-                          }))
-                        
-                      }
+                        if (
+                          deal_type.filter((deal) => deal === 1).length === 2
+                        ) {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter((deal) => deal !== 1),
+                                1,
+                              ],
+                            })
+                          );
+                        } else {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter(deal => deal !== 0),
+                                ...(deal_type.filter((deal) => deal === 1)
+                                  .length === 0
+                                  ? [1, 1]
+                                  : [1]),
+                              ],
+                            })
+                          );
+                        }
                       }}
                     ></input>
                     <p
                       onClick={() => {
-                        if(deal_type.filter(deal => deal === 1).length === 2){
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type.filter(deal => deal !== 1), 1]
-                          }))
-                        }else{
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type,...(deal_type.filter(deal => deal === 1).length === 0 ? [1,1]: [1])]
-                          }))
-                        
-                      }
+                        if (
+                          deal_type.filter((deal) => deal === 1).length === 2
+                        ) {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter((deal) => deal !== 1),
+                                1,
+                              ],
+                            })
+                          );
+                        } else {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter(deal => deal !== 0),
+                                ...(deal_type.filter((deal) => deal === 1)
+                                  .length === 0
+                                  ? [1, 1]
+                                  : [1]),
+                              ],
+                            })
+                          );
+                        }
                       }}
                     >
                       დღიურად
@@ -230,31 +272,53 @@ function DealTypes() {
                       readOnly={true}
                       checked={deal_type.includes(2)}
                       onClick={() => {
-                        if(deal_type.includes(2)){
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type.filter(deal => deal !== 2)]
-                          }))
-                        }else{
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type,...(deal_type.filter(deal => deal === 1).length === 0 ? [1,2]: [2])]
-                          }))
-                        
-                      }
+                        if (deal_type.includes(2)) {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter((deal) => deal !== 2),
+                              ],
+                            })
+                          );
+                        } else {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter(deal => deal !== 0),
+                                ...(deal_type.filter((deal) => deal === 1)
+                                  .length === 0
+                                  ? [1, 2]
+                                  : [2]),
+                              ],
+                            })
+                          );
+                        }
                       }}
                     ></input>
                     <p
-                        onClick={() => {
-                          if(deal_type.includes(2)){
-                            selectionDispatch(setDealType({
-                              deal_type: [...deal_type.filter(deal => deal !== 2)]
-                            }))
-                          }else{
-                            selectionDispatch(setDealType({
-                              deal_type: [...deal_type,...(deal_type.filter(deal => deal === 1).length === 0 ? [1,2]: [2])]
-                            }))
-                          
+                      onClick={() => {
+                        if (deal_type.includes(2)) {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter((deal) => deal !== 2),
+                              ],
+                            })
+                          );
+                        } else {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter(deal => deal !== 0),
+                                ...(deal_type.filter((deal) => deal === 1)
+                                  .length === 0
+                                  ? [1, 2]
+                                  : [2]),
+                              ],
+                            })
+                          );
                         }
-                        }}
+                      }}
                     >
                       მძღოლით
                     </p>
@@ -265,30 +329,52 @@ function DealTypes() {
                       readOnly={true}
                       checked={deal_type.includes(3)}
                       onClick={() => {
-                        if(deal_type.includes(3)){
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type.filter(deal => deal !== 3)]
-                          }))
-                        }else{
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type,...(deal_type.filter(deal => deal === 1).length === 0 ? [1,3]: [3])]
-                          }))
-                        
-                      }
+                        if (deal_type.includes(3)) {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter((deal) => deal !== 3),
+                              ],
+                            })
+                          );
+                        } else {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter(deal => deal !== 0),
+                                ...(deal_type.filter((deal) => deal === 1)
+                                  .length === 0
+                                  ? [1, 3]
+                                  : [3]),
+                              ],
+                            })
+                          );
+                        }
                       }}
                     ></input>
                     <p
                       onClick={() => {
-                        if(deal_type.includes(3)){
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type.filter(deal => deal !== 3)]
-                          }))
-                        }else{
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type,...(deal_type.filter(deal => deal === 1).length === 0 ? [1,3]: [3])]
-                          }))
-                        
-                      }
+                        if (deal_type.includes(3)) {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter((deal) => deal !== 3),
+                              ],
+                            })
+                          );
+                        } else {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter(deal => deal !== 0),
+                                ...(deal_type.filter((deal) => deal === 1)
+                                  .length === 0
+                                  ? [1, 3]
+                                  : [3]),
+                              ],
+                            })
+                          );
+                        }
                       }}
                     >
                       შესყიდვით
@@ -300,30 +386,52 @@ function DealTypes() {
                       readOnly={true}
                       checked={deal_type.includes(4)}
                       onClick={() => {
-                        if(deal_type.includes(4)){
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type.filter(deal => deal !== 4)]
-                          }))
-                        }else{
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type,...(deal_type.filter(deal => deal === 1).length === 0 ? [1,4]: [4])]
-                          }))
-                        
-                      }
+                        if (deal_type.includes(4)) {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter((deal) => deal !== 4),
+                              ],
+                            })
+                          );
+                        } else {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter(deal => deal !== 0),
+                                ...(deal_type.filter((deal) => deal === 1)
+                                  .length === 0
+                                  ? [1, 4]
+                                  : [4]),
+                              ],
+                            })
+                          );
+                        }
                       }}
                     ></input>
                     <p
                       onClick={() => {
-                        if(deal_type.includes(4)){
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type.filter(deal => deal !== 4)]
-                          }))
-                        }else{
-                          selectionDispatch(setDealType({
-                            deal_type: [...deal_type,...(deal_type.filter(deal => deal === 1).length === 0 ? [1,4]: [4])]
-                          }))
-                        
-                      }
+                        if (deal_type.includes(4)) {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter((deal) => deal !== 4),
+                              ],
+                            })
+                          );
+                        } else {
+                          selectionDispatch(
+                            setDealType({
+                              deal_type: [
+                                ...deal_type.filter(deal => deal !== 0),
+                                ...(deal_type.filter((deal) => deal === 1)
+                                  .length === 0
+                                  ? [1, 4]
+                                  : [4]),
+                              ],
+                            })
+                          );
+                        }
                       }}
                     >
                       დაზღვეული
@@ -336,9 +444,11 @@ function DealTypes() {
               <div className={selectionStyling["clear-cats-submit"]}>
                 <p
                   onClick={() => {
-                    selectionDispatch(setDealType({
-                      deal_type: []
-                    }))
+                    selectionDispatch(
+                      setDealType({
+                        deal_type: [],
+                      })
+                    );
                   }}
                 >
                   ფილტრის გასუფთავება
