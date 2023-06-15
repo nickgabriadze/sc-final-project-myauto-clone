@@ -41,7 +41,7 @@ function Models() {
   const [searchModelsTXT, setSearchModelsTXT] =
     useState<string>("ყველა მოდელი");
   const [searching, setSearching] = useState<boolean>(false);
-  
+
   return (
     <div className={selectionStyling["type-models-wrapper"]}>
       <div className={selectionStyling["models-type"]}>
@@ -351,7 +351,7 @@ function Models() {
                         ))}
 
                       {searchModelsTXT.length === 0 &&
-                        eachManModel.models_group.map((eachObject,i) => (
+                        eachManModel.models_group.map((eachObject, i) => (
                           <div key={i}>
                             {Object.entries(eachObject).map(
                               ([modelGroup, models], i) => {
