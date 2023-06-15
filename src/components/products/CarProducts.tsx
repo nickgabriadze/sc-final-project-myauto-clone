@@ -94,6 +94,8 @@ function CarProducts() {
                         page: 1,
                       })
                     );
+
+                      scrollTo(0, 0)
                   }}
                   alt="Go to the first page"
                 ></img>
@@ -108,6 +110,7 @@ function CarProducts() {
                         page: page - 1,
                       })
                     );
+                    scrollTo(0, 0)
                   }}
                   style={{ rotate: "180deg" }}
                   alt="Go one page back"
@@ -123,6 +126,9 @@ function CarProducts() {
                         page: eachPageNumber,
                       })
                     );
+                      if(eachPageNumber !== page){
+                        scrollTo(0, 0)
+                      }
                   }}
                   style={eachPageNumber === page ? { color: "#e34c0e" } : {}}
                   key={eachPageNumber}
@@ -140,6 +146,7 @@ function CarProducts() {
                         page: page + 1,
                       })
                     );
+                    scrollTo(0, 0)
                   }}
                   alt="Go one page forward"
                 ></img>
@@ -153,6 +160,7 @@ function CarProducts() {
                         page: productsData.meta.last_page,
                       })
                     );
+                    scrollTo(0, 0)
                   }}
                   style={{ rotate: "180deg" }}
                   alt="Go to the last page"
