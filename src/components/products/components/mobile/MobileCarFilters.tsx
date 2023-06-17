@@ -128,11 +128,19 @@ function MobileCarFilters() {
                 productsDispatch(setSearchLink({
                     searchLink: generateFilterLink(
                       deal_type,
-                      models,
+                      [
+                        ...models.filter(
+                          (eachModel) => eachModel.man_id !== eachMan.man_id
+                        ),
+                      ],
                       categories,
                       pricesFrom,
                       pricesTo,
-                      manufacturers
+                      [
+                        ...manufacturers.filter(
+                          (each) => each.man_id !== eachMan.man_id
+                        ),
+                      ],
                     ),
                   }))
                 }}
@@ -164,8 +172,8 @@ function MobileCarFilters() {
                   deal_type,
                   models,
                   categories,
-                  pricesFrom,
-                  pricesTo,
+                  0,
+                pricesTo,
                   manufacturers
                 ),
               }))
@@ -196,7 +204,7 @@ function MobileCarFilters() {
                   models,
                   categories,
                   pricesFrom,
-                  pricesTo,
+                  0,
                   manufacturers
                 ),
               }))
@@ -225,7 +233,7 @@ function MobileCarFilters() {
                     searchLink: generateFilterLink(
                       deal_type,
                       models,
-                      categories,
+                      [...categories.filter((each) => each.cat_id !== eachCat.cat_id)],
                       pricesFrom,
                       pricesTo,
                       manufacturers
