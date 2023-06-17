@@ -86,7 +86,7 @@ function ProductsHeader({ productsMetaTotal }: { productsMetaTotal: number }) {
                   : { width: "150px" }
               }
             >
-              {[1, 2, 3, 4, 5].map((eachPeriod) => {
+              {[0, 1, 2, 3, 4].map((eachPeriod) => {
                 {
                   return (
                     eachPeriod !== sortPeriod && (
