@@ -10,6 +10,7 @@ import {
   setManuFacturers,
   setModels,
 } from "../../../features/searchSlice";
+import { setSearchLink } from "../../../features/productSlice";
 
 function ThreeTypes() {
   const [chosenSearchType, setChosenSearchType] = useState({
@@ -65,6 +66,10 @@ function ThreeTypes() {
             );
             document.title = "ავტომობილები";
 
+              dispatchTypeInfo(setSearchLink({
+                searchLink: ''
+              }))
+
             dispatchTypeInfo(
               setMainType({
                 main_type: "cars",
@@ -108,6 +113,10 @@ function ThreeTypes() {
                 manufacturers: [],
               })
             );
+
+            dispatchTypeInfo(setSearchLink({
+              searchLink: ''
+            }))
 
             dispatchTypeInfo(
               setModels({
@@ -166,6 +175,11 @@ function ThreeTypes() {
                 models: [],
               })
             );
+            
+            dispatchTypeInfo(setSearchLink({
+              searchLink: ''
+            }))
+
 
             dispatchTypeInfo(
               setManuFacturers({
