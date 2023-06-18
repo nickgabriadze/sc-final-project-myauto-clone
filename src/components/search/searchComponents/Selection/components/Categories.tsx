@@ -86,7 +86,7 @@ function Categories() {
             <img
               src={
                 category_type
-                  ? selectedCategories.length === 0
+                  ? categories.length === 0
                     ? ExpandLessSVG
                     : CloseSVG
                   : ExpandMoreSVG
